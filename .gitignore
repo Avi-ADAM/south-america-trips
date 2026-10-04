@@ -1,0 +1,11 @@
+node_modules
+/.svelte-kit
+/build
+/package
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+vite.config.*.timestamp-*
+.claude/
