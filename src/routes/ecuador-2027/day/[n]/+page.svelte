@@ -223,13 +223,14 @@
 		padding: 14px 0 0;
 	}
 	.dots a {
-		width: 34px;
-		height: 34px;
+		box-sizing: border-box;
+		width: 40px;
+		height: 40px;
 		display: grid;
 		place-items: center;
 		border-radius: 50%;
 		text-decoration: none;
-		font-size: 0.82rem;
+		font-size: 0.95rem;
 		color: var(--muted);
 		border: 1px solid var(--line);
 		transition: all 0.25s;
@@ -355,10 +356,11 @@
 		overflow: hidden;
 		cursor: zoom-in;
 	}
+	/* Hotel photos keep their own shape: a forced ratio cut the Sangay sign off. */
 	.hotel-img img {
+		display: block;
 		width: 100%;
-		aspect-ratio: 16/9;
-		object-fit: cover;
+		height: auto;
 		transition: transform 1.2s var(--ease);
 	}
 	.hotel-img:hover img {
@@ -437,12 +439,12 @@
 			font-size: 1.6rem;
 		}
 		.dots {
-			gap: 4px;
+			gap: 3px;
 		}
 		.dots a {
-			width: 25px;
-			height: 25px;
-			font-size: 0.7rem;
+			width: 30px;
+			height: 30px;
+			font-size: 0.82rem;
 		}
 	}
 	@media (max-width: 520px) {

@@ -18,7 +18,10 @@
 </header>
 
 <section class="hero">
-	<HeroSlideshow images={['/img/client/quilotoa-flowers.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']} />
+	<HeroSlideshow
+		images={['/img/client/quilotoa-flowers.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']}
+		phoneImages={[{ src: '/img/client/quilotoa-flowers.jpg' }, { src: '/img/client/booby-nest.jpg', pos: '75% 50%' }, { src: '/img/amazon/macaws.jpg' }]}
+	/>
 	<div class="shade"></div>
 	<div class="wrap content">
 		<span class="kicker">{site.tagline}</span>
@@ -124,6 +127,12 @@
 		}
 		.body {
 			padding: 26px;
+		}
+		/* The whole photo, both blue-footed boobies, rather than a slice of it */
+		.card img {
+			height: auto;
+			min-height: 0;
+			aspect-ratio: 1424 / 809;
 		}
 	}
 </style>

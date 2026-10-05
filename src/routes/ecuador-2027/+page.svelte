@@ -30,6 +30,10 @@
 	const chapterClip: Partial<Record<RegionId, string>> = {
 		andes: '/video/andes/quilotoa.mp4'
 	};
+	// On phones, where the wide photo above shows only a sliver.
+	const chapterPhone: Partial<Record<RegionId, string>> = {
+		amazon: '/img/amazon/boardwalk.jpg'
+	};
 	let phone = $state(false);
 	$effect(() => {
 		const m = matchMedia('(max-width: 760px)');
@@ -47,7 +51,6 @@
 		return acc;
 	}, []);
 
-	const hebrewOrdinals = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ז׳', 'ח׳'];
 	const titleWords = trip.headline.split(' ');
 	const story = stories[0];
 	let videoOn = $state(false);
@@ -133,7 +136,7 @@
 
 <div class="deck">
 <section class="hero slide" use:slide>
-	<HeroSlideshow images={trip.heroImages} video={trip.heroVideo} />
+	<HeroSlideshow images={trip.heroImages} phoneImages={trip.heroPhone} video={trip.heroVideo} />
 	<div class="hero-shade"></div>
 	<div class="orb orb-1"></div>
 	<div class="orb orb-2"></div>
@@ -182,7 +185,7 @@
 	{#each worlds as w, i}
 		<article class="world wrap slide fx{i % 4}" use:slide class:flip={i % 2 === 1} class:photo-top={w.photoTop} style="--c:{regions[w.id].color};--focus:{w.focus ?? '50% 50%'}">
 			<div class="world-img reveal-zoom" use:reveal>
-				<img src={u(w.image)} alt={w.title} loading="lazy" />
+				<img src={u((phone && w.phone) || w.image)} alt={w.title} loading="lazy" />
 				<span class="world-num">0{i + 1}</span>
 			</div>
 			<div class="world-text reveal" use:reveal style="--delay:150ms">
@@ -224,13 +227,12 @@
 				{#if phone && chapterClip[ch.region]}
 					<Media src={chapterClip[ch.region]!} />
 				{:else}
-					<img src={u(chapterBg[ch.region]!)} alt="" loading="lazy" />
+					<img src={u((phone && chapterPhone[ch.region]) || chapterBg[ch.region]!)} alt="" loading="lazy" />
 				{/if}
 			</div>
 		{/if}
 		<header class="chapter" style="--c:{regions[ch.region].color}">
 			<div class="wrap reveal" use:reveal>
-				<span class="chapter-k">פרק {hebrewOrdinals[ci]}</span>
 				<h2>{chapterTitles[ch.region]}</h2>
 				<span class="chapter-dates"
 					>ימים {ch.days[0].n}{ch.days.length > 1 ? `–${ch.days.at(-1)!.n}` : ''} · {shortDate(ch.days[0].date)}{ch.days
@@ -289,11 +291,16 @@
 				id="day-{d.n}"
 				class="day wrap slide fx{d.n % 4}"
 				class:photo-top={d.photoTop}
+				class:framed={d.framed}
 				use:slide
 				style="--c:{regions[d.region].color};--focus:{d.focus ?? '50% 50%'}"
 			>
 				<a class="day-img reveal-zoom" use:reveal href={u(`/ecuador-2027/day/${d.n}/`)}>
-					<Media src={d.video ?? d.image} poster={d.video ? d.image : undefined} alt={d.title} />
+					{#if phone && d.phone}
+						<Media src={d.phone} alt={d.title} />
+					{:else}
+						<Media src={d.video ?? d.image} poster={d.video ? d.image : undefined} alt={d.title} />
+					{/if}
 					{#if d.shabbat}<span class="badge">שבת</span>{/if}
 				</a>
 				<div class="day-body reveal" use:reveal style="--delay:120ms">
@@ -683,12 +690,6 @@
 		padding: 110px 0 60px;
 		text-align: center;
 		background: radial-gradient(60% 80% at 50% 0%, color-mix(in srgb, var(--c) 18%, transparent), transparent 70%);
-	}
-	.chapter-k {
-		display: inline-block;
-		font: 700 0.9rem var(--display);
-		letter-spacing: 0.2em;
-		color: #f8e9bd;
 	}
 	.chapter h2 {
 		font-size: clamp(2.4rem, 7vw, 5.2rem);
@@ -1401,6 +1402,23 @@
 		.photo-top .world-img::after,
 		.photo-top .day-img::after {
 			background: linear-gradient(to bottom, rgba(6, 22, 27, 0.45), rgba(6, 22, 27, 0) 25%);
+		}
+
+		/* A photo too wide or too small to fill a tall screen: shown whole, in a frame above the text. */
+		.day.framed {
+			align-content: center;
+		}
+		.framed .day-img {
+			position: relative;
+			inset: auto;
+			z-index: auto;
+			aspect-ratio: 4/3;
+			margin-bottom: 70px;
+			border-radius: 22px;
+			box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+		}
+		.framed .day-img::after {
+			display: none;
 		}
 		.world-img:hover img,
 		.day-img:hover :global(img),

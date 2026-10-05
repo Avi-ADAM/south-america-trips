@@ -44,6 +44,10 @@ export interface Day {
 	photoTop?: boolean;
 	/** וידאו שקט בלולאה לרקע הכותרת (image משמשת כגיבוי) */
 	video?: string;
+	/** בטלפון: תמונה או קליפ אנכי שנראים טוב במסך גבוה, במקום image/video שנחתכים בו */
+	phone?: string;
+	/** בטלפון: התמונה לא ממלאת את המסך אלא מוצגת שלמה במסגרת מעל הטקסט (לתמונות רחבות או קטנות) */
+	framed?: boolean;
 	/** תמונות או קטעי וידאו (mp4) */
 	gallery?: string[];
 	schedule: ScheduleItem[];
@@ -77,7 +81,17 @@ export const trip = {
 	nights: 19,
 	/** בטלפון: תמונת הפתיחה הראשונה זזה (סרטון אנכי שנוצר ממנה) */
 	heroVideo: clip('andes/quilotoa'),
-	heroImages: [photo('quilotoa-flowers'), photo('quilotoa-crater'), photo('boobies'), amazon('canoe-lagoon'), photo('snorkel-turtle'), hero('cotopaxi'), hero('quito')]
+	heroImages: [photo('quilotoa-flowers'), photo('snorkel-turtle'), amazon('squirrel-monkey'), photo('boobies'), amazon('canoe-lagoon'), hero('cotopaxi'), hero('quito')],
+	/** בטלפון, תמונה אחת לכל אחת מ-heroImages: גבוהות, או רחבות שהעיקר בהן נכנס במסך צר */
+	heroPhone: [
+		{ src: photo('quilotoa-flowers') },
+		{ src: photo('snorkel-turtle'), pos: '62% 50%' },
+		{ src: amazon('squirrel-monkey'), pos: '28% 50%' },
+		{ src: photo('booby-nest'), pos: '75% 50%' },
+		{ src: amazon('macaws') },
+		{ src: hero('cotopaxi'), pos: '72% 50%' },
+		{ src: photo('pailon-1') }
+	]
 };
 
 export const worlds = [
@@ -86,6 +100,8 @@ export const worlds = [
 		title: 'אקוודור',
 		kicker: 'על קו המשווה',
 		image: hero('cotopaxi'),
+		focus: '70% 50%',
+		photoTop: true,
 		text: 'מדינה קטנה בצפון-מערב דרום אמריקה, שוכנת בדיוק על קו המשווה. רכס האנדים חוצה אותה מצפון לדרום, ובו כמה מהרי הגעש הפעילים הגבוהים בעולם — ובראשם הקוטופקסי המושלג. העיר העתיקה של קיטו, הבירה, הוכרזה כאתר מורשת עולמית של אונסק״ו.',
 		facts: ['קיטו — בירה בגובה 2,850 מ׳', 'קוטופקסי — 5,897 מ׳', 'שווקים אינדיאניים צבעוניים']
 	},
@@ -94,6 +110,7 @@ export const worlds = [
 		title: 'האמזונס',
 		kicker: 'שליש מהמדינה — ג׳ונגל',
 		image: amazon('canoe-lagoon'),
+		phone: amazon('macaws'),
 		text: 'יער הגשם האמזוני של אקוודור משתרע על כשליש משטח המדינה, מזרחית לרכס האנדים. זהו אחד המקומות העשירים ביותר בעולם במגוון ביולוגי: יותר מ-300 מיני יונקים, 800 מיני דגים ו-350 מיני זוחלים. נשהה שלושה לילות בלודג׳ אקולוגי בלב הג׳ונגל.',
 		facts: ['300+ מיני יונקים', '800 מיני דגים', '3 לילות בלודג׳ La Selva']
 	},
@@ -137,6 +154,8 @@ export const days: Day[] = [
 		title: 'מרגלות הקוטופקסי',
 		summary: 'יום בפארק הלאומי קוטופקסי: לגונת לימפיופונגו, טיפוס לבקתת חוסה ריבאס בגובה 4,810 מ׳ ואפשרות להגיע עד הקרחונים.',
 		image: hero('cotopaxi'),
+		focus: '70% 50%',
+		photoTop: true,
 		gallery: [photo('cotopaxi-horses'), photo('hacienda-chapel'), photo('hacienda-door')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט מהמלון', kind: 'hotel' },
@@ -154,6 +173,7 @@ export const days: Day[] = [
 		title: 'האגם הירוק שבלוע הר הגעש',
 		summary: 'קילוטואה — לוע הר געש ברוחב 3 ק״מ ובתוכו אגם טורקיז בעומק 250 מ׳. תצפיות, הליכה ואפשרות לרדת עד שפת המים.',
 		image: photo('quilotoa-crater'),
+		phone: photo('quilotoa-cliff'),
 		gallery: [photo('quilotoa-flowers'), photo('quilotoa-shore'), photo('quilotoa-cliff'), photo('quilotoa-tree')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט', kind: 'hotel' },
@@ -171,6 +191,7 @@ export const days: Day[] = [
 		title: 'רכבל מעל העננים וקו המשווה',
 		summary: 'עולים ברכבל של קיטו לגובה של כמעט 4,000 מ׳, ואחר הצהריים עומדים עם רגל אחת בכל חצי כדור במוזיאון אינטיניאן.',
 		image: photo('intinan-sign'),
+		phone: photo('equator-museum'),
 		gallery: [img('cablecar'), photo('mitad-monument'), photo('equator-museum')],
 		schedule: [
 			{ time: '09:00', title: 'הרכבל של קיטו (TelefériQo)', kind: 'tour', text: 'נסיעה של 18 דקות בקרונית עם נוף פנורמי על העיר אל מורדות הר הגעש פיצ׳ינצ׳ה. תצפיות והליכות קלות. למיטיבי לכת — טיפוס אופציונלי לפסגת רוקו פיצ׳ינצ׳ה (כשעתיים לכל כיוון). כרטיס לרכבל: 8–10$, בתשלום במקום.' },
@@ -188,6 +209,7 @@ export const days: Day[] = [
 		title: 'שבת בקיטו',
 		summary: 'יום חופשי ללא פעילויות מתוכננות — מנוחה, טיול רגלי בעיר העתיקה או בריכה עם נוף לעמק.',
 		image: hero('quito'),
+		focus: '47% 50%',
 		gallery: [photo('folk-dance'), photo('masks-dance')],
 		schedule: [{ title: 'יום חופשי — שבת', kind: 'free', text: 'אין פעילויות מתוכננות. זמן למנוחה ולהנאה מקיטו.' }],
 		hotel: { name: 'Hotel Quito' },
@@ -202,6 +224,7 @@ export const days: Day[] = [
 		title: 'בדרך לשער האמזונס',
 		summary: 'נוסעים דרומה לבאניוס — עיירת מעיינות חמים למרגלות הר הגעש הפעיל טונגוראואה. אחר הצהריים: ספא ובריכה.',
 		image: img('banos-church'),
+		phone: photo('pailon-2'),
 		schedule: [
 			{ time: '08:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '08:30', title: 'העברה לבאניוס', kind: 'transfer', text: 'נסיעה של כארבע שעות לאורך "שדרת הרי הגעש".' },
@@ -218,6 +241,7 @@ export const days: Day[] = [
 		title: 'דרך המפלים ופיילון דל דיאבלו',
 		summary: '60 מפלים בדרך מבאניוס לפויו: אגויאן, מנטו דה לה נוביה, טרביטה מעל הקניון והמפל העוצמתי פיילון דל דיאבלו — "קלחת השטן".',
 		image: hero('pailon'),
+		phone: photo('pailon-1'),
 		gallery: [photo('pailon-bridge'), photo('pailon-1'), photo('pailon-2'), photo('pailon-flower')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט', kind: 'hotel' },
@@ -235,6 +259,7 @@ export const days: Day[] = [
 		title: 'טסים אל לב הג׳ונגל',
 		summary: 'טיסה קצרה לקוקה, שעתיים בסירה במורד נהר הנאפו וקאנו חתירה שקט אל הלודג׳ — וכבר בלילה הראשון יוצאים לחפש קיימנים בלגונה.',
 		image: amazon('canoe-lagoon'),
+		phone: clip('amazon/ceiba'),
 		video: clip('amazon/garza-cocha'),
 		gallery: [clip('amazon/lagoon'), amazon('canoe-paddle'), amazon('coca')],
 		schedule: [
@@ -258,6 +283,8 @@ export const days: Day[] = [
 		title: 'מעל חופת היער ובין הקופים',
 		summary: 'עולים למגדל תצפית בגובה 36 מ׳ מעל קרקעית היער, מחפשים לוטרות ענק במנדי קוצ׳ה, פוגשים קופים והואצין סביב גרסה קוצ׳ה — ובלילה יוצאים לסיור רגלי בג׳ונגל.',
 		image: amazon('jungle'),
+		phone: amazon('squirrel-monkey'),
+		focus: '30% 45%',
 		video: clip('amazon/lagoon'),
 		gallery: [amazon('hoatzin'), amazon('squirrel-monkey'), amazon('canoe-binoculars'), amazon('toucan'), amazon('night-walk'), amazon('frog')],
 		schedule: [
@@ -322,6 +349,8 @@ export const days: Day[] = [
 		title: 'שבת בקיטו',
 		summary: 'יום חופשי ומנוחה לפני הטיסה לגלאפגוס.',
 		image: img('quito-sanfrancisco'),
+		focus: '45% 50%',
+		photoTop: true,
 		schedule: [{ title: 'יום חופשי — שבת', kind: 'free', text: 'אין פעילויות מתוכננות.' }],
 		hotel: { name: 'Hotel Quito' },
 		shabbat: true
@@ -413,6 +442,7 @@ export const days: Day[] = [
 		title: 'מהפרי לשוקולד',
 		summary: 'יום בחוות קקאו: מטעים, קטיף, תסיסה וייבוש — ובסוף מכינים שוקולד בעצמנו. ארוחת צהריים מסורתית בחווה.',
 		image: img('cacao'),
+		framed: true,
 		schedule: [
 			{ time: '08:00', title: 'סיור בחוות קקאו', kind: 'tour', text: 'קבלת פנים בהסיינדה וסיור במטע הקקאו, בין עצי מנגו ופפאיה. נראה את הקטיף, התסיסה והייבוש של פולי הקקאו, ובסוף נכין שוקולד. ארוחת צהריים מסורתית בבית החווה. כ-5 שעות.' }
 		],
@@ -427,6 +457,7 @@ export const days: Day[] = [
 		title: 'גואיאקיל והפארק ההיסטורי',
 		summary: 'פארק האיגואנות, הטיילת על נהר גואיאס, שכונת לאס פניאס הצבעונית — ופארק היסטורי עם מנגרובים וקופים.',
 		image: hero('guayaquil'),
+		focus: '65% 50%',
 		gallery: [img('guayaquil')],
 		schedule: [
 			{ time: '08:00', title: 'סיור עירוני + הפארק ההיסטורי', kind: 'tour', text: 'כיכר המנהל וארמון העירייה, פארק סמינריו ("פארק האיגואנות") וקתדרלת סן פדרו, טיילת סימון בוליבר עם ארמון הקריסטל והרוטונדה, ושכונת לאס פניאס על גבעת סנטה אנה. בפארק ההיסטורי: שבילי עץ מעל המנגרובים עם תנינים, קופים ועצלנים, בתי מורשת מראשית המאה ה-20, ומטעי קקאו, בננה וקפה. כ-5 שעות.' },
@@ -443,6 +474,7 @@ export const days: Day[] = [
 		title: 'שבת בגואיאקיל',
 		summary: 'יום חופשי. אפשרות להליכה לפארק ירושלים — אנדרטה עם מנורה ודגם של ירושלים בימי בית שני.',
 		image: img('jerusalem-park'),
+		framed: true,
 		schedule: [
 			{ title: 'יום חופשי — שבת', kind: 'free' },
 			{ time: '08:00', title: 'פארק ירושלים העירוני (אופציונלי, עצמאי)', kind: 'optional', text: 'פארק בשכונת אורדסה שהוקם ביוזמת הקונסול הכבוד של ישראל. במרכזו אנדרטה של 18 לוחות ברונזה המספרים את סיפורה של ירושלים, ובראשה העתק בגודל מלא של מנורת הכנסת, לצד דגם של ירושלים בקנה מידה 1:150.' }

@@ -4,10 +4,13 @@
 
 	let {
 		images,
+		phoneImages,
 		interval = 6000,
 		video
 	}: {
 		images: string[];
+		/** One per image: what that slide shows on phones, where a wide photo is cut to a narrow sliver. */
+		phoneImages?: { src: string; pos?: string }[];
 		interval?: number;
 		/** Vertical clip of the first photo, played instead of it on phones. */
 		video?: string;
@@ -34,7 +37,12 @@
 
 <div class="slides" aria-hidden="true">
 	{#each images as src, i}
-		<div class="slide" class:on={i === current} style="background-image:url('{u(src)}')">
+		{@const p = phoneImages?.[i]}
+		<div
+			class="slide"
+			class:on={i === current}
+			style="--img:url('{u(src)}');{p ? `--phone-img:url('${u(p.src)}');--phone-pos:${p.pos ?? 'center'}` : ''}"
+		>
 			{#if i === 0 && phone && video}<Media src={video} class="clip" eager />{/if}
 		</div>
 	{/each}
@@ -49,6 +57,7 @@
 	.slide {
 		position: absolute;
 		inset: -4%;
+		background-image: var(--img);
 		background-size: cover;
 		background-position: center;
 		opacity: 0;
@@ -74,5 +83,12 @@
 	.slide.on {
 		opacity: 1;
 		transform: none;
+	}
+	/* Only the image that applies is downloaded. */
+	@media (max-width: 760px) {
+		.slide {
+			background-image: var(--phone-img, var(--img));
+			background-position: var(--phone-pos, center);
+		}
 	}
 </style>

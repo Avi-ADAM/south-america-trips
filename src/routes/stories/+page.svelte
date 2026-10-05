@@ -23,11 +23,11 @@
 			</header>
 
 			<div class="wrap body">
-				{#each s.blocks as b, i}
+				{#each s.blocks as b}
 					{#if 'pull' in b}
 						<blockquote class="reveal" use:reveal>{b.pull}</blockquote>
 					{:else}
-						<p class="reveal" class:lead={i === 0} use:reveal>{b.p}</p>
+						<p class="reveal" use:reveal>{b.p}</p>
 					{/if}
 				{/each}
 				<p class="sign reveal" use:reveal>— {s.author}</p>
@@ -110,12 +110,6 @@
 	.body p {
 		color: #dbe6e4;
 	}
-	.lead::first-letter {
-		float: right;
-		font: 900 3.6em/0.9 var(--display);
-		margin: 6px 0 0 12px;
-		color: var(--accent);
-	}
 	blockquote {
 		margin: 34px 0;
 		padding: 6px 26px;
@@ -140,6 +134,23 @@
 		padding: 34px;
 		border-radius: 28px;
 		text-align: center;
+		/* A dim gold spotlight around the panel, breathing slowly. */
+		box-shadow:
+			0 0 36px 4px rgba(240, 217, 153, 0.16),
+			0 0 110px 34px rgba(240, 217, 153, 0.09);
+		animation: glow 6s ease-in-out infinite alternate;
+	}
+	@keyframes glow {
+		to {
+			box-shadow:
+				0 0 44px 8px rgba(240, 217, 153, 0.22),
+				0 0 140px 46px rgba(240, 217, 153, 0.12);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.more {
+			animation: none;
+		}
 	}
 	.more p {
 		color: var(--panel-muted);
