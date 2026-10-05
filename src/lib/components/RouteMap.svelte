@@ -61,9 +61,9 @@
 	<svg viewBox="0 0 600 470" role="img" aria-label="מפת מסלול הטיול באקוודור">
 		<defs>
 			<radialGradient id="g-amazon"><stop offset="0" stop-color="#4ade80" stop-opacity=".35" /><stop offset="1" stop-color="#4ade80" stop-opacity="0" /></radialGradient>
-			<radialGradient id="g-andes"><stop offset="0" stop-color="#f2b84b" stop-opacity=".3" /><stop offset="1" stop-color="#f2b84b" stop-opacity="0" /></radialGradient>
+			<radialGradient id="g-andes"><stop offset="0" stop-color="#f3e2b3" stop-opacity=".3" /><stop offset="1" stop-color="#f3e2b3" stop-opacity="0" /></radialGradient>
 			<radialGradient id="g-gal"><stop offset="0" stop-color="#2ec4d6" stop-opacity=".35" /><stop offset="1" stop-color="#2ec4d6" stop-opacity="0" /></radialGradient>
-			<radialGradient id="g-coast"><stop offset="0" stop-color="#ff8a65" stop-opacity=".3" /><stop offset="1" stop-color="#ff8a65" stop-opacity="0" /></radialGradient>
+			<radialGradient id="g-coast"><stop offset="0" stop-color="#f3a5b5" stop-opacity=".3" /><stop offset="1" stop-color="#f3a5b5" stop-opacity="0" /></radialGradient>
 		</defs>
 
 		<!-- graticule -->

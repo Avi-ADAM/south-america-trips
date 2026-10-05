@@ -6,10 +6,10 @@
 	--line: rgba(255, 255, 255, 0.14);
 	--text: #f3f7f6;
 	--muted: #a9bdbb;
-	--accent: #f2b84b;
+	--accent: #f0d999;
 	--accent-2: #2ec4d6;
 	--green: #4ade80;
-	--coral: #ff8a65;
+	--coral: #f3a5b5;
 	--grad: linear-gradient(100deg, #f8e9bd 0%, #ecd08a 45%, #dfba6a 100%);
 	--radius: 22px;
 	--font: 'Heebo', system-ui, sans-serif;
@@ -22,7 +22,7 @@
 	--panel-text: #0b2a31;
 	--panel-muted: #42605f;
 	--num: #0c8a94;
-	--panel-accent: #9a6b12;
+	--panel-accent: #7d6630;
 	/* Room the fixed navigation takes on phones (top bar / bottom tab bar). */
 	--nav-top: 0px;
 	--nav-bottom: 0px;

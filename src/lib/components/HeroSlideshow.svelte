@@ -1,19 +1,42 @@
 <script lang="ts">
 	import { u } from '$lib/paths';
+	import Media from './Media.svelte';
 
-	let { images, interval = 6000 }: { images: string[]; interval?: number } = $props();
+	let {
+		images,
+		interval = 6000,
+		video
+	}: {
+		images: string[];
+		interval?: number;
+		/** Vertical clip of the first photo, played instead of it on phones. */
+		video?: string;
+	} = $props();
 
 	let current = $state(0);
+	let phone = $state(false);
 
 	$effect(() => {
-		const id = setInterval(() => (current = (current + 1) % images.length), interval);
-		return () => clearInterval(id);
+		const m = matchMedia('(max-width: 760px)');
+		phone = m.matches;
+		const on = (e: MediaQueryListEvent) => (phone = e.matches);
+		m.addEventListener('change', on);
+		return () => m.removeEventListener('change', on);
+	});
+
+	// The clip runs 10 seconds, so its slide stays up that long.
+	$effect(() => {
+		const wait = current === 0 && phone && video ? 10000 : interval;
+		const id = setTimeout(() => (current = (current + 1) % images.length), wait);
+		return () => clearTimeout(id);
 	});
 </script>
 
 <div class="slides" aria-hidden="true">
 	{#each images as src, i}
-		<div class="slide" class:on={i === current} style="background-image:url('{u(src)}')"></div>
+		<div class="slide" class:on={i === current} style="background-image:url('{u(src)}')">
+			{#if i === 0 && phone && video}<Media src={video} class="clip" eager />{/if}
+		</div>
 	{/each}
 </div>
 
@@ -40,6 +63,13 @@
 	}
 	.slide:nth-child(3n) {
 		transform: translateX(-7%) scale(1.18) rotate(-1.5deg);
+	}
+	.slide :global(.clip) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 	.slide.on {
 		opacity: 1;

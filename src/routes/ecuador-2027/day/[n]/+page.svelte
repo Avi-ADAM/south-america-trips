@@ -168,7 +168,7 @@
 		position: absolute;
 		top: 90px;
 		inset-inline-end: 0;
-		font: 900 clamp(7rem, 22vw, 16rem) / 1 var(--display);
+		font: 900 clamp(5rem, 15vw, 11rem) / 1 var(--display);
 		color: transparent;
 		-webkit-text-stroke: 2px color-mix(in srgb, var(--c) 70%, transparent);
 		opacity: 0.6;
@@ -268,7 +268,7 @@
 		bottom: 10px;
 		inset-inline-start: 21px;
 		width: 2px;
-		background: linear-gradient(#f8e9bd, #dfba6a);
+		background: linear-gradient(#f8e9bd, #f0d999);
 		opacity: 0.4;
 	}
 	li {
@@ -294,7 +294,7 @@
 	}
 	.kind-free .icon {
 		color: var(--accent);
-		background: rgba(242, 184, 75, 0.12);
+		background: rgba(240, 217, 153, 0.12);
 	}
 	.kind-optional .icon {
 		color: var(--accent-2);

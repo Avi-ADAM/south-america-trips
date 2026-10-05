@@ -22,13 +22,13 @@ export const destinations: Destination[] = [
 		slug: 'ecuador',
 		name: 'אקוודור',
 		note: 'האנדים, קיטו וגואיאקיל',
-		hues: ['#f2b84b', '#c2552e'],
+		hues: ['#f3e2b3', '#7a6a45'],
 		cover: c('quilotoa-crater'),
 		items: [
 			c('quilotoa-crater'), h('cotopaxi'), c('textiles'), c('otavalo-llama'), c('cotopaxi-horses'),
 			c('quilotoa-flowers'), c('plaza-dance'), c('hacienda-garden'), c('hacienda-door'), c('quilotoa-shore'),
 			c('masks-dance'), c('pailon-bridge'), h('pailon'), c('pailon-1'), c('folk-dance'), c('intinan-sign'),
-			c('mitad-monument'), c('equator-museum'), h('quito'), t('cablecar'), c('quilotoa-cliff'), c('sangay-spa'),
+			c('mitad-monument'), c('equator-museum'), h('quito'), t('cablecar'), c('quilotoa-cliff'),
 			c('pailon-flower'), t('cacao'), h('guayaquil'), c('cedros-inn')
 		]
 	},
@@ -61,10 +61,10 @@ export const destinations: Destination[] = [
 	{ slug: 'chile', name: 'צ׳ילה', hues: ['#ff7675', '#6c2a52'], items: [] },
 	{ slug: 'brazil', name: 'ברזיל', hues: ['#55efc4', '#d6a520'], items: [] },
 	{ slug: 'montenegro', name: 'מונטנגרו', hues: ['#ffd479', '#1d5f8a'], items: [] },
-	{ slug: 'peru', name: 'פרו', hues: ['#fd9b6b', '#8c2f39'], items: [] },
+	{ slug: 'peru', name: 'פרו', hues: ['#f3a5b5', '#8c2f39'], items: [] },
 	{ slug: 'norway', name: 'נורווגיה', hues: ['#81ecec', '#2d3561'], items: [] },
 	{ slug: 'india', name: 'הודו וההימלאיה', hues: ['#ffbe76', '#b33771'], items: [] },
-	{ slug: 'georgia', name: 'גאורגיה', hues: ['#e17055', '#4b2c5e'], items: [] },
+	{ slug: 'georgia', name: 'גאורגיה', hues: ['#c9b6f2', '#4b2c5e'], items: [] },
 	{ slug: 'china', name: 'סין', hues: ['#ff6b6b', '#7d1d1d'], items: [] },
 	{ slug: 'japan', name: 'יפן · דובי הפנדה', hues: ['#fab1c8', '#6d3b8c'], items: [] },
 	{ slug: 'vietnam', name: 'וייטנאם', hues: ['#a3e635', '#1f6f50'], items: [] }

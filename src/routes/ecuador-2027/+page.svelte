@@ -22,11 +22,22 @@
 		coast: 'גואיאקיל והחוף הפסיפי'
 	};
 
-	// Full-screen photo behind a chapter's title card.
+	// Full-screen photo behind a chapter's title card, and a vertical clip of it for phones.
 	const chapterBg: Partial<Record<RegionId, string>> = {
 		andes: '/img/client/quilotoa-flowers.jpg',
 		amazon: '/img/amazon/creek-2.jpg'
 	};
+	const chapterClip: Partial<Record<RegionId, string>> = {
+		andes: '/video/andes/quilotoa.mp4'
+	};
+	let phone = $state(false);
+	$effect(() => {
+		const m = matchMedia('(max-width: 760px)');
+		phone = m.matches;
+		const on = (e: MediaQueryListEvent) => (phone = e.matches);
+		m.addEventListener('change', on);
+		return () => m.removeEventListener('change', on);
+	});
 
 	// Group consecutive days by region into "chapters".
 	const chapters = days.reduce<{ region: RegionId; days: typeof days }[]>((acc, d) => {
@@ -88,8 +99,7 @@
 		{ src: '/img/client/intinan-sign.jpg', label: 'על קו המשווה' },
 		{ src: '/img/client/plaza-dance.jpg', label: 'פסטיבל אינטי ריימי (פסטיבל השמש)' },
 		{ src: '/img/client/quilotoa-shore.jpg', label: 'האגם מלמעלה' },
-		{ src: '/img/client/otavalo-llama.jpg', label: 'קהילה מסורתית' },
-		{ src: '/img/client/sangay-spa.jpg', label: 'באניוס' }
+		{ src: '/img/client/otavalo-llama.jpg', label: 'קהילה מסורתית' }
 	];
 	const galapagosStrip = [
 		{ src: '/img/client/boobies.jpg', label: 'כחולי-רגל' },
@@ -123,7 +133,7 @@
 
 <div class="deck">
 <section class="hero slide" use:slide>
-	<HeroSlideshow images={trip.heroImages} />
+	<HeroSlideshow images={trip.heroImages} video={trip.heroVideo} />
 	<div class="hero-shade"></div>
 	<div class="orb orb-1"></div>
 	<div class="orb orb-2"></div>
@@ -210,7 +220,13 @@
 	{#each chapters as ch, ci}
 		<div class="chapter-slide slide" class:has-bg={chapterBg[ch.region]} use:slide>
 		{#if chapterBg[ch.region]}
-			<div class="chapter-bg" aria-hidden="true"><img src={u(chapterBg[ch.region]!)} alt="" loading="lazy" /></div>
+			<div class="chapter-bg" aria-hidden="true">
+				{#if phone && chapterClip[ch.region]}
+					<Media src={chapterClip[ch.region]!} />
+				{:else}
+					<img src={u(chapterBg[ch.region]!)} alt="" loading="lazy" />
+				{/if}
+			</div>
 		{/if}
 		<header class="chapter" style="--c:{regions[ch.region].color}">
 			<div class="wrap reveal" use:reveal>
@@ -399,7 +415,7 @@
 	.orb-1 {
 		width: 420px;
 		height: 420px;
-		background: #f2b84b;
+		background: #f0d999;
 		top: 10%;
 		right: -120px;
 	}
@@ -712,14 +728,16 @@
 		z-index: -1;
 		overflow: hidden;
 	}
-	.chapter-bg img {
+	.chapter-bg img,
+	.chapter-bg :global(video) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		transform: scale(1.12);
 		transition: transform 9s cubic-bezier(0.2, 0.6, 0.3, 1);
 	}
-	.chapter-slide:global(.active) .chapter-bg img {
+	.chapter-slide:global(.active) .chapter-bg img,
+	.chapter-slide:global(.active) .chapter-bg :global(video) {
 		transform: scale(1);
 	}
 	.chapter-bg::after {
@@ -776,7 +794,7 @@
 		position: absolute;
 		top: -60px;
 		inset-inline-end: 0;
-		font: 900 clamp(5rem, 11vw, 9rem) / 1 var(--display);
+		font: 900 clamp(4rem, 8vw, 6.5rem) / 1 var(--display);
 		color: transparent;
 		-webkit-text-stroke: 1.5px color-mix(in srgb, var(--c) 60%, transparent);
 		opacity: 0.55;
@@ -840,10 +858,10 @@
 		width: 6px;
 		height: 6px;
 		border-radius: 50%;
-		background: #d9ff8a;
+		background: #fff4d6;
 		box-shadow:
-			0 0 10px 3px rgba(190, 255, 120, 0.7),
-			0 0 24px 8px rgba(74, 222, 128, 0.35);
+			0 0 10px 3px rgba(248, 233, 189, 0.75),
+			0 0 24px 8px rgba(240, 217, 153, 0.35);
 		opacity: 0;
 		animation: firefly var(--t) ease-in-out infinite;
 		pointer-events: none;
@@ -1002,15 +1020,15 @@
 		background: var(--grad);
 		color: var(--bg);
 		font-size: 2rem;
-		box-shadow: 0 0 0 0 rgba(242, 184, 75, 0.6);
+		box-shadow: 0 0 0 0 rgba(240, 217, 153, 0.6);
 		animation: ring 2s infinite;
 	}
 	@keyframes ring {
 		70% {
-			box-shadow: 0 0 0 26px rgba(242, 184, 75, 0);
+			box-shadow: 0 0 0 26px rgba(240, 217, 153, 0);
 		}
 		100% {
-			box-shadow: 0 0 0 0 rgba(242, 184, 75, 0);
+			box-shadow: 0 0 0 0 rgba(240, 217, 153, 0);
 		}
 	}
 	.final {
@@ -1406,8 +1424,8 @@
 			font-size: 1rem;
 		}
 		.day-num {
-			top: -86px;
-			font-size: 6.5rem;
+			top: -64px;
+			font-size: 4.6rem;
 		}
 
 		/* The text in a day or world slide rises line by line */

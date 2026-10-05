@@ -108,7 +108,7 @@
 		background: linear-gradient(160deg, rgba(74, 222, 128, 0.12), transparent 60%);
 	}
 	.no {
-		background: linear-gradient(160deg, rgba(255, 138, 101, 0.12), transparent 60%);
+		background: linear-gradient(160deg, rgba(243, 165, 181, 0.12), transparent 60%);
 	}
 	h2 {
 		display: flex;

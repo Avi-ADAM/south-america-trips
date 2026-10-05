@@ -13,10 +13,10 @@ export interface Region {
 }
 
 export const regions: Record<RegionId, Region> = {
-	andes: { id: 'andes', name: 'קיטו והאנדים', short: 'האנדים', color: '#f2b84b' },
+	andes: { id: 'andes', name: 'קיטו והאנדים', short: 'האנדים', color: '#f3e2b3' },
 	amazon: { id: 'amazon', name: 'האמזונס', short: 'אמזונס', color: '#4ade80' },
 	galapagos: { id: 'galapagos', name: 'איי גלאפגוס', short: 'גלאפגוס', color: '#2ec4d6' },
-	coast: { id: 'coast', name: 'גואיאקיל והחוף', short: 'גואיאקיל', color: '#ff8a65' }
+	coast: { id: 'coast', name: 'גואיאקיל והחוף', short: 'גואיאקיל', color: '#f3a5b5' }
 };
 
 export interface ScheduleItem {
@@ -75,6 +75,8 @@ export const trip = {
 	dateLabel: '22.6.2027 – 11.7.2027',
 	days: 20,
 	nights: 19,
+	/** בטלפון: תמונת הפתיחה הראשונה זזה (סרטון אנכי שנוצר ממנה) */
+	heroVideo: clip('andes/quilotoa'),
 	heroImages: [photo('quilotoa-flowers'), photo('quilotoa-crater'), photo('boobies'), amazon('canoe-lagoon'), photo('snorkel-turtle'), hero('cotopaxi'), hero('quito')]
 };
 
@@ -199,14 +201,13 @@ export const days: Day[] = [
 		where: 'באניוס',
 		title: 'בדרך לשער האמזונס',
 		summary: 'נוסעים דרומה לבאניוס — עיירת מעיינות חמים למרגלות הר הגעש הפעיל טונגוראואה. אחר הצהריים: ספא ובריכה.',
-		image: photo('sangay-spa'),
-		gallery: [img('banos-church')],
+		image: img('banos-church'),
 		schedule: [
 			{ time: '08:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '08:30', title: 'העברה לבאניוס', kind: 'transfer', text: 'נסיעה של כארבע שעות לאורך "שדרת הרי הגעש".' },
 			{ time: '14:00', title: 'צ׳ק-אין במלון Sangay Spa', kind: 'hotel', text: 'דקות הליכה מהמעיינות החמים Termas de la Virgen. ספא, בריכה חיצונית וזמן חופשי בעיירה.' }
 		],
-		hotel: { name: 'Sangay Spa Hotel', text: 'מלון ספא במרכז באניוס, ליד המעיינות החמים וכנסיית הבתולה, עם ספא מלא ובריכה חיצונית.' }
+		hotel: { name: 'Sangay Spa Hotel', text: 'מלון ספא במרכז באניוס, ליד המעיינות החמים וכנסיית הבתולה, עם ספא מלא ובריכה חיצונית.', image: img('sangay') }
 	},
 	{
 		n: 7,
@@ -371,7 +372,12 @@ export const days: Day[] = [
 		where: 'סנטה קרוז',
 		title: 'שנירקול עם אריות ים',
 		summary: 'שיט במפרץ: שחייה עם אריות ים וצבי ים, תעלת הכרישים, לאס גרייטאס, ואחר הצהריים — חוף טורטוגה ביי.',
-		image: photo('snorkel-turtle'),
+		/** תמונת הפתיחה של הסרטון, כדי שלא תהיה קפיצה כשהוא מתחיל */
+		image: '/video/galapagos/snorkel-turtle.jpg',
+		video: clip('galapagos/snorkel-turtle'),
+		/** הצב, מעל הטקסט */
+		focus: '68% 45%',
+		photoTop: true,
 		gallery: [clip('galapagos/turtle'), photo('shark-cave'), hero('sealions'), photo('swim-turtle'), photo('crab-lava'), clip('galapagos/reef')],
 		schedule: [
 			{ time: '08:00', title: 'סיור מפרץ (משותף)', kind: 'tour', text: 'לה לובריה — שנירקול עם אריות ים, צבי ים ודגי שונית. תעלת הכרישים, תעלת האהבה, חוף הכלבים, מכרות המלח ולאס גרייטאס — ערוץ מים בין צוקים. סיום בחוף פונטה אסטרדה. ציוד שנירקול כלול.' },
@@ -495,7 +501,7 @@ export const notIncluded = [
 	'ארוחות כשרות — בתוספת תשלום',
 	'דמי כניסה באתרים מסוימים (למשל תרומה במפל פגוצ׳ה)',
 	'עלייה ברכבל של קיטו ביום שישי — 8–10$',
-	'אגרת כניסה לאיי גלאפגוס (200$) — כל מטיילת משלמת באופן עצמאי',
+	'אגרת כניסה לאיי גלאפגוס — 200$, לא כלולה במחיר (כל מטיילת משלמת באופן עצמאי)',
 	'ארוחות בבית חב״ד',
 	'ביטוח נסיעות',
 	'טיפים, משקאות והוצאות אישיות',
