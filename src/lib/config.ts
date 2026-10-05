@@ -13,7 +13,10 @@ export const site = {
 	/** ריק = "יעודכן בקרוב" */
 	email: '',
 	/** שם משתמש באינסטגרם בלי @. ריק = "יעודכן בקרוב" */
-	instagram: ''
+	instagram: '',
+	/** קבוצת הווצאפ "הרפתקאות ומסעות נשים" */
+	whatsappGroup: 'https://chat.whatsapp.com/F0tZKD5JntcCHRNzEoPwd3',
+	whatsappGroupQr: '/img/qr/whatsapp-group.png'
 };
 
 export const ecuadorPricing = {
@@ -27,7 +30,9 @@ export const ecuadorPricing = {
 	/** דמי רצינות להרשמה מוקדמת (בש"ח). null = לא מוצג */
 	deposit: 1500 as number | null,
 	/** קישור לתשלום בביט (Bit). ריק = הכפתור יופיע כ"קישור יתווסף בקרוב" */
-	bitUrl: '',
+	bitUrl: 'https://www.bitpay.co.il/app/me/7AAA32D6-31D7-BC1B-9443-AF3FF09E6E4EF400',
+	/** ברקוד ה-QR של הביט (לסריקה מהמחשב) */
+	bitQr: '/img/qr/bit.png',
 	/**
 	 * סיכום עלויות — שורות שיוצגו בטבלה בעמוד המחיר.
 	 * לדוגמה: { label: 'מקדמה בהרשמה', value: '1,000 ₪' }

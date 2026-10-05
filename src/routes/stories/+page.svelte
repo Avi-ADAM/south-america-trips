@@ -26,12 +26,6 @@
 				{#each s.blocks as b, i}
 					{#if 'pull' in b}
 						<blockquote class="reveal" use:reveal>{b.pull}</blockquote>
-					{:else if 'list' in b}
-						<ul>
-							{#each b.list as li, j}
-								<li class="reveal" use:reveal style="--delay:{j * 110}ms">{li}</li>
-							{/each}
-						</ul>
 					{:else}
 						<p class="reveal" class:lead={i === 0} use:reveal>{b.p}</p>
 					{/if}
@@ -128,27 +122,6 @@
 		border-inline-start: 4px solid var(--accent);
 		font: 700 clamp(1.3rem, 3vw, 1.7rem) / 1.5 var(--display);
 		color: #f8e9bd;
-	}
-	ul {
-		list-style: none;
-		margin: 0 0 1em;
-		padding: 0;
-		display: grid;
-		gap: 10px;
-	}
-	ul li {
-		position: relative;
-		padding: 12px 20px;
-		padding-inline-start: 46px;
-		border-radius: 16px;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid var(--line);
-	}
-	ul li::before {
-		content: '✦';
-		position: absolute;
-		inset-inline-start: 18px;
-		color: var(--accent);
 	}
 	.sign {
 		font: 800 1.3rem var(--display);

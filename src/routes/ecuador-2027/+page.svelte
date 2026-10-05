@@ -22,6 +22,12 @@
 		coast: 'גואיאקיל והחוף הפסיפי'
 	};
 
+	// Full-screen photo behind a chapter's title card.
+	const chapterBg: Partial<Record<RegionId, string>> = {
+		andes: '/img/client/quilotoa-flowers.jpg',
+		amazon: '/img/amazon/creek-2.jpg'
+	};
+
 	// Group consecutive days by region into "chapters".
 	const chapters = days.reduce<{ region: RegionId; days: typeof days }[]>((acc, d) => {
 		const last = acc.at(-1);
@@ -34,6 +40,17 @@
 	const titleWords = trip.headline.split(' ');
 	const story = stories[0];
 	let videoOn = $state(false);
+
+	// YouTube turns captions on by itself when the viewer's language differs from the video's,
+	// and cc_load_policy=0 alone doesn't stop that. Unload the captions module through the
+	// iframe API a few times while the player finishes loading and starts playing.
+	function hideCaptions(e: Event) {
+		const player = (e.currentTarget as HTMLIFrameElement).contentWindow;
+		const cmd = JSON.stringify({ event: 'command', func: 'unloadModule', args: ['captions'] });
+		for (const t of [400, 1200, 2500, 4000]) {
+			setTimeout(() => player?.postMessage(cmd, 'https://www.youtube-nocookie.com'), t);
+		}
+	}
 
 	// La Selva: what each jungle day is about, and the wildlife strip that scrolls under it.
 	const selvaDays = [
@@ -64,15 +81,15 @@
 		{ src: '/img/client/quilotoa-crater.jpg', label: 'לגונת קילוטואה' },
 		{ src: '/img/client/textiles.jpg', label: 'שוק אוטבלו' },
 		{ src: '/img/client/folk-dance.jpg', label: 'תלבושות צבעוניות' },
-		{ src: '/img/client/cotopaxi-horses.jpg', label: 'קוטופקסי' },
-		{ src: '/img/client/masks-dance.jpg', label: 'פסטיבלים צבעוניים' },
+		{ src: '/img/client/cotopaxi-horses.jpg', label: 'הר הגעש קוטופקסי' },
+		{ src: '/img/client/masks-dance.jpg', label: 'פסטיבלים צבעוניים', pos: '50% 12%' },
 		{ src: '/img/client/hacienda-door.jpg', label: 'הסיינדה לה סיינגה' },
-		{ src: '/img/client/pailon-bridge.jpg', label: 'פאיון דל דיאבלו' },
+		{ src: '/img/client/pailon-bridge.jpg', label: 'פיילון דל דיאבלו (קלחת השטן)' },
 		{ src: '/img/client/intinan-sign.jpg', label: 'על קו המשווה' },
-		{ src: '/img/client/plaza-dance.jpg', label: 'ריקודי עם' },
+		{ src: '/img/client/plaza-dance.jpg', label: 'פסטיבל אינטי ריימי (פסטיבל השמש)' },
 		{ src: '/img/client/quilotoa-shore.jpg', label: 'האגם מלמעלה' },
-		{ src: '/img/client/otavalo-llama.jpg', label: 'לאמות' },
-		{ src: '/img/client/sangay-spa.jpg', label: 'באניוס בערב' }
+		{ src: '/img/client/otavalo-llama.jpg', label: 'קהילה מסורתית' },
+		{ src: '/img/client/sangay-spa.jpg', label: 'באניוס' }
 	];
 	const galapagosStrip = [
 		{ src: '/img/client/boobies.jpg', label: 'כחולי-רגל' },
@@ -81,7 +98,7 @@
 		{ src: '/img/client/crab.jpg', label: 'סרטני סאלי לייטפוט' },
 		{ src: '/img/client/shark-cave.jpg', label: 'כרישי שונית' },
 		{ src: '/img/client/iguana-beach.jpg', label: 'איגואנה ימית' },
-		{ src: '/video/galapagos/reef.mp4', label: 'מים צלולים' },
+		{ src: '/video/galapagos/reef.mp4', label: 'צלילה באוקיינוס השקט' },
 		{ src: '/img/client/snorkel-turtle.jpg', label: 'שנירקול' },
 		{ src: '/img/client/sunset-pier.jpg', label: 'שקיעה במפרץ' },
 		{ src: '/img/client/booby-nest.jpg', label: 'קן על הסלעים' }
@@ -153,7 +170,7 @@
 		</div>
 	</div>
 	{#each worlds as w, i}
-		<article class="world wrap slide" use:slide class:flip={i % 2 === 1} style="--c:{regions[w.id].color}">
+		<article class="world wrap slide fx{i % 4}" use:slide class:flip={i % 2 === 1} class:photo-top={w.photoTop} style="--c:{regions[w.id].color};--focus:{w.focus ?? '50% 50%'}">
 			<div class="world-img reveal-zoom" use:reveal>
 				<img src={u(w.image)} alt={w.title} loading="lazy" />
 				<span class="world-num">0{i + 1}</span>
@@ -191,7 +208,10 @@
 <!-- DAYS -->
 <section id="days" class="days">
 	{#each chapters as ch, ci}
-		<div class="chapter-slide slide" use:slide>
+		<div class="chapter-slide slide" class:has-bg={chapterBg[ch.region]} use:slide>
+		{#if chapterBg[ch.region]}
+			<div class="chapter-bg" aria-hidden="true"><img src={u(chapterBg[ch.region]!)} alt="" loading="lazy" /></div>
+		{/if}
 		<header class="chapter" style="--c:{regions[ch.region].color}">
 			<div class="wrap reveal" use:reveal>
 				<span class="chapter-k">פרק {hebrewOrdinals[ci]}</span>
@@ -206,9 +226,9 @@
 		</header>
 
 		{#if ch.region === 'andes' && ci === 0}
-			<div class="chapter-strip"><PhotoStrip items={andesStrip} label="תמונות מהאנדים" seconds={80} /></div>
+			<div class="chapter-strip"><PhotoStrip items={andesStrip} label="תמונות מהאנדים" seconds={42} /></div>
 		{:else if ch.region === 'galapagos'}
-			<div class="chapter-strip"><PhotoStrip items={galapagosStrip} label="תמונות מגלאפגוס" reverse seconds={65} /></div>
+			<div class="chapter-strip"><PhotoStrip items={galapagosStrip} label="תמונות מגלאפגוס" reverse seconds={36} /></div>
 		{/if}
 		</div>
 
@@ -244,12 +264,18 @@
 						</ol>
 					</div>
 				</div>
-				<PhotoStrip items={wildlife} label="בעלי חיים ונופים באמזונס" />
+				<PhotoStrip items={wildlife} label="בעלי חיים ונופים באמזונס" seconds={45} />
 			</div>
 		{/if}
 
 		{#each ch.days as d}
-			<article id="day-{d.n}" class="day wrap slide" use:slide style="--c:{regions[d.region].color}">
+			<article
+				id="day-{d.n}"
+				class="day wrap slide fx{d.n % 4}"
+				class:photo-top={d.photoTop}
+				use:slide
+				style="--c:{regions[d.region].color};--focus:{d.focus ?? '50% 50%'}"
+			>
 				<a class="day-img reveal-zoom" use:reveal href={u(`/ecuador-2027/day/${d.n}/`)}>
 					<Media src={d.video ?? d.image} poster={d.video ? d.image : undefined} alt={d.title} />
 					{#if d.shabbat}<span class="badge">שבת</span>{/if}
@@ -310,8 +336,9 @@
 	<div class="frame reveal-zoom" use:reveal>
 		{#if videoOn}
 			<iframe
-				src="https://www.youtube-nocookie.com/embed/{previousTripVideoId}?autoplay=1&rel=0"
+				src="https://www.youtube-nocookie.com/embed/{previousTripVideoId}?autoplay=1&rel=0&cc_load_policy=0&enablejsapi=1"
 				title="סרטון מטיול קודם"
+				onload={hideCaptions}
 				allow="autoplay; encrypted-media; picture-in-picture"
 				allowfullscreen
 			></iframe>
@@ -352,15 +379,20 @@
 	.hero-shade {
 		position: absolute;
 		inset: 0;
-		background:
-			linear-gradient(to top, var(--bg) 2%, rgba(6, 22, 27, 0.55) 40%, rgba(6, 22, 27, 0.25) 70%, rgba(6, 22, 27, 0.6)),
-			radial-gradient(80% 60% at 80% 100%, rgba(6, 22, 27, 0.8), transparent);
+		background: linear-gradient(
+			to top,
+			var(--bg) 0%,
+			rgba(6, 22, 27, 0.6) 22%,
+			rgba(6, 22, 27, 0) 50%,
+			rgba(6, 22, 27, 0) 78%,
+			rgba(6, 22, 27, 0.45)
+		);
 	}
 	.orb {
 		position: absolute;
 		border-radius: 50%;
 		filter: blur(80px);
-		opacity: 0.45;
+		opacity: 0.22;
 		mix-blend-mode: screen;
 		animation: float 14s ease-in-out infinite;
 	}
@@ -406,7 +438,9 @@
 		font-weight: 900;
 		margin: 8px 0 18px;
 		max-width: 16ch;
-		text-shadow: 0 4px 40px rgba(0, 0, 0, 0.35);
+		text-shadow:
+			0 2px 24px rgba(0, 0, 0, 0.55),
+			0 0 3px rgba(0, 0, 0, 0.35);
 	}
 	.word {
 		display: inline-block;
@@ -441,7 +475,8 @@
 	.lead {
 		font-size: clamp(1.1rem, 2vw, 1.4rem);
 		max-width: 38ch;
-		color: #e2ecea;
+		color: #eef4f3;
+		text-shadow: 0 1px 12px rgba(0, 0, 0, 0.7);
 	}
 	.actions {
 		display: flex;
@@ -545,6 +580,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: var(--focus);
 		transition: transform 1.6s var(--ease);
 	}
 	.world-img:hover img {
@@ -636,7 +672,7 @@
 		display: inline-block;
 		font: 700 0.9rem var(--display);
 		letter-spacing: 0.2em;
-		color: var(--c);
+		color: #f8e9bd;
 	}
 	.chapter h2 {
 		font-size: clamp(2.4rem, 7vw, 5.2rem);
@@ -649,6 +685,48 @@
 	}
 	.chapter-dates {
 		color: var(--muted);
+	}
+	.chapter-slide.has-bg {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
+		margin-bottom: 70px;
+	}
+	.has-bg .chapter {
+		padding-top: 38vh;
+		background: none;
+	}
+	.has-bg .chapter h2 {
+		filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.55));
+	}
+	.has-bg .chapter-dates {
+		color: #e6eeec;
+		text-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+	}
+	.has-bg .chapter-strip {
+		margin-bottom: 30px;
+	}
+	.chapter-bg {
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+	}
+	.chapter-bg img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transform: scale(1.12);
+		transition: transform 9s cubic-bezier(0.2, 0.6, 0.3, 1);
+	}
+	.chapter-slide:global(.active) .chapter-bg img {
+		transform: scale(1);
+	}
+	.chapter-bg::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, var(--bg) 0%, rgba(6, 22, 27, 0.55) 30%, rgba(6, 22, 27, 0) 60%, rgba(6, 22, 27, 0.4));
 	}
 	.day {
 		display: grid;
@@ -673,6 +751,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: var(--focus);
 		transition: transform 1.4s var(--ease);
 	}
 	.day-img:hover :global(img),
@@ -794,15 +873,12 @@
 		padding: 160px 0 40px;
 	}
 	.selva-body h3 {
-		font-size: clamp(2.2rem, 5vw, 3.6rem);
+		font-size: clamp(1.8rem, 3.6vw, 2.8rem);
 		font-weight: 900;
 		margin: 16px 0 10px;
 		direction: ltr;
 		text-align: right;
-		background: linear-gradient(100deg, #b7f56b, #4ade80 45%, #2ec4d6);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		color: #f8e9bd;
 	}
 	.selva-body p {
 		max-width: 60ch;
@@ -1118,6 +1194,24 @@
 		.hero-content {
 			padding: calc(var(--nav-top) + 40px) 0 calc(var(--nav-bottom) + 56px);
 		}
+		/* The opening photo at full strength: smaller words, no color haze over it. */
+		.orb {
+			display: none;
+		}
+		.tagline {
+			font-size: 1.2rem;
+		}
+		h1 {
+			font-size: 1.9rem;
+			margin: 6px 0 10px;
+		}
+		/* The next slide spells out the days and places; here the photo gets the room. */
+		.lead {
+			display: none;
+		}
+		.actions {
+			margin-top: 16px;
+		}
 		.scroll-hint {
 			bottom: calc(var(--nav-bottom) + 14px);
 		}
@@ -1137,14 +1231,23 @@
 			color: var(--num);
 		}
 		.stats {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
 			margin-top: 0;
-			gap: 12px;
+			gap: 8px;
 		}
 		.stat {
-			padding: 26px 12px;
+			flex: 0 0 calc((100% - 16px) / 3);
+			padding: 10px 6px;
+			border-radius: 14px;
 		}
 		.stat strong {
-			font-size: 3.2rem;
+			font-size: 1.7rem;
+		}
+		.stat span {
+			font-size: 0.78rem;
+			line-height: 1.3;
 		}
 
 		/* Title cards */
@@ -1159,7 +1262,7 @@
 			margin: 0;
 		}
 		.head h2 {
-			font-size: 2.3rem;
+			font-size: 1.7rem;
 		}
 		.worlds {
 			padding: 0;
@@ -1168,7 +1271,17 @@
 			padding: 0 0 20px;
 		}
 		.chapter h2 {
-			font-size: 3.6rem;
+			font-size: 2.2rem;
+		}
+		.chapter-slide.has-bg {
+			justify-content: flex-end;
+			margin: 0;
+		}
+		.has-bg .chapter {
+			padding: 0 0 10px;
+		}
+		.has-bg .chapter-strip {
+			margin: 0;
 		}
 		.chapter-strip {
 			margin: 10px 0 0;
@@ -1208,18 +1321,68 @@
 				rgba(6, 22, 27, 0.45)
 			);
 		}
+		/* Each photo makes an entrance, taking turns between four:
+		   fx0 wipes in from the side, fx1 slides in from the other side, fx2 zooms out of a tilt, fx3 opens as a circle.
+		   Once in, it keeps drifting slowly. */
 		.deck .slide .world-img,
 		.deck .slide .day-img {
-			opacity: 0.35;
-			transform: scale(1.18);
 			transition:
-				opacity 1.2s var(--ease),
-				transform 7s cubic-bezier(0.2, 0.6, 0.3, 1);
+				clip-path 1.1s var(--ease),
+				opacity 0.9s var(--ease),
+				transform 1.6s var(--ease);
+		}
+		.deck .fx0 .world-img,
+		.deck .fx0 .day-img {
+			clip-path: inset(0 0 0 100%);
+			transform: scale(1.3);
+		}
+		.deck .fx1 .world-img,
+		.deck .fx1 .day-img {
+			opacity: 0;
+			transform: translateX(45%) scale(1.25);
+		}
+		.deck .fx2 .world-img,
+		.deck .fx2 .day-img {
+			opacity: 0;
+			transform: scale(1.6) rotate(-5deg);
+		}
+		.deck .fx3 .world-img,
+		.deck .fx3 .day-img {
+			clip-path: circle(0% at 50% 45%);
+			transform: scale(1.2);
 		}
 		.deck .slide:global(.active) .world-img,
 		.deck .slide:global(.active) .day-img {
+			clip-path: inset(0 0 0 0);
 			opacity: 1;
-			transform: scale(1);
+			transform: none;
+		}
+		.deck .fx3:global(.active) .world-img,
+		.deck .fx3:global(.active) .day-img {
+			clip-path: circle(150% at 50% 45%);
+		}
+		.deck .slide:global(.active) .world-img img,
+		.deck .slide:global(.active) .day-img :global(img),
+		.deck .slide:global(.active) .day-img :global(video) {
+			animation: drift 16s ease-in-out 1.4s infinite alternate;
+		}
+		@keyframes drift {
+			to {
+				transform: scale(1.1) translate(-2%, -1.5%);
+			}
+		}
+
+		/* The photo's subject is low in the frame: keep the photo above the text. */
+		.photo-top .world-img,
+		.photo-top .day-img {
+			inset: 0 0 auto;
+			height: 62%;
+			-webkit-mask-image: linear-gradient(to top, transparent, #000 32%);
+			mask-image: linear-gradient(to top, transparent, #000 32%);
+		}
+		.photo-top .world-img::after,
+		.photo-top .day-img::after {
+			background: linear-gradient(to bottom, rgba(6, 22, 27, 0.45), rgba(6, 22, 27, 0) 25%);
 		}
 		.world-img:hover img,
 		.day-img:hover :global(img),
@@ -1233,7 +1396,7 @@
 			top: calc(var(--nav-top) + 34px);
 		}
 		.world-text h3 {
-			font-size: 3rem;
+			font-size: 2rem;
 		}
 		.world-text p,
 		.day-body p {
@@ -1289,7 +1452,7 @@
 			transition-duration: 1.2s;
 		}
 		.day-body h3 {
-			font-size: 2rem;
+			font-size: 1.35rem;
 		}
 		.day-body p {
 			margin-bottom: 0.6em;
@@ -1301,7 +1464,8 @@
 			padding: calc(var(--nav-top) + 20px) 0 calc(var(--nav-bottom) + 20px);
 		}
 		.route h2 {
-			font-size: 1.6rem;
+			font-size: min(1.6rem, 4.6vw);
+			white-space: nowrap;
 		}
 		.route-text p {
 			display: none;
@@ -1329,6 +1493,9 @@
 		}
 		.selva-body {
 			padding: calc(var(--nav-top) + 30px) 0 calc(var(--nav-bottom) + 20px);
+		}
+		.selva-body h3 {
+			font-size: 1.6rem;
 		}
 		.selva-body p {
 			font-size: 0.98rem;

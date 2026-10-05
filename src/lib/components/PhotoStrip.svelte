@@ -7,7 +7,7 @@
 		label,
 		reverse = false,
 		seconds = 70
-	}: { items: { src: string; label: string }[]; label: string; reverse?: boolean; seconds?: number } = $props();
+	}: { items: { src: string; label: string; pos?: string }[]; label: string; reverse?: boolean; seconds?: number } = $props();
 </script>
 
 <!-- Endless strip: the list is rendered twice and slid by half its width, so the loop is seamless. -->
@@ -15,7 +15,7 @@
 	<div class="track">
 		{#each [0, 1] as copy}
 			{#each items as it}
-				<figure aria-hidden={copy === 1 ? 'true' : undefined}>
+				<figure aria-hidden={copy === 1 ? 'true' : undefined} style:--pos={it.pos}>
 					<Media src={it.src} alt={it.label} eager={!isVideo(it.src)} />
 					<figcaption>{it.label}</figcaption>
 				</figure>
@@ -64,6 +64,7 @@
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		object-position: var(--pos, 50% 50%);
 		transition:
 			transform 1.2s var(--ease),
 			filter 0.4s;

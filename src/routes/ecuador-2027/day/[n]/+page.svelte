@@ -432,6 +432,19 @@
 			grid-template-columns: 1fr;
 		}
 	}
+	@media (max-width: 760px) {
+		h1 {
+			font-size: 1.6rem;
+		}
+		.dots {
+			gap: 4px;
+		}
+		.dots a {
+			width: 25px;
+			height: 25px;
+			font-size: 0.7rem;
+		}
+	}
 	@media (max-width: 520px) {
 		.pager {
 			grid-template-columns: 1fr;

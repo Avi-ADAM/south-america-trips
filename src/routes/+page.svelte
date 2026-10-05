@@ -17,11 +17,11 @@
 </header>
 
 <section class="hero">
-	<HeroSlideshow images={['/img/hero/quilotoa.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']} />
+	<HeroSlideshow images={['/img/client/quilotoa-flowers.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']} />
 	<div class="shade"></div>
 	<div class="wrap content">
 		<span class="kicker">{site.tagline}</span>
-		<h1>דרום אמריקה,<br /><span class="grad-text">כמו שלא חוויתם</span></h1>
+		<h1>דרום אמריקה<br /><span class="grad-text">במלוא עוצמתה</span></h1>
 	</div>
 </section>
 

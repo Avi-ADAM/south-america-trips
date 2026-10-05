@@ -60,6 +60,7 @@ export const destinations: Destination[] = [
 	{ slug: 'argentina', name: 'ארגנטינה', hues: ['#74b9ff', '#2d3e8f'], items: [] },
 	{ slug: 'chile', name: 'צ׳ילה', hues: ['#ff7675', '#6c2a52'], items: [] },
 	{ slug: 'brazil', name: 'ברזיל', hues: ['#55efc4', '#d6a520'], items: [] },
+	{ slug: 'montenegro', name: 'מונטנגרו', hues: ['#ffd479', '#1d5f8a'], items: [] },
 	{ slug: 'peru', name: 'פרו', hues: ['#fd9b6b', '#8c2f39'], items: [] },
 	{ slug: 'norway', name: 'נורווגיה', hues: ['#81ecec', '#2d3561'], items: [] },
 	{ slug: 'india', name: 'הודו וההימלאיה', hues: ['#ffbe76', '#b33771'], items: [] },

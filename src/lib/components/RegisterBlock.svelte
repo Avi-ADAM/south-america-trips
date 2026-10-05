@@ -3,6 +3,7 @@
 	import { ecuadorPricing as p, site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
 	import { money } from '$lib/format';
+	import { u } from '$lib/paths';
 
 	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${trip.dateLabel})`);
 </script>
@@ -38,6 +39,12 @@
 				>
 			{/if}
 		</div>
+		{#if p.bitUrl && p.bitQr}
+			<div class="qr">
+				<img src={u(p.bitQr)} alt="ברקוד לתשלום בביט" loading="lazy" />
+				<span>אפשר גם לסרוק מהטלפון</span>
+			</div>
+		{/if}
 	</div>
 </div>
 
@@ -99,7 +106,26 @@
 		gap: 12px;
 		flex-wrap: wrap;
 	}
+	.qr {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin-top: 18px;
+		color: var(--panel-muted);
+		font-size: 0.9rem;
+	}
+	.qr img {
+		width: 110px;
+		border-radius: 12px;
+		background: #fff;
+		padding: 6px;
+		box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.5);
+	}
 	@media (max-width: 760px) {
+		/* On a phone the button opens Bit directly; a code on the same screen can't be scanned. */
+		.qr {
+			display: none;
+		}
 		.reg {
 			grid-template-columns: 1fr;
 			padding: 30px 22px;

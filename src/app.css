@@ -16,45 +16,20 @@
 	--display: 'Rubik', 'Heebo', system-ui, sans-serif;
 	--ease: cubic-bezier(0.22, 1, 0.36, 1);
 	--max: 1200px;
-	/* "Windows" (cards and panels) and the big numbers in them. */
-	--panel: rgba(255, 255, 255, 0.06);
-	--panel-border: rgba(255, 255, 255, 0.14);
-	--panel-text: var(--text);
-	--panel-muted: var(--muted);
-	--num: #ecd08a;
-	--panel-accent: var(--accent);
-	/* Room the fixed navigation takes on phones (top bar / bottom tab bar). */
-	--nav-top: 0px;
-	--nav-bottom: 0px;
-	color-scheme: dark;
-}
-
-/* Looks for the client to compare: ?look=a | b | c */
-:root[data-look='a'] {
+	/* "Windows" (cards and panels) and the big numbers in them: the pearl look the client chose. */
 	--panel: rgba(250, 245, 232, 0.95);
 	--panel-border: rgba(255, 255, 255, 0.7);
 	--panel-text: #0b2a31;
 	--panel-muted: #42605f;
 	--num: #0c8a94;
 	--panel-accent: #9a6b12;
-}
-:root[data-look='b'] {
-	--panel: rgba(14, 74, 84, 0.82);
-	--panel-border: rgba(46, 196, 214, 0.5);
-	--panel-text: #ffffff;
-	--panel-muted: #c3e6e8;
-	--num: #ffb547;
-}
-:root[data-look='c'] {
-	--panel: linear-gradient(150deg, rgba(255, 138, 101, 0.26), rgba(255, 94, 126, 0.1));
-	--panel-border: rgba(255, 170, 140, 0.45);
-	--panel-text: #ffffff;
-	--panel-muted: #f6dcd2;
-	--num: #ff9a76;
-	--panel-accent: #ffd2a6;
+	/* Room the fixed navigation takes on phones (top bar / bottom tab bar). */
+	--nav-top: 0px;
+	--nav-bottom: 0px;
+	color-scheme: dark;
 }
 
-/* A window: card or panel that follows the selected look. */
+/* A window: card or panel in the pearl look. */
 .panel {
 	background: var(--panel);
 	border: 1px solid var(--panel-border);

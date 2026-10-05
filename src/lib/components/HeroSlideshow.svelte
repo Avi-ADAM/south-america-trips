@@ -31,11 +31,18 @@
 		opacity: 0;
 		transform: scale(1.12);
 		transition:
-			opacity 1.8s ease,
-			transform 9s linear;
+			opacity 1.4s ease,
+			transform 8s cubic-bezier(0.2, 0.6, 0.3, 1);
+	}
+	/* Each photo arrives with its own move: zoom out, glide from one side, glide from the other. */
+	.slide:nth-child(3n + 2) {
+		transform: translateX(7%) scale(1.18);
+	}
+	.slide:nth-child(3n) {
+		transform: translateX(-7%) scale(1.18) rotate(-1.5deg);
 	}
 	.slide.on {
 		opacity: 1;
-		transform: scale(1);
+		transform: none;
 	}
 </style>

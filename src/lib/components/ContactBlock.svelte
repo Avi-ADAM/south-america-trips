@@ -2,6 +2,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
+	import { u } from '$lib/paths';
 
 	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${trip.dateLabel})`);
 
@@ -62,6 +63,17 @@
 			</li>
 		{/each}
 	</ul>
+	{#if site.whatsappGroup}
+		<a class="group panel reveal" use:reveal href={site.whatsappGroup} target="_blank" rel="noopener">
+			<span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17" cy="9" r="2.4"/><path d="M16 14c2.8.2 5 2 5 5"/></svg></span>
+			<span class="g-txt">
+				<span class="label">קבוצת הווצאפ שלנו</span>
+				<strong>הרפתקאות ומסעות נשים</strong>
+				<em>הצטרפו לקבוצה ←</em>
+			</span>
+			{#if site.whatsappGroupQr}<img class="g-qr" src={u(site.whatsappGroupQr)} alt="ברקוד להצטרפות לקבוצה" loading="lazy" />{/if}
+		</a>
+	{/if}
 </div>
 
 <style>
@@ -139,13 +151,73 @@
 	.soon .ic {
 		opacity: 0.55;
 	}
+	.group {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+		margin-top: 14px;
+		padding: 18px 24px;
+		border-radius: var(--radius);
+		text-decoration: none;
+		transition: transform 0.4s var(--ease);
+	}
+	.group:hover {
+		transform: translateY(-4px);
+	}
+	.group .ic {
+		margin: 0;
+		flex: none;
+	}
+	.g-txt {
+		display: grid;
+		flex: 1;
+	}
+	.group em {
+		font-style: normal;
+		font-weight: 700;
+		color: var(--panel-accent);
+	}
+	.g-qr {
+		width: 120px;
+		border-radius: 12px;
+	}
 	@media (max-width: 760px) {
+		.group {
+			padding: 10px 14px;
+			gap: 12px;
+			margin-top: 10px;
+			border-radius: 14px;
+		}
+		/* A phone taps the link; scanning its own screen isn't possible. */
+		.g-qr {
+			display: none;
+		}
 		ul {
 			grid-template-columns: 1fr 1fr;
 			gap: 10px;
 		}
 		.card {
-			padding: 18px 10px;
+			padding: 10px 6px;
+			gap: 2px;
+			border-radius: 14px;
+		}
+		.ic {
+			width: 34px;
+			height: 34px;
+			margin-bottom: 4px;
+		}
+		svg {
+			width: 18px;
+			height: 18px;
+		}
+		.label {
+			font-size: 0.78rem;
+		}
+		strong {
+			font-size: 0.92rem;
+		}
+		.soon strong {
+			font-size: 0.82rem;
 		}
 	}
 </style>

@@ -2,7 +2,6 @@
 	import '../app.css';
 	import { page } from '$app/state';
 	import Footer from '$lib/components/Footer.svelte';
-	import LookSwitcher from '$lib/components/LookSwitcher.svelte';
 	import TripNav from '$lib/components/TripNav.svelte';
 	import { u } from '$lib/paths';
 
@@ -15,4 +14,3 @@
 {#if withNav}<TripNav />{/if}
 {@render children()}
 <Footer />
-<LookSwitcher />
