@@ -20,7 +20,7 @@
 <section class="hero">
 	<HeroSlideshow
 		images={['/img/client/quilotoa-flowers.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']}
-		phoneImages={[{ src: '/img/client/quilotoa-flowers.jpg' }, { src: '/img/client/booby-nest.jpg', pos: '75% 50%' }, { src: '/img/amazon/macaws.jpg' }]}
+		phoneImages={[{ src: '/img/client/quilotoa-flowers.jpg' }, { src: '/img/client/snorkel-turtle.jpg', pos: '62% 50%' }, { src: '/img/amazon/macaws.jpg' }]}
 	/>
 	<div class="shade"></div>
 	<div class="wrap content">

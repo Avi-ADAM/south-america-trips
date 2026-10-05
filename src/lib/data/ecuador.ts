@@ -16,7 +16,7 @@ export const regions: Record<RegionId, Region> = {
 	andes: { id: 'andes', name: 'קיטו והאנדים', short: 'האנדים', color: '#f3e2b3' },
 	amazon: { id: 'amazon', name: 'האמזונס', short: 'אמזונס', color: '#4ade80' },
 	galapagos: { id: 'galapagos', name: 'איי גלאפגוס', short: 'גלאפגוס', color: '#2ec4d6' },
-	coast: { id: 'coast', name: 'גואיאקיל והחוף', short: 'גואיאקיל', color: '#f3a5b5' }
+	coast: { id: 'coast', name: 'גוויאקיל והחוף', short: 'גוויאקיל', color: '#f3a5b5' }
 };
 
 export interface ScheduleItem {
@@ -81,13 +81,13 @@ export const trip = {
 	nights: 19,
 	/** בטלפון: תמונת הפתיחה הראשונה זזה (סרטון אנכי שנוצר ממנה) */
 	heroVideo: clip('andes/quilotoa'),
-	heroImages: [photo('quilotoa-flowers'), photo('snorkel-turtle'), amazon('squirrel-monkey'), photo('boobies'), amazon('canoe-lagoon'), hero('cotopaxi'), hero('quito')],
+	heroImages: [photo('quilotoa-flowers'), photo('snorkel-turtle'), amazon('squirrel-monkey'), { src: photo('booby-pair'), pos: '50% 15%' }, amazon('canoe-lagoon'), hero('cotopaxi'), hero('quito')],
 	/** בטלפון, תמונה אחת לכל אחת מ-heroImages: גבוהות, או רחבות שהעיקר בהן נכנס במסך צר */
 	heroPhone: [
 		{ src: photo('quilotoa-flowers') },
 		{ src: photo('snorkel-turtle'), pos: '62% 50%' },
 		{ src: amazon('squirrel-monkey'), pos: '28% 50%' },
-		{ src: photo('booby-nest'), pos: '75% 50%' },
+		{ src: photo('booby-pair'), pos: '32% 50%' },
 		{ src: amazon('macaws') },
 		{ src: photo('cotopaxi-llamas') },
 		{ src: photo('pailon-1') }
@@ -123,7 +123,7 @@ export const worlds = [
 		focus: '27% 60%',
 		photoTop: true,
 		text: 'ארכיפלג של איים וולקניים באוקיינוס השקט, כ-906 ק״מ מערבית ליבשת. האיים מפורסמים בזכות מספר עצום של מינים אנדמיים — צבי ענק, איגואנות ימיות, כחולי-רגל ואריות ים — ובזכות צ׳ארלס דרווין, שתצפיותיו כאן הולידו את תורת האבולוציה. כל האיים הם פארק לאומי ושמורה ימית.',
-		facts: ['906 ק״מ מהיבשת', 'אתר מורשת עולמית', 'שנירקול עם אריות ים']
+		facts: ['906 ק״מ מהיבשת', 'אתר מורשת עולמית', 'שנירקול עם צבי ים ואריות ים']
 	}
 ];
 
@@ -328,12 +328,12 @@ export const days: Day[] = [
 		region: 'andes',
 		where: 'La Selva · קוקה · קיטו',
 		title: 'חוזרים לקיטו',
-		summary: 'השכמה מוקדמת, שיט במעלה הנאפו חזרה לקוקה, טיסה לקיטו והתארגנות לשבת.',
+		summary: 'השכמה מוקדמת, שיט בנהר הנאפו חזרה לקוקה, טיסה לקיטו והתארגנות לשבת.',
 		image: amazon('paddle'),
 		gallery: [img('hotel-quito')],
 		schedule: [
 			{ title: 'השכמה מוקדמת וארוחת בוקר', kind: 'free' },
-			{ title: 'שיט במעלה הנאפו לקוקה', kind: 'transfer', text: 'צוות הלודג׳ מטפל במזוודות, והקאנו המנועי שט במעלה הנהר חזרה לקוקה. הפסקה קצרה במשרד של La Selva, ומשם לשדה התעופה — הנציגים עוזרים עם כרטיסי העלייה והמזוודות.' },
+			{ title: 'שיט בנהר הנאפו לקוקה', kind: 'transfer', text: 'צוות הלודג׳ מטפל במזוודות, והקאנו המנועי שט בנהר הנאפו חזרה לקוקה. הפסקה קצרה במשרד של La Selva, ומשם לשדה התעופה — הנציגים עוזרים עם כרטיסי העלייה והמזוודות.' },
 			{ time: '10:49', title: 'טיסה קוקה ← קיטו (LATAM)', kind: 'flight', text: 'טיסה של 38 דקות.' },
 			{ time: '12:00', title: 'העברה מהשדה למלון', kind: 'transfer' },
 			{ title: 'ערב שבת בקיטו', kind: 'free' }
@@ -367,7 +367,7 @@ export const days: Day[] = [
 		gallery: [photo('boobies'), photo('booby-nest'), photo('iguana-beach'), img('galapaguera')],
 		schedule: [
 			{ time: '05:00', title: 'צ׳ק-אאוט והעברה לשדה', kind: 'transfer' },
-			{ time: '07:38', title: 'טיסה קיטו ← סן קריסטובל (דרך גואיאקיל)', kind: 'flight' },
+			{ time: '07:38', title: 'טיסה קיטו ← סן קריסטובל (דרך גוויאקיל)', kind: 'flight' },
 			{ time: '10:30', title: 'העברה מהשדה למלון', kind: 'transfer' },
 			{ time: '14:00', title: 'גלאפגוארה, אל חונקו ופוארטו צ׳ינו', kind: 'tour', text: 'הגלאפגוארה — שטח שבו צבי ענק מסתובבים חופשי, ומרכז הרבייה שבו בוקעים הצבים הצעירים. לגונת אל חונקו — אגם מים מתוקים בתוך מכתש בגובה 700 מ׳, המקום האהוב על ציפורי הפריגטה. ולסיום: פוארטו צ׳ינו, חוף חול לבן וגלים בטורקיז, עם אריות ים וכחולי-רגל.' },
 			{ time: '17:00', title: 'צ׳ק-אין בקאסה אופונטיה', kind: 'hotel' }
@@ -399,7 +399,7 @@ export const days: Day[] = [
 		weekday: 'שלישי',
 		region: 'galapagos',
 		where: 'סנטה קרוז',
-		title: 'שנירקול עם אריות ים',
+		title: 'שנירקול עם צבי ים ואריות ים',
 		summary: 'שיט במפרץ: שחייה עם אריות ים וצבי ים, תעלת הכרישים, לאס גרייטאס, ואחר הצהריים — חוף טורטוגה ביי.',
 		/** תמונת הפתיחה של הסרטון, כדי שלא תהיה קפיצה כשהוא מתחיל */
 		image: '/video/galapagos/snorkel-turtle.jpg',
@@ -419,19 +419,19 @@ export const days: Day[] = [
 		date: '2027-07-07',
 		weekday: 'רביעי',
 		region: 'coast',
-		where: 'סנטה קרוז · גואיאקיל',
-		title: 'תחנת דרווין וטיסה לגואיאקיל',
-		summary: 'ביקור בבוקר בתחנת המחקר על שם צ׳ארלס דרווין, טיסה לגואיאקיל ומעבר לחוף הפסיפי.',
+		where: 'סנטה קרוז · גוויאקיל',
+		title: 'תחנת דרווין וטיסה לגוויאקיל',
+		summary: 'ביקור בבוקר בתחנת המחקר על שם צ׳ארלס דרווין, טיסה לגוויאקיל ומעבר לחוף הפסיפי.',
 		image: photo('crab'),
 		gallery: [img('darwin-station'), photo('sunset-harbor')],
 		schedule: [
 			{ time: '07:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '07:15', title: 'תחנת המחקר צ׳ארלס דרווין', kind: 'tour', text: 'הליכה קלה בשבילים מסומנים, מתאימה לכל הגילאים. כ-2–3 שעות.' },
 			{ time: '09:15', title: 'העברה פרטית לשדה התעופה בלטרה', kind: 'transfer' },
-			{ time: '12:00', title: 'טיסה בלטרה ← גואיאקיל (LATAM)', kind: 'flight' },
+			{ time: '12:00', title: 'טיסה בלטרה ← גוויאקיל (LATAM)', kind: 'flight' },
 			{ time: '16:00', title: 'צ׳ק-אין בסדרוס אין', kind: 'hotel' }
 		],
-		hotel: { name: 'Hotel Cedros Inn', text: 'מלון בוטיק מודרני בלב גואיאקיל, 24 חדרים, בריכה חיצונית, גן ומרפסת שקטה.', image: photo('cedros-inn') }
+		hotel: { name: 'Hotel Cedros Inn', text: 'מלון בוטיק מודרני בלב גוויאקיל, 24 חדרים, בריכה חיצונית, גן ומרפסת שקטה.', image: photo('cedros-inn') }
 	},
 	{
 		n: 17,
@@ -441,7 +441,7 @@ export const days: Day[] = [
 		where: 'חוות קקאו',
 		title: 'מהפרי לשוקולד',
 		summary: 'יום בחוות קקאו: מטעים, קטיף, תסיסה וייבוש — ובסוף מכינים שוקולד בעצמנו. ארוחת צהריים מסורתית בחווה.',
-		image: img('cacao'),
+		image: photo('cacao-pod'),
 		framed: true,
 		schedule: [
 			{ time: '08:00', title: 'סיור בחוות קקאו', kind: 'tour', text: 'קבלת פנים בהסיינדה וסיור במטע הקקאו, בין עצי מנגו ופפאיה. נראה את הקטיף, התסיסה והייבוש של פולי הקקאו, ובסוף נכין שוקולד. ארוחת צהריים מסורתית בבית החווה. כ-5 שעות.' }
@@ -453,15 +453,15 @@ export const days: Day[] = [
 		date: '2027-07-09',
 		weekday: 'שישי',
 		region: 'coast',
-		where: 'גואיאקיל',
-		title: 'גואיאקיל והפארק ההיסטורי',
+		where: 'גוויאקיל',
+		title: 'גוויאקיל והפארק ההיסטורי',
 		summary: 'פארק האיגואנות, הטיילת על נהר גואיאס, שכונת לאס פניאס הצבעונית — ופארק היסטורי עם מנגרובים וקופים.',
 		image: hero('guayaquil'),
 		focus: '65% 50%',
 		gallery: [img('guayaquil')],
 		schedule: [
 			{ time: '08:00', title: 'סיור עירוני + הפארק ההיסטורי', kind: 'tour', text: 'כיכר המנהל וארמון העירייה, פארק סמינריו ("פארק האיגואנות") וקתדרלת סן פדרו, טיילת סימון בוליבר עם ארמון הקריסטל והרוטונדה, ושכונת לאס פניאס על גבעת סנטה אנה. בפארק ההיסטורי: שבילי עץ מעל המנגרובים עם תנינים, קופים ועצלנים, בתי מורשת מראשית המאה ה-20, ומטעי קקאו, בננה וקפה. כ-5 שעות.' },
-			{ title: 'ערב שבת בגואיאקיל', kind: 'free' }
+			{ title: 'ערב שבת בגוויאקיל', kind: 'free' }
 		],
 		hotel: { name: 'Hotel Cedros Inn' }
 	},
@@ -470,8 +470,8 @@ export const days: Day[] = [
 		date: '2027-07-10',
 		weekday: 'שבת',
 		region: 'coast',
-		where: 'גואיאקיל',
-		title: 'שבת בגואיאקיל',
+		where: 'גוויאקיל',
+		title: 'שבת בגוויאקיל',
 		summary: 'יום חופשי. אפשרות להליכה לפארק ירושלים — אנדרטה עם מנורה ודגם של ירושלים בימי בית שני.',
 		image: img('jerusalem-park'),
 		framed: true,
@@ -487,7 +487,7 @@ export const days: Day[] = [
 		date: '2027-07-11',
 		weekday: 'ראשון',
 		region: 'coast',
-		where: 'גואיאקיל',
+		where: 'גוויאקיל',
 		title: 'להתראות אקוודור',
 		summary: 'צ׳ק-אאוט, העברה לשדה התעופה וטיסה הביתה — עם תיק מלא בזיכרונות.',
 		image: photo('textiles'),
@@ -509,7 +509,7 @@ export const stays = [
 	{ nights: 2, name: 'Hotel Quito', where: 'קיטו' },
 	{ nights: 1, name: 'Casa Opuntia', where: 'סן קריסטובל' },
 	{ nights: 2, name: 'Hotel Fiesta', where: 'סנטה קרוז' },
-	{ nights: 4, name: 'Hotel Cedros Inn', where: 'גואיאקיל' }
+	{ nights: 4, name: 'Hotel Cedros Inn', where: 'גוויאקיל' }
 ];
 
 export const included = [
@@ -517,14 +517,14 @@ export const included = [
 	'ארוחת בוקר אחת בכל יום',
 	'כרטיס מעבר לגלאפגוס (TCT) בעלות 20$',
 	'3 לילות בלודג׳ האקולוגי La Selva באמזונס (סוויטה Superior/Scenic)',
-	'4 טיסות פנים: קיטו–קוקה, קוקה–קיטו, קיטו–סן קריסטובל, בלטרה–גואיאקיל',
+	'4 טיסות פנים: קיטו–קוקה, קוקה–קיטו, קיטו–סן קריסטובל, בלטרה–גוויאקיל',
 	'מעבורת בין האיים סן קריסטובל – סנטה קרוז',
 	'כל ההעברות בין שדות התעופה, המלונות והסיורים',
 	'סיורים עם מדריך מוסמך: אוטבלו, קוטופקסי, קילוטואה, הרכבל של קיטו, מוזיאון אינטיניאן, דרך המפלים',
 	'בגלאפגוס: גלאפגוארה, אל חונקו ופוארטו צ׳ינו, מרכז המבקרים, גבעת הפריגטות, תחנת דרווין',
 	'סיור מפרץ בסנטה קרוז כולל ציוד שנירקול',
 	'סיור בחוות קקאו כולל ארוחת צהריים',
-	'סיור עירוני בגואיאקיל כולל כניסה לפארק ההיסטורי'
+	'סיור עירוני בגוויאקיל כולל כניסה לפארק ההיסטורי'
 ];
 
 export const notIncluded = [
@@ -554,7 +554,7 @@ export const mapPoints = [
 	{ id: 'quilotoa', name: 'קילוטואה', lat: -0.86, lon: -78.9 },
 	{ id: 'banos', name: 'באניוס', lat: -1.396, lon: -78.42 },
 	{ id: 'laselva', name: 'לה סלבה', lat: -0.5, lon: -76.37 },
-	{ id: 'guayaquil', name: 'גואיאקיל', lat: -2.17, lon: -79.92 }
+	{ id: 'guayaquil', name: 'גוויאקיל', lat: -2.17, lon: -79.92 }
 ];
 
 /** "חשוב לדעת" — מוצג במצגת ובעמוד "מה כלול" */
@@ -572,7 +572,7 @@ export const goodToKnow = [
 	{
 		icon: '🍽',
 		title: 'ארוחות כשרות',
-		text: 'אפשר להזמין ארוחות כשרות בתוספת תשלום.'
+		text: 'ניתן להזמין ארוחות כשרות בתוספת תשלום.'
 	},
 	{
 		icon: '🚡',

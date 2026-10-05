@@ -8,7 +8,8 @@
 		interval = 6000,
 		video
 	}: {
-		images: string[];
+		/** A photo, or a photo with its own focus point (CSS background-position) on wide screens. */
+		images: (string | { src: string; pos?: string })[];
 		/** One per image: what that slide shows on phones, where a wide photo is cut to a narrow sliver. */
 		phoneImages?: { src: string; pos?: string }[];
 		interval?: number;
@@ -36,12 +37,14 @@
 </script>
 
 <div class="slides" aria-hidden="true">
-	{#each images as src, i}
+	{#each images as img, i}
+		{@const src = typeof img === 'string' ? img : img.src}
+		{@const pos = typeof img === 'string' ? undefined : img.pos}
 		{@const p = phoneImages?.[i]}
 		<div
 			class="slide"
 			class:on={i === current}
-			style="--img:url('{u(src)}');{p ? `--phone-img:url('${u(p.src)}');--phone-pos:${p.pos ?? 'center'}` : ''}"
+			style="--img:url('{u(src)}');{pos ? `--pos:${pos};` : ''}{p ? `--phone-img:url('${u(p.src)}');--phone-pos:${p.pos ?? 'center'}` : ''}"
 		>
 			{#if i === 0 && phone && video}<Media src={video} class="clip" eager />{/if}
 		</div>
@@ -59,7 +62,7 @@
 		inset: -4%;
 		background-image: var(--img);
 		background-size: cover;
-		background-position: center;
+		background-position: var(--pos, center);
 		opacity: 0;
 		transform: scale(1.12);
 		transition:

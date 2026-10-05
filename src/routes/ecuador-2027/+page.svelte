@@ -19,7 +19,7 @@
 		andes: 'הרי האנדים',
 		amazon: 'לב האמזונס',
 		galapagos: 'איי גלאפגוס',
-		coast: 'גואיאקיל והחוף הפסיפי'
+		coast: 'גוויאקיל והחוף הפסיפי'
 	};
 
 	// Full-screen photo behind a chapter's title card, and a vertical clip of it for phones.
@@ -71,7 +71,7 @@
 		{ n: 8, icon: '🛶', text: 'נהר הנאפו, קאנו אל הלודג׳ ושיט לילי לחפש קיימנים' },
 		{ n: 9, icon: '🔭', text: 'מגדל תצפית מעל החופה, לוטרות ענק, קופים והואצין' },
 		{ n: 10, icon: '🦜', text: 'ליקוק החימר של מאות תוכים וקהילת פילצ׳י הילידית' },
-		{ n: 11, icon: '🌅', text: 'שיט במעלה הנהר, טיסה לקיטו והתארגנות לשבת' }
+		{ n: 11, icon: '🌅', text: 'שיט בנהר הנאפו, טיסה לקיטו והתארגנות לשבת' }
 	];
 	const wildlife = [
 		{ src: '/img/amazon/clay-lick.jpg', label: 'ליקוק החימר של התוכים' },
@@ -105,7 +105,7 @@
 		{ src: '/img/client/otavalo-llama.jpg', label: 'קהילה מסורתית' }
 	];
 	const galapagosStrip = [
-		{ src: '/img/client/boobies.jpg', label: 'כחולי-רגל' },
+		{ src: '/img/client/boobies.jpg', label: 'סולה כחולת רגל' },
 		{ src: '/video/galapagos/turtle.mp4', label: 'שוחים עם צבי ים' },
 		{ src: '/img/client/frigatebird.jpg', label: 'ציפור פריגטה' },
 		{ src: '/img/client/crab.jpg', label: 'סרטני סאלי לייטפוט' },
@@ -113,8 +113,7 @@
 		{ src: '/img/client/iguana-beach.jpg', label: 'איגואנה ימית' },
 		{ src: '/video/galapagos/reef.mp4', label: 'צלילה באוקיינוס השקט' },
 		{ src: '/img/client/snorkel-turtle.jpg', label: 'שנירקול' },
-		{ src: '/img/client/sunset-pier.jpg', label: 'שקיעה במפרץ' },
-		{ src: '/img/client/booby-nest.jpg', label: 'קן על הסלעים' }
+		{ src: '/img/client/sunset-pier.jpg', label: 'שקיעה באיי גלאפגוס' }
 	];
 
 	// Fixed (not random) so server and client render the same fireflies.
@@ -206,7 +205,7 @@
 		<span class="kicker">המסלול</span>
 		<h2>20 ימים, 8 מקומות לינה, 4 טיסות פנים</h2>
 		<p>
-			מתחילים בקיטו ובהרי האנדים, טסים ללב האמזונס, חוזרים לשבת בקיטו, ממשיכים לאיי גלאפגוס ומסיימים בגואיאקיל
+			מתחילים בקיטו ובהרי האנדים, טסים ללב האמזונס, חוזרים לשבת בקיטו, ממשיכים לאיי גלאפגוס ומסיימים בגוויאקיל
 			שעל החוף הפסיפי.
 		</p>
 		<ol class="stays">

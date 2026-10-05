@@ -21,7 +21,7 @@ export const destinations: Destination[] = [
 	{
 		slug: 'ecuador',
 		name: 'אקוודור',
-		note: 'האנדים, קיטו וגואיאקיל',
+		note: 'האנדים, קיטו וגוויאקיל',
 		hues: ['#f3e2b3', '#7a6a45'],
 		cover: c('quilotoa-crater'),
 		items: [
@@ -29,7 +29,7 @@ export const destinations: Destination[] = [
 			c('quilotoa-flowers'), c('plaza-dance'), c('hacienda-garden'), c('hacienda-door'), c('quilotoa-shore'),
 			c('masks-dance'), c('pailon-bridge'), h('pailon'), c('pailon-1'), c('folk-dance'), c('intinan-sign'),
 			c('mitad-monument'), c('equator-museum'), h('quito'), t('cablecar'), c('quilotoa-cliff'),
-			c('pailon-flower'), t('cacao'), h('guayaquil'), c('cedros-inn')
+			c('pailon-flower'), c('cacao-pod'), h('guayaquil'), c('cedros-inn')
 		]
 	},
 	{
