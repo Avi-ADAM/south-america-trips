@@ -302,6 +302,7 @@
 					{/if}
 					{#if d.shabbat}<span class="badge">שבת</span>{/if}
 				</a>
+				<span class="day-corner" aria-hidden="true">{String(d.n).padStart(2, '0')}</span>
 				<div class="day-body reveal" use:reveal style="--delay:120ms">
 					<div class="day-num" aria-hidden="true">{String(d.n).padStart(2, '0')}</div>
 					<div class="day-meta">
@@ -799,6 +800,9 @@
 		-webkit-text-stroke: 1.5px color-mix(in srgb, var(--c) 60%, transparent);
 		opacity: 0.55;
 		pointer-events: none;
+	}
+	.day-corner {
+		display: none;
 	}
 	.where {
 		margin: 16px 0 4px;
@@ -1440,9 +1444,26 @@
 		.world-text p {
 			font-size: 1rem;
 		}
+		/* The day number: small and solid in the top-left corner, level with the day count on the right */
 		.day-num {
-			top: -64px;
-			font-size: 4.6rem;
+			display: none;
+		}
+		.day-corner {
+			display: block;
+			position: absolute;
+			top: calc(var(--nav-top) + 16px);
+			left: 10px;
+			z-index: 2;
+			padding: 1px 9px;
+			border-radius: 999px;
+			font: 800 0.95rem/1.3 var(--display);
+			color: #fff;
+			background: rgba(6, 22, 27, 0.7);
+			border: 1px solid color-mix(in srgb, var(--c) 55%, transparent);
+			backdrop-filter: blur(8px);
+		}
+		.day:not(.framed) .badge {
+			top: calc(var(--nav-top) + 52px);
 		}
 
 		/* The text in a day or world slide rises line by line */
