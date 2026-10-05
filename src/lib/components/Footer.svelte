@@ -13,8 +13,15 @@
 			<a href={u('/ecuador-2027/')}>אקוודור 2027</a>
 			<a href={u('/ecuador-2027/itinerary/')}>המסלול המלא</a>
 			<a href={u('/ecuador-2027/register/')}>הרשמה</a>
+			<a href={u('/gallery/')}>גלריה</a>
+			<a href={u('/stories/')}>סיפורי מטיילות</a>
+			<a href={u('/contact/')}>צור קשר</a>
+		</nav>
+		<nav class="reach" aria-label="יצירת קשר">
+			{#if site.phone}<a href="tel:+{site.whatsapp}" dir="ltr">{site.phone}</a>{/if}
 			{#if site.whatsapp}<a href="https://wa.me/{site.whatsapp}" target="_blank" rel="noopener">וואטסאפ</a>{/if}
 			{#if site.email}<a href="mailto:{site.email}">{site.email}</a>{/if}
+			{#if site.instagram}<a href="https://instagram.com/{site.instagram}" target="_blank" rel="noopener">אינסטגרם</a>{/if}
 		</nav>
 	</div>
 	<div class="wrap small"><a href={u('/credits/')}>קרדיט לתמונות</a> · © {new Date().getFullYear()} {site.brand}. כל הזכויות שמורות.</div>
@@ -23,7 +30,7 @@
 <style>
 	footer {
 		border-top: 1px solid var(--line);
-		padding: 48px 0 28px;
+		padding: 48px 0 calc(28px + var(--nav-bottom));
 		background: #041015;
 		color: var(--muted);
 	}
@@ -48,6 +55,9 @@
 	}
 	nav a {
 		text-decoration: none;
+	}
+	.reach a {
+		color: var(--text);
 	}
 	nav a:hover {
 		color: var(--text);

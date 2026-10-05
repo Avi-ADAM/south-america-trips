@@ -17,7 +17,7 @@
 </header>
 
 <section class="hero">
-	<HeroSlideshow images={['/img/hero/quilotoa.jpg', '/img/hero/galapagos.jpg', '/img/hero/amazon-river.jpg']} />
+	<HeroSlideshow images={['/img/hero/quilotoa.jpg', '/img/client/snorkel-turtle.jpg', '/img/hero/amazon-river.jpg']} />
 	<div class="shade"></div>
 	<div class="wrap content">
 		<span class="kicker">{site.tagline}</span>
@@ -27,7 +27,7 @@
 
 <section class="wrap featured">
 	<a class="card reveal" use:reveal href={u('/ecuador-2027/')}>
-		<img src={u('/img/hero/galapagos.jpg')} alt="" />
+		<img src={u('/img/client/boobies.jpg')} alt="" />
 		<div class="body">
 			<span class="chip">הטיול הבא · {trip.dateLabel}</span>
 			<h2>{trip.title}</h2>

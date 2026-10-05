@@ -7,12 +7,12 @@
 	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${trip.dateLabel})`);
 </script>
 
-<div class="reg reveal" use:reveal>
+<div class="reg panel reveal" use:reveal>
 	<div class="glow" aria-hidden="true"></div>
 	<div class="price">
 		<span class="kicker">עלות הטיול</span>
 		{#if p.pricePerPerson}
-			<strong class="grad-text">{money(p.pricePerPerson, p.currency)}</strong>
+			<strong class="num">{money(p.pricePerPerson, p.currency)}</strong>
 			<span class="note">{p.priceNote}</span>
 			{#if p.singleSupplement}<span class="note">תוספת לחדר יחיד: {money(p.singleSupplement, p.currency)}</span>{/if}
 		{:else}
@@ -51,8 +51,6 @@
 		align-items: center;
 		padding: 46px;
 		border-radius: 30px;
-		border: 1px solid var(--line);
-		background: linear-gradient(135deg, rgba(236, 208, 138, 0.13), rgba(236, 208, 138, 0.04));
 	}
 	.glow {
 		position: absolute;
@@ -80,18 +78,21 @@
 		font: 900 clamp(2.6rem, 6vw, 4.2rem) / 1.1 var(--display);
 		margin: 10px 0 6px;
 	}
+	.price .num {
+		color: var(--num);
+	}
 	.price .soon {
 		font-size: clamp(1.8rem, 4vw, 2.6rem);
 	}
 	.note {
 		display: block;
-		color: var(--muted);
+		color: var(--panel-muted);
 	}
 	.act h3 {
 		font-size: 1.8rem;
 	}
 	.act p {
-		color: #d5e2e0;
+		color: var(--panel-muted);
 	}
 	.btns {
 		display: flex;

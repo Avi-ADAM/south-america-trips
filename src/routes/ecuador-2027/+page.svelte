@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
+	import { slide } from '$lib/actions/slide';
+	import ContactBlock from '$lib/components/ContactBlock.svelte';
 	import Counter from '$lib/components/Counter.svelte';
 	import HeroSlideshow from '$lib/components/HeroSlideshow.svelte';
 	import Media from '$lib/components/Media.svelte';
 	import PhotoStrip from '$lib/components/PhotoStrip.svelte';
 	import RouteMap from '$lib/components/RouteMap.svelte';
 	import RegisterBlock from '$lib/components/RegisterBlock.svelte';
+	import TripProgress from '$lib/components/TripProgress.svelte';
 	import { previousTripVideoId } from '$lib/config';
-	import { days, regions, stats, stays, trip, worlds, type RegionId } from '$lib/data/ecuador';
+	import { days, goodToKnow, regions, stats, stays, trip, worlds, type RegionId } from '$lib/data/ecuador';
+	import { stories } from '$lib/data/stories';
 	import { shortDate } from '$lib/format';
 	import { u } from '$lib/paths';
 
@@ -28,6 +32,7 @@
 
 	const hebrewOrdinals = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ז׳', 'ח׳'];
 	const titleWords = trip.headline.split(' ');
+	const story = stories[0];
 	let videoOn = $state(false);
 
 	// La Selva: what each jungle day is about, and the wildlife strip that scrolls under it.
@@ -38,13 +43,18 @@
 		{ n: 11, icon: '🌅', text: 'שיט במעלה הנהר, טיסה לקיטו והתארגנות לשבת' }
 	];
 	const wildlife = [
+		{ src: '/img/amazon/clay-lick.jpg', label: 'ליקוק החימר של התוכים' },
+		{ src: '/img/amazon/hoatzin.jpg', label: 'ההואצין' },
+		{ src: '/img/amazon/squirrel-monkey.jpg', label: 'קופי סנאי' },
 		{ src: '/img/amazon/toucan.jpg', label: 'טוקנים' },
+		{ src: '/img/amazon/macaws.jpg', label: 'תוכי מקאו' },
 		{ src: '/video/amazon/lagoon.mp4', label: 'לגונות שקטות' },
 		{ src: '/img/amazon/frog.jpg', label: 'צפרדעי חץ צבעוניות' },
 		{ src: '/img/amazon/canoe-paddle.jpg', label: 'שיט בקאנו' },
 		{ src: '/img/amazon/python.jpg', label: 'בואה ירוקה' },
 		{ src: '/video/amazon/ceiba.mp4', label: 'עצי ענק' },
 		{ src: '/img/amazon/night-walk.jpg', label: 'סיורי לילה ובוקר' },
+		{ src: '/img/amazon/canoe-binoculars.jpg', label: 'עם משקפת בקאנו' },
 		{ src: '/img/amazon/creek.jpg', label: 'נחלי הג׳ונגל' },
 		{ src: '/img/amazon/jungle-vines.jpg', label: 'יער הגשם' },
 		{ src: '/img/amazon/lodge.jpg', label: 'הלודג׳' }
@@ -53,7 +63,7 @@
 	const andesStrip = [
 		{ src: '/img/client/quilotoa-crater.jpg', label: 'לגונת קילוטואה' },
 		{ src: '/img/client/textiles.jpg', label: 'שוק אוטבלו' },
-		{ src: '/img/client/women-dress.jpg', label: 'לבוש מסורתי' },
+		{ src: '/img/client/folk-dance.jpg', label: 'תלבושות צבעוניות' },
 		{ src: '/img/client/cotopaxi-horses.jpg', label: 'קוטופקסי' },
 		{ src: '/img/client/masks-dance.jpg', label: 'פסטיבלים צבעוניים' },
 		{ src: '/img/client/hacienda-door.jpg', label: 'הסיינדה לה סיינגה' },
@@ -92,7 +102,10 @@
 </svelte:head>
 
 <!-- HERO -->
-<section class="hero">
+<TripProgress />
+
+<div class="deck">
+<section class="hero slide" use:slide>
 	<HeroSlideshow images={trip.heroImages} />
 	<div class="hero-shade"></div>
 	<div class="orb orb-1"></div>
@@ -115,27 +128,32 @@
 </section>
 
 <!-- STATS -->
-<section id="stats" class="stats wrap">
-	{#each stats as s, i}
-		<div class="stat reveal" use:reveal style="--delay:{i * 100}ms">
-			<strong class="grad-text"><Counter value={s.value} /></strong>
-			<span>{s.label}</span>
+<section id="stats" class="stats-slide slide" use:slide>
+	<p class="stats-k reveal" use:reveal>{trip.dateLabel}</p>
+	<div class="stats wrap">
+		{#each stats as s, i}
+			<div class="stat panel reveal" use:reveal style="--delay:{i * 100}ms">
+				<strong><Counter value={s.value} /></strong>
+				<span>{s.label}</span>
+			</div>
+		{/each}
+		<div class="stat panel reveal" use:reveal style="--delay:400ms">
+			<strong>0°</strong>
+			<span>קו המשווה</span>
 		</div>
-	{/each}
-	<div class="stat reveal" use:reveal style="--delay:400ms">
-		<strong class="grad-text">0°</strong>
-		<span>קו המשווה</span>
 	</div>
 </section>
 
 <!-- THREE WORLDS -->
 <section class="worlds">
-	<div class="wrap head reveal" use:reveal>
-		<span class="kicker">שלושה עולמות במסע אחד</span>
-		<h2>מהרי געש מושלגים, דרך הג׳ונגל — אל האיים של דרווין</h2>
+	<div class="head-slide slide" use:slide>
+		<div class="wrap head reveal" use:reveal>
+			<span class="kicker">שלושה עולמות במסע אחד</span>
+			<h2>מהרי געש מושלגים, דרך הג׳ונגל — אל האיים של דרווין</h2>
+		</div>
 	</div>
 	{#each worlds as w, i}
-		<article class="world wrap" class:flip={i % 2 === 1} style="--c:{regions[w.id].color}">
+		<article class="world wrap slide" use:slide class:flip={i % 2 === 1} style="--c:{regions[w.id].color}">
 			<div class="world-img reveal-zoom" use:reveal>
 				<img src={u(w.image)} alt={w.title} loading="lazy" />
 				<span class="world-num">0{i + 1}</span>
@@ -153,7 +171,7 @@
 </section>
 
 <!-- MAP -->
-<section class="route wrap">
+<section class="route wrap slide" use:slide>
 	<div class="route-text reveal" use:reveal>
 		<span class="kicker">המסלול</span>
 		<h2>20 ימים, 8 מקומות לינה, 4 טיסות פנים</h2>
@@ -163,7 +181,7 @@
 		</p>
 		<ol class="stays">
 			{#each stays as s}
-				<li><span class="n">{s.nights}</span><span>{s.nights === 1 ? 'לילה' : 'לילות'} · {s.where}</span><em>{s.name}</em></li>
+				<li class="panel"><span class="n">{s.nights}</span><span>{s.nights === 1 ? 'לילה' : 'לילות'} · {s.where}</span><em>{s.name}</em></li>
 			{/each}
 		</ol>
 	</div>
@@ -173,6 +191,7 @@
 <!-- DAYS -->
 <section id="days" class="days">
 	{#each chapters as ch, ci}
+		<div class="chapter-slide slide" use:slide>
 		<header class="chapter" style="--c:{regions[ch.region].color}">
 			<div class="wrap reveal" use:reveal>
 				<span class="chapter-k">פרק {hebrewOrdinals[ci]}</span>
@@ -191,10 +210,11 @@
 		{:else if ch.region === 'galapagos'}
 			<div class="chapter-strip"><PhotoStrip items={galapagosStrip} label="תמונות מגלאפגוס" reverse seconds={65} /></div>
 		{/if}
+		</div>
 
 		{#if ch.region === 'amazon'}
 			<div class="selva">
-				<div class="selva-stage">
+				<div class="selva-stage slide" use:slide>
 					<Media src="/video/amazon/garza-cocha.mp4" poster="/img/amazon/lodge.jpg" class="selva-bg" alt="לגונת גרסה קוצ׳ה ליד הלודג׳" />
 					<div class="selva-shade"></div>
 					<div class="fireflies" aria-hidden="true">
@@ -229,7 +249,7 @@
 		{/if}
 
 		{#each ch.days as d}
-			<article class="day wrap" style="--c:{regions[d.region].color}">
+			<article id="day-{d.n}" class="day wrap slide" use:slide style="--c:{regions[d.region].color}">
 				<a class="day-img reveal-zoom" use:reveal href={u(`/ecuador-2027/day/${d.n}/`)}>
 					<Media src={d.video ?? d.image} poster={d.video ? d.image : undefined} alt={d.title} />
 					{#if d.shabbat}<span class="badge">שבת</span>{/if}
@@ -250,8 +270,39 @@
 	{/each}
 </section>
 
+<!-- GOOD TO KNOW -->
+<section class="know wrap slide" use:slide>
+	<div class="reveal" use:reveal>
+		<span class="kicker">לפני שאורזים</span>
+		<h2>חשוב לדעת</h2>
+	</div>
+	<ul>
+		{#each goodToKnow as g, i}
+			<li class="panel reveal" use:reveal style="--delay:{i * 100}ms">
+				<span class="k-ic" aria-hidden="true">{g.icon}</span>
+				<h3>{g.title}</h3>
+				<p>{g.text}</p>
+			</li>
+		{/each}
+	</ul>
+</section>
+
+<!-- STORY -->
+<section class="story-slide slide" use:slide>
+	<a class="story wrap reveal" use:reveal href={u('/stories/')}>
+		<div class="story-img"><img src={u(story.image)} alt="" loading="lazy" /></div>
+		<div class="story-txt">
+			<span class="kicker">סיפורי מטיילות</span>
+			<h2>{story.title}</h2>
+			<p>{story.excerpt}</p>
+			<span class="by">כתבה {story.author} · {story.trip}</span>
+			<span class="read">לסיפור המלא ←</span>
+		</div>
+	</a>
+</section>
+
 <!-- VIDEO -->
-<section class="video wrap">
+<section class="video wrap slide" use:slide>
 	<div class="reveal" use:reveal>
 		<span class="kicker">מהטיול הקודם שלנו</span>
 		<h2>ככה זה נראה מבפנים</h2>
@@ -274,13 +325,19 @@
 </section>
 
 <!-- CTA -->
-<section class="wrap final">
+<section class="wrap final slide" use:slide>
 	<RegisterBlock />
 	<div class="links reveal" use:reveal>
 		<a class="btn btn-ghost" href={u('/ecuador-2027/itinerary/')}>למסלול המלא (להדפסה)</a>
 		<a class="btn btn-ghost" href={u('/ecuador-2027/included/')}>מה כלול ומה לא</a>
 	</div>
 </section>
+
+<!-- CONTACT -->
+<section id="contact" class="wrap contact slide" use:slide>
+	<ContactBlock />
+</section>
+</div>
 
 <style>
 	/* HERO */
@@ -335,13 +392,14 @@
 		position: relative;
 		padding: 140px 0 110px;
 	}
+	/* Solid color, not gradient-clipped text: clipped text combined with the fade-in vanished on some phones. */
 	.tagline {
 		margin: 22px 0 0;
-		font: 800 clamp(1.3rem, 3vw, 2.1rem) / 1.2 var(--display);
-		background: var(--grad);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
+		font: 800 clamp(1.4rem, 3.4vw, 2.3rem) / 1.2 var(--display);
+		color: #f6dc97;
+		text-shadow:
+			0 2px 18px rgba(0, 0, 0, 0.65),
+			0 0 2px rgba(0, 0, 0, 0.4);
 	}
 	h1 {
 		font-size: clamp(2.4rem, 6.6vw, 5.6rem);
@@ -432,9 +490,10 @@
 		position: relative;
 		z-index: 2;
 	}
+	.stats-k {
+		display: none;
+	}
 	.stat {
-		background: var(--surface);
-		border: 1px solid var(--line);
 		backdrop-filter: blur(14px);
 		border-radius: var(--radius);
 		padding: 22px 16px;
@@ -446,9 +505,10 @@
 		font-size: clamp(2rem, 4vw, 3rem);
 		font-weight: 900;
 		line-height: 1.1;
+		color: var(--num);
 	}
 	.stat span {
-		color: var(--muted);
+		color: var(--panel-muted);
 	}
 
 	/* WORLDS */
@@ -552,17 +612,16 @@
 		gap: 10px;
 		padding: 8px 12px;
 		border-radius: 12px;
-		background: var(--surface);
 		font-size: 0.93rem;
 	}
 	.stays .n {
 		font: 800 1.1rem var(--display);
-		color: var(--accent);
+		color: var(--num);
 		text-align: center;
 	}
 	.stays em {
 		font-style: normal;
-		color: var(--muted);
+		color: var(--panel-muted);
 		font-size: 0.85rem;
 		direction: ltr;
 	}
@@ -879,7 +938,100 @@
 		}
 	}
 	.final {
-		padding: 40px 0 100px;
+		padding: 40px 0 60px;
+	}
+
+	/* GOOD TO KNOW */
+	.know {
+		padding: 60px 0 40px;
+	}
+	.know h2,
+	.story h2 {
+		font-size: clamp(1.8rem, 4vw, 3rem);
+		margin-top: 12px;
+	}
+	.know ul {
+		list-style: none;
+		margin: 26px 0 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 14px;
+	}
+	.know li {
+		padding: 24px 22px;
+		border-radius: var(--radius);
+	}
+	.k-ic {
+		display: inline-block;
+		font-size: 2rem;
+		animation: bob 3.4s ease-in-out infinite;
+	}
+	.know li:nth-child(2) .k-ic {
+		animation-delay: -1s;
+	}
+	.know li:nth-child(3) .k-ic {
+		animation-delay: -2s;
+	}
+	.know li:nth-child(4) .k-ic {
+		animation-delay: -3s;
+	}
+	.know h3 {
+		font-size: 1.2rem;
+		margin: 10px 0 6px;
+	}
+	.know p {
+		margin: 0;
+		color: var(--panel-muted);
+	}
+
+	/* STORY */
+	.story-slide {
+		padding: 60px 0 20px;
+	}
+	.story {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr;
+		gap: 40px;
+		align-items: center;
+		text-decoration: none;
+	}
+	.story-img {
+		border-radius: 26px;
+		overflow: hidden;
+		aspect-ratio: 4/3;
+		box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8);
+	}
+	.story-img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 1.4s var(--ease);
+	}
+	.story:hover .story-img img {
+		transform: scale(1.07);
+	}
+	.story-txt p {
+		font: 600 clamp(1.15rem, 2.2vw, 1.45rem) / 1.6 var(--display);
+		color: #e8efee;
+	}
+	.story-txt .by {
+		display: block;
+		color: var(--muted);
+	}
+	.read {
+		display: inline-block;
+		margin-top: 14px;
+		font-weight: 700;
+		color: var(--accent);
+		border-bottom: 1px solid currentColor;
+		transition: transform 0.4s var(--ease);
+	}
+	.story:hover .read {
+		transform: translateX(-6px);
+	}
+	.contact {
+		padding: 40px 0 110px;
 	}
 	.links {
 		display: flex;
@@ -918,6 +1070,13 @@
 		.selva-body {
 			padding-top: 120px;
 		}
+		.know ul {
+			grid-template-columns: 1fr 1fr;
+		}
+		.story {
+			grid-template-columns: 1fr;
+			gap: 22px;
+		}
 	}
 	@media (max-width: 520px) {
 		.stats {
@@ -928,6 +1087,306 @@
 		}
 		.selva-days {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	/* PHONES — every part of the presentation is a full screen, and swiping snaps from one to the next.
+	   Each slide replays its entrance whenever it becomes the active one (see lib/actions/slide.ts). */
+	@media (max-width: 760px) {
+		:global(html:has(.deck)) {
+			scroll-snap-type: y mandatory;
+		}
+		:global(html:has(.deck) footer) {
+			scroll-snap-align: end;
+		}
+		.slide {
+			position: relative;
+			min-height: 100svh;
+			scroll-snap-align: start;
+		}
+		.deck .slide :global(.reveal),
+		.deck .slide :global(.reveal-zoom) {
+			opacity: 0;
+			transform: translateY(34px);
+		}
+		.deck .slide:global(.active) :global(.reveal),
+		.deck .slide:global(.active) :global(.reveal-zoom) {
+			opacity: 1;
+			transform: none;
+		}
+
+		.hero-content {
+			padding: calc(var(--nav-top) + 40px) 0 calc(var(--nav-bottom) + 56px);
+		}
+		.scroll-hint {
+			bottom: calc(var(--nav-bottom) + 14px);
+		}
+
+		/* Stats: one screen of big numbers */
+		.stats-slide {
+			display: grid;
+			align-content: center;
+			gap: 18px;
+			padding: calc(var(--nav-top) + 20px) 0 calc(var(--nav-bottom) + 20px);
+		}
+		.stats-k {
+			display: block;
+			text-align: center;
+			margin: 0;
+			font: 800 1.2rem var(--display);
+			color: var(--num);
+		}
+		.stats {
+			margin-top: 0;
+			gap: 12px;
+		}
+		.stat {
+			padding: 26px 12px;
+		}
+		.stat strong {
+			font-size: 3.2rem;
+		}
+
+		/* Title cards */
+		.head-slide,
+		.chapter-slide {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: calc(var(--nav-top) + 20px) 0 calc(var(--nav-bottom) + 20px);
+		}
+		.head {
+			margin: 0;
+		}
+		.head h2 {
+			font-size: 2.3rem;
+		}
+		.worlds {
+			padding: 0;
+		}
+		.chapter {
+			padding: 0 0 20px;
+		}
+		.chapter h2 {
+			font-size: 3.6rem;
+		}
+		.chapter-strip {
+			margin: 10px 0 0;
+		}
+
+		/* World and day slides: the photo fills the screen and the text sits over it */
+		.world,
+		.day {
+			display: grid;
+			align-items: end;
+			width: 100%;
+			margin: 0;
+			gap: 0;
+			padding: calc(var(--nav-top) + 40px) 20px calc(var(--nav-bottom) + 26px);
+			overflow: hidden;
+			isolation: isolate;
+		}
+		.world-img,
+		.day-img {
+			position: absolute;
+			inset: 0;
+			z-index: -1;
+			aspect-ratio: auto;
+			border-radius: 0;
+			box-shadow: none;
+		}
+		.world-img::after,
+		.day-img::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(
+				to top,
+				rgba(6, 22, 27, 0.96) 8%,
+				rgba(6, 22, 27, 0.55) 45%,
+				rgba(6, 22, 27, 0.1) 70%,
+				rgba(6, 22, 27, 0.45)
+			);
+		}
+		.deck .slide .world-img,
+		.deck .slide .day-img {
+			opacity: 0.35;
+			transform: scale(1.18);
+			transition:
+				opacity 1.2s var(--ease),
+				transform 7s cubic-bezier(0.2, 0.6, 0.3, 1);
+		}
+		.deck .slide:global(.active) .world-img,
+		.deck .slide:global(.active) .day-img {
+			opacity: 1;
+			transform: scale(1);
+		}
+		.world-img:hover img,
+		.day-img:hover :global(img),
+		.day-img:hover :global(video) {
+			transform: none;
+		}
+		.world-num {
+			top: calc(var(--nav-top) + 30px);
+		}
+		.badge {
+			top: calc(var(--nav-top) + 34px);
+		}
+		.world-text h3 {
+			font-size: 3rem;
+		}
+		.world-text p,
+		.day-body p {
+			color: #e6eeec;
+		}
+		.world-text p {
+			font-size: 1rem;
+		}
+		.day-num {
+			top: -86px;
+			font-size: 6.5rem;
+		}
+
+		/* The text in a day or world slide rises line by line */
+		.deck .slide .day-body > :global(*),
+		.deck .slide .world-text > :global(*) {
+			opacity: 0;
+			transform: translateY(26px);
+			transition:
+				opacity 0.8s var(--ease),
+				transform 0.8s var(--ease);
+		}
+		.deck .slide:global(.active) .day-body > :global(*),
+		.deck .slide:global(.active) .world-text > :global(*) {
+			opacity: 1;
+			transform: none;
+		}
+		.deck .slide:global(.active) .day-body > :global(*:nth-child(2)),
+		.deck .slide:global(.active) .world-text > :global(*:nth-child(2)) {
+			transition-delay: 0.12s;
+		}
+		.deck .slide:global(.active) .day-body > :global(*:nth-child(3)),
+		.deck .slide:global(.active) .world-text > :global(*:nth-child(3)) {
+			transition-delay: 0.22s;
+		}
+		.deck .slide:global(.active) .day-body > :global(*:nth-child(4)),
+		.deck .slide:global(.active) .world-text > :global(*:nth-child(4)) {
+			transition-delay: 0.32s;
+		}
+		.deck .slide:global(.active) .day-body > :global(*:nth-child(5)),
+		.deck .slide:global(.active) .world-text > :global(*:nth-child(5)) {
+			transition-delay: 0.42s;
+		}
+		.deck .slide:global(.active) .day-body > :global(*:nth-child(n + 6)) {
+			transition-delay: 0.52s;
+		}
+		.deck .slide .day-body > .day-num {
+			transform: translateX(-60px);
+		}
+		.deck .slide:global(.active) .day-body > .day-num {
+			opacity: 0.55;
+			transform: none;
+			transition-duration: 1.2s;
+		}
+		.day-body h3 {
+			font-size: 2rem;
+		}
+		.day-body p {
+			margin-bottom: 0.6em;
+		}
+
+		/* Route: map and the list of stays */
+		.route {
+			align-content: center;
+			padding: calc(var(--nav-top) + 20px) 0 calc(var(--nav-bottom) + 20px);
+		}
+		.route h2 {
+			font-size: 1.6rem;
+		}
+		.route-text p {
+			display: none;
+		}
+		.stays {
+			grid-template-columns: 1fr 1fr;
+			margin-top: 12px;
+		}
+		.stays li {
+			grid-template-columns: 22px 1fr;
+			gap: 6px;
+			padding: 5px 8px;
+			font-size: 0.8rem;
+		}
+		.stays em {
+			display: none;
+		}
+
+		/* Amazon */
+		.selva {
+			margin: 0;
+		}
+		.selva-stage {
+			align-items: center;
+		}
+		.selva-body {
+			padding: calc(var(--nav-top) + 30px) 0 calc(var(--nav-bottom) + 20px);
+		}
+		.selva-body p {
+			font-size: 0.98rem;
+		}
+		.selva-days {
+			grid-template-columns: 1fr 1fr;
+			gap: 8px;
+			margin-top: 16px;
+		}
+		.selva-days a {
+			padding: 12px;
+			gap: 2px;
+			border-radius: 16px;
+		}
+		.sd-icon {
+			font-size: 1.4rem;
+		}
+		.sd-t {
+			font-size: 0.82rem;
+			line-height: 1.4;
+		}
+
+		/* Closing slides */
+		.know,
+		.story-slide,
+		.video,
+		.final,
+		.contact {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: calc(var(--nav-top) + 24px) 0 calc(var(--nav-bottom) + 24px);
+		}
+		.know ul {
+			gap: 10px;
+		}
+		.know li {
+			padding: 16px 14px;
+		}
+		.know h3 {
+			font-size: 1.02rem;
+		}
+		.know p {
+			font-size: 0.88rem;
+		}
+		.story-img {
+			aspect-ratio: 16/10;
+		}
+		.story-txt p {
+			font-size: 1.1rem;
+		}
+	}
+	@media (max-width: 760px) and (max-height: 700px) {
+		.know p {
+			font-size: 0.8rem;
+		}
+		.sd-t {
+			display: none;
 		}
 	}
 </style>

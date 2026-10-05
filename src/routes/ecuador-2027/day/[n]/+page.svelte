@@ -78,7 +78,7 @@
 
 		<aside>
 			{#if day.hotel}
-				<div class="card reveal" class:has-img={day.hotel.image} use:reveal>
+				<div class="card panel reveal" class:has-img={day.hotel.image} use:reveal>
 					{#if day.hotel.image}
 						<button class="hotel-img" onclick={() => (zoomedHotel = 0)} aria-label="הגדלת תמונת המלון">
 							<img src={u(day.hotel.image)} alt={day.hotel.name} loading="lazy" />
@@ -106,20 +106,20 @@
 
 	<nav class="wrap pager" aria-label="ניווט בין ימים">
 		{#if data.prev}
-			<a class="pg prev" href={u(`/ecuador-2027/day/${data.prev.n}/`)}>
+			<a class="pg panel prev" href={u(`/ecuador-2027/day/${data.prev.n}/`)}>
 				<span>→ יום {data.prev.n}</span>
 				<strong>{data.prev.title}</strong>
 			</a>
 		{:else}
-			<a class="pg prev" href={u('/ecuador-2027/')}><span>→ חזרה</span><strong>למצגת</strong></a>
+			<a class="pg panel prev" href={u('/ecuador-2027/')}><span>→ חזרה</span><strong>למצגת</strong></a>
 		{/if}
 		{#if data.next}
-			<a class="pg next" href={u(`/ecuador-2027/day/${data.next.n}/`)}>
+			<a class="pg panel next" href={u(`/ecuador-2027/day/${data.next.n}/`)}>
 				<span>יום {data.next.n} ←</span>
 				<strong>{data.next.title}</strong>
 			</a>
 		{:else}
-			<a class="pg next" href={u('/ecuador-2027/register/')}><span>סוף המסע ←</span><strong>רישום למסע</strong></a>
+			<a class="pg panel next" href={u('/ecuador-2027/register/')}><span>סוף המסע ←</span><strong>רישום למסע</strong></a>
 		{/if}
 	</nav>
 {/key}
@@ -330,8 +330,6 @@
 	.card {
 		padding: 26px;
 		border-radius: var(--radius);
-		background: var(--surface);
-		border: 1px solid var(--line);
 	}
 	.hotel-name {
 		font-size: 1.5rem;
@@ -340,7 +338,7 @@
 		text-align: right;
 	}
 	.card p {
-		color: var(--muted);
+		color: var(--panel-muted);
 		margin: 0;
 	}
 	.card.has-img {
@@ -407,20 +405,18 @@
 	.pg {
 		padding: 22px 26px;
 		border-radius: var(--radius);
-		background: var(--surface);
-		border: 1px solid var(--line);
 		text-decoration: none;
 		transition:
-			background 0.3s,
+			filter 0.3s,
 			transform 0.3s var(--ease);
 	}
 	.pg:hover {
-		background: var(--surface-2);
+		filter: brightness(1.12);
 		transform: translateY(-3px);
 	}
 	.pg span {
 		display: block;
-		color: var(--accent);
+		color: var(--panel-accent);
 		font-weight: 700;
 		font-size: 0.9rem;
 	}

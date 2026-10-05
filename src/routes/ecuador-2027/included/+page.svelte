@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
-	import { included, notIncluded, stays, trip } from '$lib/data/ecuador';
+	import { goodToKnow, included, notIncluded, stays, trip } from '$lib/data/ecuador';
 	import { u } from '$lib/paths';
 </script>
 
@@ -36,11 +36,26 @@
 	</div>
 </section>
 
+<section class="wrap know">
+	<h2 class="reveal" use:reveal>חשוב לדעת</h2>
+	<div class="grid">
+		{#each goodToKnow as g, i}
+			<div class="tip panel reveal" use:reveal style="--delay:{i * 70}ms">
+				<span class="tip-ic" aria-hidden="true">{g.icon}</span>
+				<div>
+					<strong>{g.title}</strong>
+					<p>{g.text}</p>
+				</div>
+			</div>
+		{/each}
+	</div>
+</section>
+
 <section class="wrap stays reveal" use:reveal>
 	<h2>איפה ישנים</h2>
 	<div class="grid">
 		{#each stays as s, i}
-			<div class="stay reveal" use:reveal style="--delay:{i * 50}ms">
+			<div class="stay panel reveal" use:reveal style="--delay:{i * 50}ms">
 				<span class="n">{s.nights}</span>
 				<div>
 					<strong>{s.name}</strong>
@@ -149,6 +164,25 @@
 	.stays {
 		padding: 20px 0 100px;
 	}
+	.know {
+		padding: 0 0 50px;
+	}
+	.tip {
+		display: flex;
+		gap: 14px;
+		align-items: flex-start;
+		padding: 18px 20px;
+		border-radius: 18px;
+	}
+	.tip-ic {
+		font-size: 1.8rem;
+		line-height: 1;
+	}
+	.tip p {
+		margin: 4px 0 0;
+		color: var(--panel-muted);
+		font-size: 0.95rem;
+	}
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -160,12 +194,10 @@
 		align-items: center;
 		padding: 16px 18px;
 		border-radius: 18px;
-		background: var(--surface);
-		border: 1px solid var(--line);
 	}
 	.stay .n {
 		font: 900 2rem/1 var(--display);
-		color: var(--accent);
+		color: var(--num);
 		min-width: 30px;
 		text-align: center;
 	}
@@ -173,7 +205,7 @@
 		display: block;
 	}
 	.stay span {
-		color: var(--muted);
+		color: var(--panel-muted);
 		font-size: 0.9rem;
 	}
 	.note {

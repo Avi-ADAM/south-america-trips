@@ -32,7 +32,7 @@
 {#if ecuadorPricing.costSummary.length}
 	<section class="wrap summary reveal" use:reveal>
 		<h2>סיכום עלויות</h2>
-		<table>
+		<table class="panel">
 			<tbody>
 				{#each ecuadorPricing.costSummary as row}
 					<tr><td>{row.label}</td><td>{row.value}</td></tr>
@@ -46,8 +46,8 @@
 	<h2 class="reveal" use:reveal>איך זה עובד</h2>
 	<ol>
 		{#each steps as s, i}
-			<li class="reveal" use:reveal style="--delay:{i * 100}ms">
-				<span class="n grad-text">0{i + 1}</span>
+			<li class="panel reveal" use:reveal style="--delay:{i * 100}ms">
+				<span class="n">0{i + 1}</span>
 				<h3>{s.t}</h3>
 				<p>{s.d}</p>
 			</li>
@@ -91,13 +91,12 @@
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		background: var(--surface);
 		border-radius: 18px;
 		overflow: hidden;
 	}
 	td {
 		padding: 14px 20px;
-		border-bottom: 1px solid var(--line);
+		border-bottom: 1px solid var(--panel-border);
 	}
 	td:last-child {
 		text-align: left;
@@ -120,18 +119,17 @@
 	li {
 		padding: 26px;
 		border-radius: var(--radius);
-		background: var(--surface);
-		border: 1px solid var(--line);
 	}
 	.n {
 		font: 900 2.4rem/1 var(--display);
+		color: var(--num);
 	}
 	li h3 {
 		margin-top: 12px;
 		font-size: 1.25rem;
 	}
 	li p {
-		color: var(--muted);
+		color: var(--panel-muted);
 		margin: 0;
 	}
 	.links {

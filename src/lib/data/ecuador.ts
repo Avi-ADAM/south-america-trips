@@ -68,10 +68,10 @@ export const trip = {
 	subtitle: '20 ימים בין הרי געש, ג׳ונגל אמזוני ואיים שבהם הטבע עדיין מנהל את העניינים',
 	start: '2027-06-22',
 	end: '2027-07-11',
-	dateLabel: '22.6 – 11.7.2027',
+	dateLabel: '22.6.2027 – 11.7.2027',
 	days: 20,
 	nights: 19,
-	heroImages: [hero('galapagos'), photo('quilotoa-crater'), amazon('canoe-lagoon'), photo('snorkel-turtle'), hero('cotopaxi'), hero('quito')]
+	heroImages: [photo('quilotoa-crater'), photo('boobies'), amazon('canoe-lagoon'), photo('snorkel-turtle'), hero('cotopaxi'), hero('quito')]
 };
 
 export const worlds = [
@@ -95,7 +95,7 @@ export const worlds = [
 		id: 'galapagos' as RegionId,
 		title: 'איי גלאפגוס',
 		kicker: 'המעבדה של דרווין',
-		image: hero('galapagos'),
+		image: photo('boobies'),
 		text: 'ארכיפלג של איים וולקניים באוקיינוס השקט, כ-906 ק״מ מערבית ליבשת. האיים מפורסמים בזכות מספר עצום של מינים אנדמיים — צבי ענק, איגואנות ימיות, כחולי-רגל ואריות ים — ובזכות צ׳ארלס דרווין, שתצפיותיו כאן הולידו את תורת האבולוציה. כל האיים הם פארק לאומי ושמורה ימית.',
 		facts: ['906 ק״מ מהיבשת', 'אתר מורשת עולמית', 'שנירקול עם אריות ים']
 	}
@@ -111,7 +111,7 @@ export const days: Day[] = [
 		title: 'נחיתה באקוודור ושוק אוטבלו',
 		summary: 'נוחתים באקוודור ויוצאים צפונה לאוטבלו — השוק האינדיאני המפורסם, מפל פגוצ׳ה וסדנת אריגה מקומית.',
 		image: hero('otavalo'),
-		gallery: [photo('textiles'), photo('women-dress'), photo('otavalo-llama'), photo('plaza-dance')],
+		gallery: [photo('textiles'), photo('otavalo-llama'), photo('plaza-dance'), photo('folk-dance')],
 		schedule: [
 			{ title: 'טיסה בינלאומית לאקוודור', text: 'כרטיסי הטיסה הבינלאומית נרכשים ישירות על ידי המטיילים.', kind: 'flight' },
 			{ time: '08:00', title: 'יום טיול לאוטבלו', kind: 'tour', text: 'נסיעה של כשעתיים צפונה. עצירה אופציונלית בקאיאמבה לטעום ביסקוטים וגבינה מקומית. זמן חופשי בשוק אוטבלו — מלאכות יד, אריגים, תכשיטים ומזכרות. ארוחת צהריים במסעדה מקומית, הליכה קלה של רבע שעה למפל פגוצ׳ה, וביקור בבית משפחה מקומית לצפות באריגה ובבניית כלי נגינה אנדיאניים.' },
@@ -164,7 +164,7 @@ export const days: Day[] = [
 		image: photo('intinan-sign'),
 		gallery: [img('cablecar'), photo('mitad-monument'), photo('equator-museum')],
 		schedule: [
-			{ time: '09:00', title: 'הרכבל של קיטו (TelefériQo)', kind: 'tour', text: 'נסיעה של 18 דקות בקרונית עם נוף פנורמי על העיר אל מורדות הר הגעש פיצ׳ינצ׳ה. תצפיות והליכות קלות. למיטיבי לכת — טיפוס אופציונלי לפסגת רוקו פיצ׳ינצ׳ה (כשעתיים לכל כיוון).' },
+			{ time: '09:00', title: 'הרכבל של קיטו (TelefériQo)', kind: 'tour', text: 'נסיעה של 18 דקות בקרונית עם נוף פנורמי על העיר אל מורדות הר הגעש פיצ׳ינצ׳ה. תצפיות והליכות קלות. למיטיבי לכת — טיפוס אופציונלי לפסגת רוקו פיצ׳ינצ׳ה (כשעתיים לכל כיוון). כרטיס לרכבל: 8–10$, בתשלום במקום.' },
 			{ time: '13:00', title: 'מוזיאון אינטיניאן — אמצע העולם', kind: 'tour', text: 'מוזיאון אינטראקטיבי על קו המשווה: בקתות בנות מאה שנה, ניסויים בתופעות פיזיקליות של קו המשווה ומסלול השמש בתפיסת העולם של העמים הקדומים.' },
 			{ title: 'ערב שבת בקיטו', kind: 'free' }
 		],
@@ -251,7 +251,7 @@ export const days: Day[] = [
 		summary: 'עולים למגדל תצפית בגובה 36 מ׳ מעל קרקעית היער, מחפשים לוטרות ענק במנדי קוצ׳ה, פוגשים קופים והואצין סביב גרסה קוצ׳ה — ובלילה יוצאים לסיור רגלי בג׳ונגל.',
 		image: amazon('jungle'),
 		video: clip('amazon/lagoon'),
-		gallery: [amazon('toucan'), amazon('night-walk'), amazon('frog')],
+		gallery: [amazon('hoatzin'), amazon('squirrel-monkey'), amazon('canoe-binoculars'), amazon('toucan'), amazon('night-walk'), amazon('frog')],
 		schedule: [
 			{ title: 'השכמה וארוחת בוקר', kind: 'free' },
 			{ title: 'מגדל התצפית', kind: 'tour', text: 'אחרי הליכה של רבע שעה מתגלה המגדל — 36 מטרים מעל קרקעית היער. המדריכים, עם טלסקופ תצפית, מראים לנו ציפורים צבעוניות בחופת העצים, ולפעמים גם קופים.' },
@@ -271,8 +271,8 @@ export const days: Day[] = [
 		where: 'נהר הנאפו · פילצ׳י · שביל קוטו',
 		title: 'מאות תוכים וקהילה ילידית',
 		summary: 'בוקר בסירה אל ליקוק החימר — מאות תוכים ותוכונים שמתקבצים לאכול אדמה עשירה במינרלים. ביקור בקהילה הילידית פילצ׳י, ואחר הצהריים שביל קוטו וקאנו חזרה בין קיימנים.',
-		image: amazon('boardwalk'),
-		gallery: [clip('amazon/ceiba'), amazon('jungle-vines'), amazon('creek')],
+		image: amazon('clay-lick'),
+		gallery: [amazon('macaws'), amazon('kapok'), clip('amazon/ceiba'), amazon('boardwalk'), amazon('jungle-vines'), amazon('creek')],
 		schedule: [
 			{ title: 'השכמה וארוחת בוקר מוקדמת', kind: 'free' },
 			{ title: 'ליקוק החימר של התוכים', kind: 'tour', text: 'חוזרים לנהר הנאפו ושטים בקאנו מנועי אל אחד המחזות המרתקים בטבע: מאות תוכים ותוכונים מתקבצים כדי לאכול את האדמה העשירה במינרלים — חלק חשוב בתזונה שלהם. משקפת חובה.' },
@@ -343,8 +343,8 @@ export const days: Day[] = [
 		where: 'סן קריסטובל · סנטה קרוז',
 		title: 'גבעת הפריגטות ומעבר לסנטה קרוז',
 		summary: 'מרכז המבקרים, גבעת הפריגטות — שם נחת דרווין לראשונה — ושיט במעבורת לאי סנטה קרוז.',
-		image: hero('galapagos'),
-		gallery: [photo('frigatebird'), photo('sunset-pier'), img('tijeretas')],
+		image: photo('frigatebird'),
+		gallery: [photo('sunset-pier'), img('tijeretas'), photo('booby-nest')],
 		schedule: [
 			{ time: '10:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '11:00', title: 'מרכז המבקרים (Interpretation Center)', kind: 'tour', text: 'ההיסטוריה הטבעית והאנושית של האיים — מהמוצא הוולקני ועד מאבקי השימור של היום.' },
@@ -483,7 +483,9 @@ export const included = [
 export const notIncluded = [
 	'טיסות בינלאומיות לאקוודור וממנה',
 	'ארוחות צהריים וערב, למעט המצוין בתכנית',
-	'דמי כניסה באתרים מסוימים (למשל תרומה במפל פגוצ׳ה, כרטיס לרכבל קיטו)',
+	'ארוחות כשרות — בתוספת תשלום',
+	'דמי כניסה באתרים מסוימים (למשל תרומה במפל פגוצ׳ה)',
+	'עלייה ברכבל של קיטו ביום שישי — 8–10$',
 	'אגרת כניסה לאיי גלאפגוס (200$) — כל מטיילת משלמת באופן עצמאי',
 	'ארוחות בבית חב״ד',
 	'ביטוח נסיעות',
@@ -506,4 +508,28 @@ export const mapPoints = [
 	{ id: 'banos', name: 'באניוס', lat: -1.396, lon: -78.42 },
 	{ id: 'laselva', name: 'לה סלבה', lat: -0.5, lon: -76.37 },
 	{ id: 'guayaquil', name: 'גואיאקיל', lat: -2.17, lon: -79.92 }
+];
+
+/** "חשוב לדעת" — מוצג במצגת ובעמוד "מה כלול" */
+export const goodToKnow = [
+	{
+		icon: '🧳',
+		title: 'כבודה לאיי גלאפגוס',
+		text: 'מזוודה עד 20 ק״ג ועוד טרולי עד 8 ק״ג. על כל חריגה במשקל משלמים 20$.'
+	},
+	{
+		icon: '💉',
+		title: 'בטיחות ובריאות',
+		text: 'לפני הנסיעה יש לעבור במרפאת מטיילים לקבלת החיסונים הנדרשים וכדורי מלרון (נגד מלריה).'
+	},
+	{
+		icon: '🍽',
+		title: 'ארוחות כשרות',
+		text: 'אפשר להזמין ארוחות כשרות בתוספת תשלום.'
+	},
+	{
+		icon: '🚡',
+		title: 'הרכבל של קיטו',
+		text: 'העלייה ברכבל ביום שישי (יום 4) עולה 8–10$, בתשלום במקום.'
+	}
 ];
