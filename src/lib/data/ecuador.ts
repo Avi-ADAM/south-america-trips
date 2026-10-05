@@ -89,7 +89,7 @@ export const trip = {
 		{ src: amazon('squirrel-monkey'), pos: '28% 50%' },
 		{ src: photo('booby-nest'), pos: '75% 50%' },
 		{ src: amazon('macaws') },
-		{ src: hero('cotopaxi'), pos: '72% 50%' },
+		{ src: photo('cotopaxi-llamas') },
 		{ src: photo('pailon-1') }
 	]
 };
@@ -101,7 +101,7 @@ export const worlds = [
 		kicker: 'על קו המשווה',
 		image: hero('cotopaxi'),
 		focus: '70% 50%',
-		photoTop: true,
+		phone: photo('cotopaxi-llamas'),
 		text: 'מדינה קטנה בצפון-מערב דרום אמריקה, שוכנת בדיוק על קו המשווה. רכס האנדים חוצה אותה מצפון לדרום, ובו כמה מהרי הגעש הפעילים הגבוהים בעולם — ובראשם הקוטופקסי המושלג. העיר העתיקה של קיטו, הבירה, הוכרזה כאתר מורשת עולמית של אונסק״ו.',
 		facts: ['קיטו — בירה בגובה 2,850 מ׳', 'קוטופקסי — 5,897 מ׳', 'שווקים אינדיאניים צבעוניים']
 	},
@@ -155,7 +155,7 @@ export const days: Day[] = [
 		summary: 'יום בפארק הלאומי קוטופקסי: לגונת לימפיופונגו, טיפוס לבקתת חוסה ריבאס בגובה 4,810 מ׳ ואפשרות להגיע עד הקרחונים.',
 		image: hero('cotopaxi'),
 		focus: '70% 50%',
-		photoTop: true,
+		phone: photo('cotopaxi-llamas'),
 		gallery: [photo('cotopaxi-horses'), photo('hacienda-chapel'), photo('hacienda-door')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט מהמלון', kind: 'hotel' },
