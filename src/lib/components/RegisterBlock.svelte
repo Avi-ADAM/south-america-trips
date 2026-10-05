@@ -52,7 +52,7 @@
 		padding: 46px;
 		border-radius: 30px;
 		border: 1px solid var(--line);
-		background: linear-gradient(135deg, rgba(242, 184, 75, 0.12), rgba(46, 196, 214, 0.1));
+		background: linear-gradient(135deg, rgba(236, 208, 138, 0.13), rgba(236, 208, 138, 0.04));
 	}
 	.glow {
 		position: absolute;

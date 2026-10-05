@@ -268,7 +268,7 @@
 		bottom: 10px;
 		inset-inline-start: 21px;
 		width: 2px;
-		background: linear-gradient(var(--accent), var(--accent-2));
+		background: linear-gradient(#f8e9bd, #dfba6a);
 		opacity: 0.4;
 	}
 	li {
