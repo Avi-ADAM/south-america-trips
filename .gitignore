@@ -9,3 +9,6 @@ node_modules
 Thumbs.db
 vite.config.*.timestamp-*
 .claude/
+
+# Original client photos/videos (large); web-sized copies live in static/img and static/video
+/media-source

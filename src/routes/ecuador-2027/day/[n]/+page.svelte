@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { reveal } from '$lib/actions/reveal';
+	import Lightbox from '$lib/components/Lightbox.svelte';
+	import Media from '$lib/components/Media.svelte';
 	import { days, regions, trip } from '$lib/data/ecuador';
 	import { longDate } from '$lib/format';
 	import { u } from '$lib/paths';
@@ -8,6 +10,9 @@
 	let { data } = $props();
 	const day = $derived(data.day);
 	const region = $derived(regions[data.day.region]);
+
+	let zoomed = $state<number | null>(null);
+	let zoomedHotel = $state<number | null>(null);
 
 	const icons = { tour: '✦', flight: '✈', transfer: '⇄', hotel: '⌂', free: '☀', optional: '＋' } as const;
 
@@ -28,7 +33,9 @@
 
 {#key day.n}
 	<section class="hero" style="--c:{region.color}">
-		<div class="bg" style="background-image:url('{u(day.image)}')"></div>
+		<div class="bg" style="background-image:url('{u(day.image)}')">
+			{#if day.video}<Media src={day.video} poster={day.image} class="bg-video" eager />{/if}
+		</div>
 		<div class="shade"></div>
 		<div class="wrap content">
 			<div class="big-n" aria-hidden="true">{String(day.n).padStart(2, '0')}</div>
@@ -55,12 +62,6 @@
 	<section class="wrap body">
 		<div class="timeline">
 			<h2 class="reveal" use:reveal>מסלול היום</h2>
-			{#if day.pending}
-				<div class="pending reveal" use:reveal>
-					<strong>התכנית המפורטת של לודג׳ La Selva בדרך אלינו</strong>
-					<p>ברגע שנקבל אותה מהלודג׳ — היא תופיע כאן.</p>
-				</div>
-			{/if}
 			<ol>
 				{#each day.schedule as item, i}
 					<li class="reveal kind-{item.kind ?? 'tour'}" use:reveal style="--delay:{i * 80}ms">
@@ -77,21 +78,31 @@
 
 		<aside>
 			{#if day.hotel}
-				<div class="card reveal" use:reveal>
+				<div class="card reveal" class:has-img={day.hotel.image} use:reveal>
+					{#if day.hotel.image}
+						<button class="hotel-img" onclick={() => (zoomedHotel = 0)} aria-label="הגדלת תמונת המלון">
+							<img src={u(day.hotel.image)} alt={day.hotel.name} loading="lazy" />
+						</button>
+					{/if}
 					<span class="kicker">לינה הלילה</span>
 					<h3 class="hotel-name">{day.hotel.name}</h3>
 					{#if day.hotel.text}<p>{day.hotel.text}</p>{/if}
 				</div>
 			{/if}
 			{#if day.gallery?.length}
-				<div class="gallery">
+				<div class="gallery" style="columns:{Math.min(2, day.gallery.length)}">
 					{#each day.gallery as g, i}
-						<img class="reveal-zoom" use:reveal style="--delay:{i * 120}ms" src={u(g)} alt="" loading="lazy" />
+						<button class="shot reveal-zoom" use:reveal style="--delay:{i * 120}ms" onclick={() => (zoomed = i)} aria-label="הגדלה">
+							<Media src={g} />
+						</button>
 					{/each}
 				</div>
 			{/if}
 		</aside>
 	</section>
+
+	<Lightbox items={day.gallery ?? []} bind:index={zoomed} />
+	{#if day.hotel?.image}<Lightbox items={[day.hotel.image]} bind:index={zoomedHotel} />{/if}
 
 	<nav class="wrap pager" aria-label="ניווט בין ימים">
 		{#if data.prev}
@@ -136,6 +147,13 @@
 		to {
 			transform: scale(1.02);
 		}
+	}
+	.bg :global(.bg-video) {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 	.shade {
 		position: absolute;
@@ -304,17 +322,6 @@
 		color: var(--accent-2);
 		vertical-align: middle;
 	}
-	.pending {
-		padding: 20px 22px;
-		border-radius: 18px;
-		border: 1px dashed rgba(74, 222, 128, 0.6);
-		background: rgba(74, 222, 128, 0.08);
-		margin-bottom: 14px;
-	}
-	.pending p {
-		margin: 4px 0 0;
-		color: var(--muted);
-	}
 	aside {
 		display: grid;
 		gap: 18px;
@@ -336,15 +343,59 @@
 		color: var(--muted);
 		margin: 0;
 	}
-	.gallery {
-		display: grid;
-		gap: 12px;
+	.card.has-img {
+		padding-top: 0;
+		overflow: hidden;
 	}
-	.gallery img {
+	.hotel-img {
+		display: block;
+		width: calc(100% + 52px);
+		margin: 0 -26px 20px;
+		padding: 0;
+		border: 0;
+		background: none;
+		overflow: hidden;
+		cursor: zoom-in;
+	}
+	.hotel-img img {
 		width: 100%;
-		border-radius: 18px;
 		aspect-ratio: 16/9;
 		object-fit: cover;
+		transition: transform 1.2s var(--ease);
+	}
+	.hotel-img:hover img {
+		transform: scale(1.06);
+	}
+	/* Masonry: photos keep their own shape, so tall waterfalls stay tall. */
+	.gallery {
+		column-gap: 12px;
+	}
+	.shot {
+		display: block;
+		width: 100%;
+		margin: 0 0 12px;
+		padding: 0;
+		border: 0;
+		background: none;
+		border-radius: 18px;
+		overflow: hidden;
+		break-inside: avoid;
+		cursor: zoom-in;
+		box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+	}
+	.shot :global(img),
+	.shot :global(video) {
+		display: block;
+		width: 100%;
+		height: auto;
+		transition:
+			transform 1.2s var(--ease),
+			filter 0.4s;
+	}
+	.shot:hover :global(img),
+	.shot:hover :global(video) {
+		transform: scale(1.06);
+		filter: saturate(1.2);
 	}
 
 	.pager {

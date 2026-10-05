@@ -38,17 +38,26 @@ export interface Day {
 	/** תקציר קצר למצגת */
 	summary: string;
 	image: string;
+	/** וידאו שקט בלולאה לרקע הכותרת (image משמשת כגיבוי) */
+	video?: string;
+	/** תמונות או קטעי וידאו (mp4) */
 	gallery?: string[];
 	schedule: ScheduleItem[];
 	/** המלון של הלילה (או "—" ביום האחרון) */
-	hotel?: { name: string; text?: string };
+	hotel?: { name: string; text?: string; image?: string };
 	shabbat?: boolean;
-	/** תכנית שעדיין לא התקבלה מהספק (לודג' לה סלבה) */
-	pending?: boolean;
 }
+
+export const isVideo = (src: string) => src.endsWith('.mp4');
+export const posterOf = (src: string) => src.replace(/\.mp4$/, '.jpg');
 
 const img = (name: string) => `/img/trip/${name}.jpg`;
 const hero = (name: string) => `/img/hero/${name}.jpg`;
+const amazon = (name: string) => `/img/amazon/${name}.jpg`;
+/** תמונות שסיפקה הלקוחה */
+const photo = (name: string) => `/img/client/${name}.jpg`;
+/** וידאו בלולאה ('amazon/lagoon'); תמונת הפוסטר יושבת לידו באותו שם עם סיומת jpg */
+const clip = (path: string) => `/video/${path}.mp4`;
 
 export const trip = {
 	slug: 'ecuador-2027',
@@ -62,7 +71,7 @@ export const trip = {
 	dateLabel: '22.6 – 11.7.2027',
 	days: 20,
 	nights: 19,
-	heroImages: [hero('galapagos'), hero('quito'), hero('amazon'), hero('cotopaxi'), hero('quilotoa')]
+	heroImages: [hero('galapagos'), photo('quilotoa-crater'), amazon('canoe-lagoon'), photo('snorkel-turtle'), hero('cotopaxi'), hero('quito')]
 };
 
 export const worlds = [
@@ -78,7 +87,7 @@ export const worlds = [
 		id: 'amazon' as RegionId,
 		title: 'האמזונס',
 		kicker: 'שליש מהמדינה — ג׳ונגל',
-		image: hero('amazon'),
+		image: amazon('canoe-lagoon'),
 		text: 'יער הגשם האמזוני של אקוודור משתרע על כשליש משטח המדינה, מזרחית לרכס האנדים. זהו אחד המקומות העשירים ביותר בעולם במגוון ביולוגי: יותר מ-300 מיני יונקים, 800 מיני דגים ו-350 מיני זוחלים. נשהה שלושה לילות בלודג׳ אקולוגי בלב הג׳ונגל.',
 		facts: ['300+ מיני יונקים', '800 מיני דגים', '3 לילות בלודג׳ La Selva']
 	},
@@ -102,13 +111,13 @@ export const days: Day[] = [
 		title: 'נחיתה באקוודור ושוק אוטבלו',
 		summary: 'נוחתים באקוודור ויוצאים צפונה לאוטבלו — השוק האינדיאני המפורסם, מפל פגוצ׳ה וסדנת אריגה מקומית.',
 		image: hero('otavalo'),
-		gallery: [img('otavalo-llama'), img('otavalo-dance')],
+		gallery: [photo('textiles'), photo('women-dress'), photo('otavalo-llama'), photo('plaza-dance')],
 		schedule: [
 			{ title: 'טיסה בינלאומית לאקוודור', text: 'כרטיסי הטיסה הבינלאומית נרכשים ישירות על ידי המטיילים.', kind: 'flight' },
 			{ time: '08:00', title: 'יום טיול לאוטבלו', kind: 'tour', text: 'נסיעה של כשעתיים צפונה. עצירה אופציונלית בקאיאמבה לטעום ביסקוטים וגבינה מקומית. זמן חופשי בשוק אוטבלו — מלאכות יד, אריגים, תכשיטים ומזכרות. ארוחת צהריים במסעדה מקומית, הליכה קלה של רבע שעה למפל פגוצ׳ה, וביקור בבית משפחה מקומית לצפות באריגה ובבניית כלי נגינה אנדיאניים.' },
 			{ time: '18:00', title: 'צ׳ק-אין במלון Hotel Quito', kind: 'hotel' }
 		],
-		hotel: { name: 'Hotel Quito', text: 'מלון ארט-דקו 4 כוכבים במרכז קיטו, חדרים עם מרפסות ובריכה חיצונית המשקיפה על העמק האנדיאני.' }
+		hotel: { name: 'Hotel Quito', text: 'מלון ארט-דקו 4 כוכבים במרכז קיטו, חדרים עם מרפסות ובריכה חיצונית המשקיפה על העמק האנדיאני.', image: img('hotel-quito') }
 	},
 	{
 		n: 2,
@@ -119,13 +128,13 @@ export const days: Day[] = [
 		title: 'מרגלות הקוטופקסי',
 		summary: 'יום בפארק הלאומי קוטופקסי: לגונת לימפיופונגו, טיפוס לבקתת חוסה ריבאס בגובה 4,810 מ׳ ואפשרות להגיע עד הקרחונים.',
 		image: hero('cotopaxi'),
-		gallery: [img('cotopaxi-2'), img('hacienda-cienega')],
+		gallery: [photo('cotopaxi-horses'), photo('hacienda-chapel'), photo('hacienda-door')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט מהמלון', kind: 'hotel' },
 			{ time: '08:00', title: 'יום מלא בקוטופקסי', kind: 'tour', text: 'כשעתיים נסיעה לפארק הלאומי. הליכה קצרה סביב לגונת לימפיופונגו ונקודת התצפית. טיפוס בקצב אישי מגובה 4,550 מ׳ לבקתת חוסה ריבאס (4,810 מ׳) — כ-45–60 דקות. אפשרות להמשיך 30–40 דקות עד שולי הקרחונים.' },
 			{ time: '17:00', title: 'צ׳ק-אין בהסיינדה לה סיינגה', kind: 'hotel' }
 		],
-		hotel: { name: 'Hacienda La Ciénega', text: 'אחוזה היסטורית למרגלות הרי האנדים ליד לטקונגה, 28 חדרים מעוצבים עם אח, מסעדה ובר עם נוף לגן.' }
+		hotel: { name: 'Hacienda La Ciénega', text: 'אחוזה היסטורית למרגלות הרי האנדים ליד לטקונגה, 28 חדרים מעוצבים עם אח, מסעדה ובר עם נוף לגן.', image: photo('hacienda-garden') }
 	},
 	{
 		n: 3,
@@ -135,8 +144,8 @@ export const days: Day[] = [
 		where: 'לגונת קילוטואה',
 		title: 'האגם הירוק שבלוע הר הגעש',
 		summary: 'קילוטואה — לוע הר געש ברוחב 3 ק״מ ובתוכו אגם טורקיז בעומק 250 מ׳. תצפיות, הליכה ואפשרות לרדת עד שפת המים.',
-		image: hero('quilotoa'),
-		gallery: [img('quilotoa'), img('quilotoa-2')],
+		image: photo('quilotoa-crater'),
+		gallery: [photo('quilotoa-flowers'), photo('quilotoa-shore'), photo('quilotoa-cliff'), photo('quilotoa-tree')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '08:00', title: 'יום מלא בקילוטואה', kind: 'tour', text: 'כשעה וחצי נסיעה עם עצירות בנקודות תצפית. הליכה סביב שפת הלוע בגובה 3,800 מ׳ ותצפית על האגם, שצבעו הירקרק נובע ממינרלים מומסים. אפשרות לשכור פרדה לירידה לשפת האגם. ארוחת צהריים במקום וזמן חופשי. חזרה לקיטו בשעות הערב.' },
@@ -152,8 +161,8 @@ export const days: Day[] = [
 		where: 'קיטו · אמצע העולם',
 		title: 'רכבל מעל העננים וקו המשווה',
 		summary: 'עולים ברכבל של קיטו לגובה של כמעט 4,000 מ׳, ואחר הצהריים עומדים עם רגל אחת בכל חצי כדור במוזיאון אינטיניאן.',
-		image: img('cablecar-clouds'),
-		gallery: [img('cablecar'), hero('mitad'), img('intinan')],
+		image: photo('intinan-sign'),
+		gallery: [img('cablecar'), photo('mitad-monument'), photo('equator-museum')],
 		schedule: [
 			{ time: '09:00', title: 'הרכבל של קיטו (TelefériQo)', kind: 'tour', text: 'נסיעה של 18 דקות בקרונית עם נוף פנורמי על העיר אל מורדות הר הגעש פיצ׳ינצ׳ה. תצפיות והליכות קלות. למיטיבי לכת — טיפוס אופציונלי לפסגת רוקו פיצ׳ינצ׳ה (כשעתיים לכל כיוון).' },
 			{ time: '13:00', title: 'מוזיאון אינטיניאן — אמצע העולם', kind: 'tour', text: 'מוזיאון אינטראקטיבי על קו המשווה: בקתות בנות מאה שנה, ניסויים בתופעות פיזיקליות של קו המשווה ומסלול השמש בתפיסת העולם של העמים הקדומים.' },
@@ -170,7 +179,7 @@ export const days: Day[] = [
 		title: 'שבת בקיטו',
 		summary: 'יום חופשי ללא פעילויות מתוכננות — מנוחה, טיול רגלי בעיר העתיקה או בריכה עם נוף לעמק.',
 		image: hero('quito'),
-		gallery: [img('quito-sanfrancisco'), img('quito-view')],
+		gallery: [photo('folk-dance'), photo('masks-dance')],
 		schedule: [{ title: 'יום חופשי — שבת', kind: 'free', text: 'אין פעילויות מתוכננות. זמן למנוחה ולהנאה מקיטו.' }],
 		hotel: { name: 'Hotel Quito' },
 		shabbat: true
@@ -183,7 +192,7 @@ export const days: Day[] = [
 		where: 'באניוס',
 		title: 'בדרך לשער האמזונס',
 		summary: 'נוסעים דרומה לבאניוס — עיירת מעיינות חמים למרגלות הר הגעש הפעיל טונגוראואה. אחר הצהריים: ספא ובריכה.',
-		image: img('sangay'),
+		image: photo('sangay-spa'),
 		gallery: [img('banos-church')],
 		schedule: [
 			{ time: '08:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
@@ -201,69 +210,93 @@ export const days: Day[] = [
 		title: 'דרך המפלים ופאיון דל דיאבלו',
 		summary: '60 מפלים בדרך מבאניוס לפויו: אגויאן, מנטו דה לה נוביה, טרביטה מעל הקניון והמפל העוצמתי "סיר השטן".',
 		image: hero('pailon'),
-		gallery: [img('banos-church'), img('wyndham')],
+		gallery: [photo('pailon-bridge'), photo('pailon-1'), photo('pailon-2'), photo('pailon-flower')],
 		schedule: [
 			{ time: '07:45', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '08:00', title: 'דרך המפלים, טרביטה ופאיון דל דיאבלו', kind: 'tour', text: 'מפל אגויאן — מהגבוהים באקוודור, נסיעה במנהרות שמפלים זורמים עליהן, מפל "צעיף הכלה" (Manto de la Novia) עם טרביטה — סל רכבל מעל הקניון — וגשר תלוי. ושיא היום: פאיון דל דיאבלו, מפל אדיר שנופל לתוך "סיר" סלעי. בדרך: מפלי אינס מריה, בסקון, צ׳מנה ואולבה.' },
 			{ time: '18:00', title: 'צ׳ק-אין בווינדהם שדה התעופה קיטו', kind: 'hotel' }
 		],
-		hotel: { name: 'Wyndham Quito Airport', text: 'מלון 4 כוכבים צמוד לשדה התעופה — מוכנים לטיסה המוקדמת לאמזונס.' }
+		hotel: { name: 'Wyndham Quito Airport', text: 'מלון 4 כוכבים צמוד לשדה התעופה — מוכנים לטיסה המוקדמת לאמזונס.', image: img('wyndham') }
 	},
 	{
 		n: 8,
 		date: '2027-06-29',
 		weekday: 'שלישי',
 		region: 'amazon',
-		where: 'קוקה · לה סלבה',
+		where: 'קוקה · נהר הנאפו · La Selva',
 		title: 'טסים אל לב הג׳ונגל',
-		summary: 'טיסה קצרה מקיטו לקוקה, ומשם ללודג׳ האקולוגי La Selva — שלושה לילות בלב יער הגשם האמזוני.',
-		image: hero('amazon-river'),
-		gallery: [img('laselva'), img('laselva-room'), img('macaw')],
+		summary: 'טיסה קצרה לקוקה, שעתיים בסירה במורד נהר הנאפו וקאנו חתירה שקט אל הלודג׳ — וכבר בלילה הראשון יוצאים לחפש קיימנים בלגונה.',
+		image: amazon('canoe-lagoon'),
+		video: clip('amazon/garza-cocha'),
+		gallery: [clip('amazon/lagoon'), amazon('canoe-paddle'), amazon('coca')],
 		schedule: [
 			{ time: '07:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
-			{ time: '09:29', title: 'טיסה קיטו ← קוקה (LATAM)', kind: 'flight', text: 'טיסה של 40 דקות לשדה התעופה פרנסיסקו דה אוריאנה.' },
-			{ time: '12:00', title: 'הגעה ללודג׳ La Selva', kind: 'tour', text: 'תכנית הפעילויות המלאה בלודג׳ תתעדכן בקרוב.' }
+			{ time: '09:29', title: 'טיסה קיטו ← קוקה (LATAM)', kind: 'flight', text: 'נציג של La Selva פוגש אותנו בשדה בקיטו ועוזר בצ׳ק-אין. טיסה של כ-40 דקות לפוארטו פרנסיסקו דה אוריאנה — "אל קוקה" — ומשם רכב פרטי למשרד הלודג׳ על רציף נהר הנאפו.' },
+			{ title: 'שיט במורד נהר הנאפו', kind: 'transfer', text: 'כשעתיים בקאנו מנועי במורד הנאפו — תחילתה של חוויה בלתי נשכחת. ארוחת צהריים ארוזה ושתייה על הסירה.' },
+			{ title: 'קאנו חתירה אל הלודג׳', kind: 'tour', text: 'מהרציף הראשי ממשיכים בקאנו חתירה שקט על פני הלגונה. את המזוודות מעביר צוות הלודג׳ — אנחנו אחראים רק לתיק היד ולמצלמה. המנהל מקבל את פנינו עם משקה מרענן, נשנושים ותדריך קצר.' },
+			{ title: 'היכרות עם יער הגשם', kind: 'tour', text: 'אחרי מנוחה והתמקמות בחדרים, מדריך טבע מספר על יער הגשם הטרופי, על האמזונס ועל החיים בלודג׳ — כדי שנצא לפעילויות כבר עם הבנה של המקום המופלא שהגענו אליו.' },
+			{ title: 'שביל מטפאלו צ׳רפה', kind: 'tour', text: 'הליכה קצרה בשביל הקרוי על שם עץ התאנה החונקת. עצי מהגוני בני יותר מ-400 שנה, ואור רך של אחר הצהריים מסתנן מבעד לחופה — השעה שבה חיות היום מפנות את מקומן לחיות הלילה.' },
+			{ title: 'שיט לילי בלגונת גרסה קוצ׳ה', kind: 'tour', text: 'בעזרת פנס חזק של המדריכים מחפשים קיימנים, עטלפים, ינשופים ויונקי לילה. ואם השמיים בהירים — כוכבים כמו שלא ראיתם מעולם.' },
+			{ title: 'ארוחת ערב בלודג׳', kind: 'free' }
 		],
-		hotel: { name: 'La Selva Eco Lodge', text: 'סוויטה Superior/Scenic · חבילת 4 ימים / 3 לילות.' },
-		pending: true
+		hotel: { name: 'La Selva Eco Lodge', text: 'לודג׳ אקולוגי על שפת לגונת גרסה קוצ׳ה, בלב יער הגשם. סוויטה Superior/Scenic · חבילת 4 ימים / 3 לילות, עם מדריך טבע ומדריך מקומי בכל הפעילויות.', image: amazon('lodge') }
 	},
 	{
 		n: 9,
 		date: '2027-06-30',
 		weekday: 'רביעי',
 		region: 'amazon',
-		where: 'לודג׳ La Selva',
-		title: 'יום בג׳ונגל',
-		summary: 'יום מלא באמזונס. התכנית המפורטת של הלודג׳ תתעדכן בקרוב.',
-		image: hero('amazon'),
-		schedule: [{ title: 'פעילויות בלודג׳ La Selva', kind: 'tour', text: 'התכנית המפורטת תתעדכן בקרוב.' }],
-		hotel: { name: 'La Selva Eco Lodge' },
-		pending: true
+		where: 'לודג׳ La Selva · מנדי קוצ׳ה',
+		title: 'מעל חופת היער ובין הקופים',
+		summary: 'עולים למגדל תצפית בגובה 36 מ׳ מעל קרקעית היער, מחפשים לוטרות ענק במנדי קוצ׳ה, פוגשים קופים והואצין סביב גרסה קוצ׳ה — ובלילה יוצאים לסיור רגלי בג׳ונגל.',
+		image: amazon('jungle'),
+		video: clip('amazon/lagoon'),
+		gallery: [amazon('toucan'), amazon('night-walk'), amazon('frog')],
+		schedule: [
+			{ title: 'השכמה וארוחת בוקר', kind: 'free' },
+			{ title: 'מגדל התצפית', kind: 'tour', text: 'אחרי הליכה של רבע שעה מתגלה המגדל — 36 מטרים מעל קרקעית היער. המדריכים, עם טלסקופ תצפית, מראים לנו ציפורים צבעוניות בחופת העצים, ולפעמים גם קופים.' },
+			{ title: 'אגם מנדי קוצ׳ה', kind: 'tour', text: 'עוד חצי שעה הליכה אל אגם קטן בלב היער המוצף, עם צמחייה ונופים אחרים לגמרי. עם קצת מזל נראה את לוטרות הענק שחיות בסביבה — מין נדיר בסכנת הכחדה.' },
+			{ title: 'ארוחת צהריים וזמן חופשי', kind: 'free', text: 'בין הפעילויות: קיאקים על הלגונה, עיסוי, או סתם מנוחה בחדר.' },
+			{ title: 'אגם גרסה קוצ׳ה', kind: 'tour', text: 'מהאגמים היפים באמזונס האקוודורי. להקות של קופי סנאי מצטרפות למשפחות קפוצ׳ינים בחיפוש אחר מזון, קופי יללן מבלים כאן את שעות אחר הצהריים, וההואצין — ציפור ייחודית שחיה רק באמזונס הבתולי — נראה כאן בקלות.' },
+			{ title: 'סיור לילי רגלי', kind: 'tour', text: 'פנס ומצלמה — זה כל מה שצריך כדי לראות את הג׳ונגל מתעורר בלילה: דו-חיים, חרקים, זוחלים, ציפורים ויונקי לילה, בכל מקום שהמדריכים יובילו אותנו.' },
+			{ title: 'ארוחת ערב בלודג׳', kind: 'free' }
+		],
+		hotel: { name: 'La Selva Eco Lodge' }
 	},
 	{
 		n: 10,
 		date: '2027-07-01',
 		weekday: 'חמישי',
 		region: 'amazon',
-		where: 'לודג׳ La Selva',
-		title: 'עוד יום בג׳ונגל',
-		summary: 'יום נוסף באמזונס. התכנית המפורטת של הלודג׳ תתעדכן בקרוב.',
-		image: hero('amazon-mist'),
-		schedule: [{ title: 'פעילויות בלודג׳ La Selva', kind: 'tour', text: 'התכנית המפורטת תתעדכן בקרוב.' }],
-		hotel: { name: 'La Selva Eco Lodge' },
-		pending: true
+		where: 'נהר הנאפו · פילצ׳י · שביל קוטו',
+		title: 'מאות תוכים וקהילה ילידית',
+		summary: 'בוקר בסירה אל ליקוק החימר — מאות תוכים ותוכונים שמתקבצים לאכול אדמה עשירה במינרלים. ביקור בקהילה הילידית פילצ׳י, ואחר הצהריים שביל קוטו וקאנו חזרה בין קיימנים.',
+		image: amazon('boardwalk'),
+		gallery: [clip('amazon/ceiba'), amazon('jungle-vines'), amazon('creek')],
+		schedule: [
+			{ title: 'השכמה וארוחת בוקר מוקדמת', kind: 'free' },
+			{ title: 'ליקוק החימר של התוכים', kind: 'tour', text: 'חוזרים לנהר הנאפו ושטים בקאנו מנועי אל אחד המחזות המרתקים בטבע: מאות תוכים ותוכונים מתקבצים כדי לאכול את האדמה העשירה במינרלים — חלק חשוב בתזונה שלהם. משקפת חובה.' },
+			{ title: 'הקהילה הילידית פילצ׳י', kind: 'tour', text: 'לומדים איך חיו העמים הראשונים של האמזונס לפני אלפי שנים: מה לבשו, מה אכלו, איך בישלו ואיך השתמשו בכל מה שהיער נותן. אל תתביישו לשאול — הם אוהבים לשתף בידע של אבותיהם ובסיפור של המקום שבו הם חיים.' },
+			{ title: 'ארוחת צהריים וזמן חופשי', kind: 'free', text: 'קיאקים, עיסוי או מנוחה בחדר.' },
+			{ title: 'שביל קוטו', kind: 'tour', text: 'הליכה מהלודג׳ אל שפת אגם גרסה קוצ׳ה באור הרך של אחר הצהריים. המדריך מצביע על היצורים שבדרך, והמדריך המקומי מראה צמחי מרפא שבני המקום משתמשים בהם אלפי שנים. החזרה בקאנו — עם קיימנים, עטלפים וחיות לילה סביב האגם.' },
+			{ title: 'תדריך יציאה וקוקטייל פרידה', kind: 'hotel', text: 'מנהל הלודג׳ מסביר על סדרי היציאה מחר בבוקר, והברמן מגיש קוקטייל פרידה.' },
+			{ title: 'ארוחת ערב אחרונה בג׳ונגל', kind: 'free' }
+		],
+		hotel: { name: 'La Selva Eco Lodge' }
 	},
 	{
 		n: 11,
 		date: '2027-07-02',
 		weekday: 'שישי',
 		region: 'andes',
-		where: 'קוקה · קיטו',
+		where: 'La Selva · קוקה · קיטו',
 		title: 'חוזרים לקיטו',
-		summary: 'נפרדים מהג׳ונגל, טסים חזרה לקיטו ומתארגנים לשבת.',
-		image: img('hotel-quito'),
+		summary: 'השכמה מוקדמת, שיט במעלה הנאפו חזרה לקוקה, טיסה לקיטו והתארגנות לשבת.',
+		image: amazon('creek-2'),
+		gallery: [img('hotel-quito')],
 		schedule: [
-			{ time: '09:00', title: 'יציאה מהלודג׳', kind: 'transfer' },
+			{ title: 'השכמה מוקדמת וארוחת בוקר', kind: 'free' },
+			{ title: 'שיט במעלה הנאפו לקוקה', kind: 'transfer', text: 'צוות הלודג׳ מטפל במזוודות, והקאנו המנועי שט במעלה הנהר חזרה לקוקה. הפסקה קצרה במשרד של La Selva, ומשם לשדה התעופה — הנציגים עוזרים עם כרטיסי העלייה והמזוודות.' },
 			{ time: '10:49', title: 'טיסה קוקה ← קיטו (LATAM)', kind: 'flight', text: 'טיסה של 38 דקות.' },
 			{ time: '12:00', title: 'העברה מהשדה למלון', kind: 'transfer' },
 			{ title: 'ערב שבת בקיטו', kind: 'free' }
@@ -278,7 +311,7 @@ export const days: Day[] = [
 		where: 'קיטו',
 		title: 'שבת בקיטו',
 		summary: 'יום חופשי ומנוחה לפני הטיסה לגלאפגוס.',
-		image: img('quito-view'),
+		image: img('quito-sanfrancisco'),
 		schedule: [{ title: 'יום חופשי — שבת', kind: 'free', text: 'אין פעילויות מתוכננות.' }],
 		hotel: { name: 'Hotel Quito' },
 		shabbat: true
@@ -292,7 +325,7 @@ export const days: Day[] = [
 		title: 'נוחתים בגלאפגוס',
 		summary: 'טסים לאי סן קריסטובל: חוות צבי הענק, אגם המכתש אל חונקו והחוף הלבן של פוארטו צ׳ינו עם אריות ים וכחולי-רגל.',
 		image: hero('tortoise'),
-		gallery: [hero('booby'), img('galapaguera'), img('casa-opuntia')],
+		gallery: [photo('boobies'), photo('booby-nest'), photo('iguana-beach'), img('galapaguera')],
 		schedule: [
 			{ time: '05:00', title: 'צ׳ק-אאוט והעברה לשדה', kind: 'transfer' },
 			{ time: '07:38', title: 'טיסה קיטו ← סן קריסטובל (דרך גואיאקיל)', kind: 'flight' },
@@ -300,7 +333,7 @@ export const days: Day[] = [
 			{ time: '14:00', title: 'גלאפגוארה, אל חונקו ופוארטו צ׳ינו', kind: 'tour', text: 'הגלאפגוארה — שטח שבו צבי ענק מסתובבים חופשי, ומרכז הרבייה שבו בוקעים הצבים הצעירים. לגונת אל חונקו — אגם מים מתוקים בתוך מכתש בגובה 700 מ׳, המקום האהוב על ציפורי הפריגטה. ולסיום: פוארטו צ׳ינו, חוף חול לבן וגלים בטורקיז, עם אריות ים וכחולי-רגל.' },
 			{ time: '17:00', title: 'צ׳ק-אין בקאסה אופונטיה', kind: 'hotel' }
 		],
-		hotel: { name: 'Casa Opuntia', text: 'על טיילת החוף, מטרים מחוף פלאיה דה אורו, עם מסעדת גן המשקיפה על המפרץ.' }
+		hotel: { name: 'Casa Opuntia', text: 'על טיילת החוף, מטרים מחוף פלאיה דה אורו, עם מסעדת גן המשקיפה על המפרץ.', image: img('casa-opuntia') }
 	},
 	{
 		n: 14,
@@ -311,7 +344,7 @@ export const days: Day[] = [
 		title: 'גבעת הפריגטות ומעבר לסנטה קרוז',
 		summary: 'מרכז המבקרים, גבעת הפריגטות — שם נחת דרווין לראשונה — ושיט במעבורת לאי סנטה קרוז.',
 		image: hero('galapagos'),
-		gallery: [img('tijeretas'), img('interpretation'), img('fiesta')],
+		gallery: [photo('frigatebird'), photo('sunset-pier'), img('tijeretas')],
 		schedule: [
 			{ time: '10:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '11:00', title: 'מרכז המבקרים (Interpretation Center)', kind: 'tour', text: 'ההיסטוריה הטבעית והאנושית של האיים — מהמוצא הוולקני ועד מאבקי השימור של היום.' },
@@ -319,7 +352,7 @@ export const days: Day[] = [
 			{ time: '15:00', title: 'מעבורת סן קריסטובל ← סנטה קרוז', kind: 'transfer', text: 'שיט של כשעתיים.' },
 			{ time: '17:10', title: 'צ׳ק-אין במלון פייסטה, פוארטו איורה', kind: 'hotel' }
 		],
-		hotel: { name: 'Hotel Fiesta', text: 'בפוארטו איורה, קרוב לחוף, לתחנת דרווין ולמפרץ טורטוגה. בריכה חיצונית ומרפסת.' }
+		hotel: { name: 'Hotel Fiesta', text: 'בפוארטו איורה, קרוב לחוף, לתחנת דרווין ולמפרץ טורטוגה. בריכה חיצונית ומרפסת.', image: img('fiesta') }
 	},
 	{
 		n: 15,
@@ -329,8 +362,8 @@ export const days: Day[] = [
 		where: 'סנטה קרוז',
 		title: 'שנירקול עם אריות ים',
 		summary: 'שיט במפרץ: שחייה עם אריות ים וצבי ים, תעלת הכרישים, לאס גרייטאס, ואחר הצהריים — חוף טורטוגה ביי.',
-		image: hero('sealions'),
-		gallery: [hero('tortuga'), hero('iguana'), img('bay-santa-cruz')],
+		image: photo('snorkel-turtle'),
+		gallery: [clip('galapagos/turtle'), photo('shark-cave'), hero('sealions'), photo('swim-turtle'), photo('crab-lava'), clip('galapagos/reef')],
 		schedule: [
 			{ time: '08:00', title: 'סיור מפרץ (משותף)', kind: 'tour', text: 'לה לובריה — שנירקול עם אריות ים, צבי ים ודגי שונית. תעלת הכרישים, תעלת האהבה, חוף הכלבים, מכרות המלח ולאס גרייטאס — ערוץ מים בין צוקים. סיום בחוף פונטה אסטרדה. ציוד שנירקול כלול.' },
 			{ time: '14:00', title: 'חוף טורטוגה ביי (אופציונלי, עצמאי)', kind: 'optional', text: 'חוף חול לבן כ-2 ק״מ מפוארטו איורה, אתר הטלה של צבי ים ירוקים. שחייה, הליכה ותצפית על שקנאים וכרישים קטנים.' }
@@ -345,8 +378,8 @@ export const days: Day[] = [
 		where: 'סנטה קרוז · גואיאקיל',
 		title: 'תחנת דרווין וטיסה לגואיאקיל',
 		summary: 'ביקור בבוקר בתחנת המחקר על שם צ׳ארלס דרווין, טיסה לגואיאקיל ומעבר לחוף הפסיפי.',
-		image: img('darwin-station'),
-		gallery: [img('cedros')],
+		image: photo('crab'),
+		gallery: [img('darwin-station'), photo('sunset-harbor')],
 		schedule: [
 			{ time: '07:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '07:15', title: 'תחנת המחקר צ׳ארלס דרווין', kind: 'tour', text: 'הליכה קלה בשבילים מסומנים, מתאימה לכל הגילאים. כ-2–3 שעות.' },
@@ -354,7 +387,7 @@ export const days: Day[] = [
 			{ time: '12:00', title: 'טיסה בלטרה ← גואיאקיל (LATAM)', kind: 'flight' },
 			{ time: '16:00', title: 'צ׳ק-אין בסדרוס אין', kind: 'hotel' }
 		],
-		hotel: { name: 'Hotel Cedros Inn', text: 'מלון בוטיק מודרני בלב גואיאקיל, 24 חדרים, בריכה חיצונית, גן ומרפסת שקטה.' }
+		hotel: { name: 'Hotel Cedros Inn', text: 'מלון בוטיק מודרני בלב גואיאקיל, 24 חדרים, בריכה חיצונית, גן ומרפסת שקטה.', image: photo('cedros-inn') }
 	},
 	{
 		n: 17,
@@ -410,7 +443,7 @@ export const days: Day[] = [
 		where: 'גואיאקיל',
 		title: 'להתראות אקוודור',
 		summary: 'צ׳ק-אאוט, העברה לשדה התעופה וטיסה הביתה — עם תיק מלא בזיכרונות.',
-		image: img('arrival'),
+		image: photo('textiles'),
 		schedule: [
 			{ time: '10:00', title: 'צ׳ק-אאוט', kind: 'hotel' },
 			{ time: '10:30', title: 'העברה פרטית לשדה התעופה', kind: 'transfer' },
