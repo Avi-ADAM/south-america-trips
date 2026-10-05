@@ -16,6 +16,7 @@
 		</div>
 
 		<header class="doc-head">
+			<img class="logo" src={u('/img/brand/logo.jpg')} alt="AH Boutique Tours" width="600" height="586" />
 			<p class="brand">{site.brand}</p>
 			<h1>{trip.title}</h1>
 			<p class="meta">{trip.dateLabel} · {trip.days} ימים / {trip.nights} לילות</p>
@@ -125,6 +126,13 @@
 		border-bottom: 3px solid #1d2a2c;
 		padding-bottom: 20px;
 		margin-bottom: 30px;
+	}
+	.logo {
+		display: block;
+		width: 120px;
+		height: auto;
+		margin-bottom: 10px;
+		border-radius: 12px;
 	}
 	.brand {
 		letter-spacing: 0.15em;

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import Brand from '$lib/components/Brand.svelte';
 	import { site } from '$lib/config';
 	import { u } from '$lib/paths';
 
@@ -88,7 +89,7 @@
 
 <header class:scrolled={scrolled || path.includes('/itinerary')}>
 	<div class="bar wrap">
-		<a class="brand" href={u('/')}>{site.brand}</a>
+		<div class="brand"><Brand /></div>
 		<nav aria-label="ניווט באתר" bind:this={nav}>
 			<span class="pill" class:on={pill.on} class:ready style="transform:translateX({pill.x}px);width:{pill.w}px" aria-hidden="true"></span>
 			{#each tabs as t}
@@ -133,11 +134,8 @@
 		height: 72px;
 	}
 	.brand {
-		font-family: var(--display);
-		font-weight: 800;
 		font-size: 1.15rem;
-		text-decoration: none;
-		white-space: nowrap;
+		--logo-size: 46px;
 	}
 	nav {
 		position: relative;
@@ -240,6 +238,7 @@
 		}
 		.brand {
 			font-size: 1.02rem;
+			--logo-size: 38px;
 		}
 		.cta {
 			margin-inline-start: auto;

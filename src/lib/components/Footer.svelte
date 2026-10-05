@@ -6,6 +6,7 @@
 <footer>
 	<div class="wrap row">
 		<div>
+			<a class="logo" href={u('/')}><img src={u('/img/brand/logo.jpg')} alt="AH Boutique Tours" width="600" height="586" loading="lazy" /></a>
 			<a class="brand" href={u('/')}>{site.brand}</a>
 			<p>{site.tagline}</p>
 		</div>
@@ -39,6 +40,18 @@
 		justify-content: space-between;
 		gap: 24px;
 		flex-wrap: wrap;
+	}
+	.logo {
+		display: block;
+		width: 150px;
+		margin-bottom: 16px;
+	}
+	.logo img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 18px;
+		box-shadow: 0 0 0 1px rgba(240, 217, 153, 0.4);
 	}
 	.brand {
 		font-family: var(--display);

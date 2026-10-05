@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { reveal } from '$lib/actions/reveal';
+	import Brand from '$lib/components/Brand.svelte';
 	import HeroSlideshow from '$lib/components/HeroSlideshow.svelte';
 	import { site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
@@ -12,7 +13,7 @@
 </svelte:head>
 
 <header class="top wrap">
-	<a class="brand" href={u('/')}>{site.brand}</a>
+	<div class="brand"><Brand /></div>
 	<a class="btn btn-ghost" href={u('/ecuador-2027/')}>הטיול הקרוב</a>
 </header>
 
@@ -48,8 +49,14 @@
 		height: 80px;
 	}
 	.brand {
-		font: 800 1.3rem var(--display);
-		text-decoration: none;
+		font-size: 1.3rem;
+		--logo-size: 54px;
+	}
+	@media (max-width: 600px) {
+		.brand {
+			font-size: 1.05rem;
+			--logo-size: 44px;
+		}
 	}
 	.hero {
 		position: relative;
