@@ -10,8 +10,9 @@
 	}: {
 		/** A photo, or a photo with its own focus point (CSS background-position) on wide screens. */
 		images: (string | { src: string; pos?: string })[];
-		/** One per image: what that slide shows on phones, where a wide photo is cut to a narrow sliver. */
-		phoneImages?: { src: string; pos?: string }[];
+		/** One per image: what that slide shows on phones, where a wide photo is cut to a narrow sliver.
+		 *  `framed` shows the whole photo in a card above the text, over a blurred copy of itself. */
+		phoneImages?: { src: string; pos?: string; framed?: boolean }[];
 		interval?: number;
 		/** Vertical clip of the first photo, played instead of it on phones. */
 		video?: string;
@@ -44,9 +45,11 @@
 		<div
 			class="slide"
 			class:on={i === current}
+			class:framed={p?.framed}
 			style="--img:url('{u(src)}');{pos ? `--pos:${pos};` : ''}{p ? `--phone-img:url('${u(p.src)}');--phone-pos:${p.pos ?? 'center'}` : ''}"
 		>
 			{#if i === 0 && phone && video}<Media src={video} class="clip" eager />{/if}
+			{#if phone && p?.framed}<img class="frame" src={u(p.src)} alt="" />{/if}
 		</div>
 	{/each}
 </div>
@@ -92,6 +95,27 @@
 		.slide {
 			background-image: var(--phone-img, var(--img));
 			background-position: var(--phone-pos, center);
+		}
+		/* The whole photo, sharp, in a card under the header; a blurred copy fills the screen behind it. */
+		.slide.framed {
+			inset: 0;
+			background: none;
+		}
+		.slide.framed::before {
+			content: '';
+			position: absolute;
+			inset: -40px;
+			background: var(--phone-img) center / cover;
+			filter: blur(26px) brightness(0.75);
+		}
+		.frame {
+			position: absolute;
+			top: calc(var(--nav-top) + 14px);
+			left: 12px;
+			width: calc(100% - 24px);
+			height: auto;
+			border-radius: 18px;
+			box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
 		}
 	}
 </style>

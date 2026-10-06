@@ -32,18 +32,23 @@
 <svelte:window onkeydown={onKey} />
 
 {#key day.n}
-	<section class="hero" style="--c:{region.color}">
+	<!-- On a wide screen a photo stretched across the hero is cropped and blown up,
+	     so desktop shows it whole in a frame beside the text (phones keep the full-bleed photo). -->
+	<section class="hero" class:framed={!day.video} style="--c:{region.color}">
 		<div class="bg" style="background-image:url('{u(day.image)}')">
 			{#if day.video}<Media src={day.video} poster={day.image} class="bg-video" eager />{/if}
 		</div>
 		<div class="shade"></div>
 		<div class="wrap content">
 			<div class="big-n" aria-hidden="true">{String(day.n).padStart(2, '0')}</div>
-			<span class="chip a" style="--d:.05s"><span class="dot" style="color:var(--c)"></span>{region.name}</span>
-			<p class="date a" style="--d:.15s">יום {day.n} מתוך {days.length} · יום {day.weekday} · {longDate(day.date)}</p>
-			<h1 class="a" style="--d:.25s">{day.title}</h1>
-			<p class="where a" style="--d:.35s">📍 {day.where}</p>
-			<p class="summary a" style="--d:.45s">{day.summary}</p>
+			<div class="text">
+				<span class="chip a" style="--d:.05s"><span class="dot" style="color:var(--c)"></span>{region.name}</span>
+				<p class="date a" style="--d:.15s">יום {day.n} מתוך {days.length} · יום {day.weekday} · {longDate(day.date)}</p>
+				<h1 class="a" style="--d:.25s">{day.title}</h1>
+				<p class="where a" style="--d:.35s">📍 {day.where}</p>
+				<p class="summary a" style="--d:.45s">{day.summary}</p>
+			</div>
+			{#if !day.video}<img class="frame" src={u(day.image)} alt={day.title} />{/if}
 		</div>
 	</section>
 
@@ -193,6 +198,46 @@
 		to {
 			opacity: 1;
 			transform: none;
+		}
+	}
+	.frame {
+		display: none;
+	}
+	@media (min-width: 861px) {
+		.framed .bg {
+			inset: -40px;
+			filter: blur(24px) brightness(0.7);
+		}
+		.framed .content {
+			display: grid;
+			grid-template-columns: 1fr 1.15fr;
+			align-items: center;
+			gap: 48px;
+			padding: 120px 0 56px;
+		}
+		.framed .frame {
+			display: block;
+			justify-self: center;
+			max-width: 100%;
+			max-height: 60svh;
+			border-radius: 18px;
+			box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.95);
+			outline: 1px solid rgba(255, 255, 255, 0.18);
+			outline-offset: -1px;
+			animation: frameIn 1.1s var(--ease) both;
+		}
+		/* The day number sits on the frame's top corner. */
+		.framed .big-n {
+			grid-area: 1 / 2;
+			top: -0.42em;
+			inset-inline-end: -0.12em;
+			z-index: 1;
+		}
+	}
+	@keyframes frameIn {
+		from {
+			opacity: 0;
+			transform: scale(0.96);
 		}
 	}
 	.date {

@@ -25,14 +25,16 @@
 	// Full-screen photo behind a chapter's title card, and a vertical clip of it for phones.
 	const chapterBg: Partial<Record<RegionId, string>> = {
 		andes: '/img/client/quilotoa-flowers.jpg',
-		amazon: '/img/amazon/creek-2.jpg'
+		amazon: '/img/amazon/boardwalk-jungle.jpg'
 	};
 	const chapterClip: Partial<Record<RegionId, string>> = {
 		andes: '/video/andes/quilotoa.mp4'
 	};
 	// On phones, where the wide photo above shows only a sliver.
-	const chapterPhone: Partial<Record<RegionId, string>> = {
-		amazon: '/img/amazon/boardwalk.jpg'
+	const chapterPhone: Partial<Record<RegionId, string>> = {};
+	// Where the narrow phone crop of chapterBg centres (object-position).
+	const chapterFocus: Partial<Record<RegionId, string>> = {
+		amazon: '43% 50%'
 	};
 	let phone = $state(false);
 	$effect(() => {
@@ -68,10 +70,10 @@
 
 	// La Selva: what each jungle day is about, and the wildlife strip that scrolls under it.
 	const selvaDays = [
-		{ n: 8, icon: '🛶', text: 'נהר הנאפו, קאנו אל הלודג׳ ושיט לילי לחפש קיימנים' },
+		{ n: 8, icon: '🛶', text: 'נהר הנאפו, קאנו אל הלודג׳ ושייט לילי לחפש קיימנים' },
 		{ n: 9, icon: '🔭', text: 'מגדל תצפית מעל החופה, לוטרות ענק, קופים והואצין' },
 		{ n: 10, icon: '🦜', text: 'ליקוק החימר של מאות תוכים וקהילת פילצ׳י הילידית' },
-		{ n: 11, icon: '🌅', text: 'שיט בנהר הנאפו, טיסה לקיטו והתארגנות לשבת' }
+		{ n: 11, icon: '🌅', text: 'שייט בנהר הנאפו, טיסה לקיטו והתארגנות לשבת' }
 	];
 	const wildlife = [
 		{ src: '/img/amazon/clay-lick.jpg', label: 'ליקוק החימר של התוכים' },
@@ -81,7 +83,7 @@
 		{ src: '/img/amazon/macaws.jpg', label: 'תוכי מקאו' },
 		{ src: '/video/amazon/lagoon.mp4', label: 'לגונות שקטות' },
 		{ src: '/img/amazon/frog.jpg', label: 'צפרדעי חץ צבעוניות' },
-		{ src: '/img/amazon/canoe-paddle.jpg', label: 'שיט בקאנו' },
+		{ src: '/img/amazon/canoe-paddle.jpg', label: 'שייט בקאנו' },
 		{ src: '/img/amazon/python.jpg', label: 'בואה ירוקה' },
 		{ src: '/video/amazon/ceiba.mp4', label: 'עצי ענק' },
 		{ src: '/img/amazon/night-walk.jpg', label: 'סיורי לילה ובוקר' },
@@ -92,16 +94,16 @@
 	];
 	// Photo strips that scroll under the Andes and Galápagos chapter headers.
 	const andesStrip = [
-		{ src: '/img/client/quilotoa-crater.jpg', label: 'לגונת קילוטואה' },
+		{ src: '/img/client/quilotoa-crater.jpg', label: 'לגונה קילוטואה' },
 		{ src: '/img/client/textiles.jpg', label: 'שוק אוטבלו' },
 		{ src: '/img/client/folk-dance.jpg', label: 'תלבושות צבעוניות' },
 		{ src: '/img/client/cotopaxi-horses.jpg', label: 'הר הגעש קוטופקסי' },
 		{ src: '/img/client/masks-dance.jpg', label: 'פסטיבלים צבעוניים', pos: '50% 12%' },
 		{ src: '/img/client/hacienda-door.jpg', label: 'הסיינדה לה סיינגה' },
-		{ src: '/img/client/pailon-bridge.jpg', label: 'פיילון דל דיאבלו (קלחת השטן)' },
+		{ src: '/img/client/pailon-bridge.jpg', label: 'מפל פיילון דל דיאבלו (קלחת השטן)' },
 		{ src: '/img/client/intinan-sign.jpg', label: 'על קו המשווה' },
 		{ src: '/img/client/plaza-dance.jpg', label: 'פסטיבל אינטי ריימי (פסטיבל השמש)' },
-		{ src: '/img/client/quilotoa-shore.jpg', label: 'האגם מלמעלה' },
+		{ src: '/img/client/quilotoa-shore.jpg', label: 'לוע לגונה קילוטואה' },
 		{ src: '/img/client/otavalo-llama.jpg', label: 'קהילה מסורתית' }
 	];
 	const galapagosStrip = [
@@ -150,7 +152,7 @@
 		<p class="lead intro" style="--d:0.9s">{trip.subtitle}</p>
 		<div class="actions intro" style="--d:1.1s">
 			<a class="btn btn-primary" href="#days">גללו למסע ↓</a>
-			<a class="btn btn-ghost" href={u('/ecuador-2027/register/')}>רישום למסע</a>
+			<a class="btn btn-ghost" href={u('/ecuador-2027/register/')}>מחירים והרשמה</a>
 		</div>
 	</div>
 	<a class="scroll-hint" href="#stats" aria-label="גלילה למטה"><span></span></a>
@@ -226,7 +228,12 @@
 				{#if phone && chapterClip[ch.region]}
 					<Media src={chapterClip[ch.region]!} />
 				{:else}
-					<img src={u((phone && chapterPhone[ch.region]) || chapterBg[ch.region]!)} alt="" loading="lazy" />
+					<img
+						src={u((phone && chapterPhone[ch.region]) || chapterBg[ch.region]!)}
+						style:object-position={chapterFocus[ch.region]}
+						alt=""
+						loading="lazy"
+					/>
 				{/if}
 			</div>
 		{/if}
@@ -264,7 +271,7 @@
 							<span class="chip"><span class="dot" style="color:var(--green)"></span>4 ימים · 3 לילות בלב יער הגשם</span>
 							<h3>La Selva Eco Lodge</h3>
 							<p>
-								לודג׳ אקולוגי על שפת לגונה, שעתיים שיט מהעיר הקרובה. בכל פעילות מלווים אותנו מדריך טבע ומדריך מקומי —
+								לודג׳ אקולוגי על שפת לגונה, שעתיים שייט מהעיר הקרובה. בכל פעילות מלווים אותנו מדריך טבע ומדריך מקומי —
 								בקאנו, בשבילי הג׳ונגל, במגדל התצפית ובסיורי הלילה. ובין לבין: קיאקים, עיסוי, או ערסל ונוף.
 							</p>
 						</div>
