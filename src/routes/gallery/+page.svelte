@@ -1,13 +1,11 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { destinations } from '$lib/data/gallery';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>גלריה · המיוחדים שלנו</title>
-	<meta name="description" content="תמונות מהמסעות שלנו — אקוודור, האמזונס, איי גלאפגוס, ועוד יעדים בקרוב." />
-</svelte:head>
+<Meta title="גלריה · המיוחדים שלנו" description="תמונות מהמסעות שלנו — אקוודור, האמזונס, איי גלאפגוס, ועוד יעדים בקרוב." image={destinations[0].cover} />
 
 <main class="wrap">
 	<header class="head">

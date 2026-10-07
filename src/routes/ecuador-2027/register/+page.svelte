@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import RegisterBlock from '$lib/components/RegisterBlock.svelte';
 	import { ecuadorPricing } from '$lib/config';
@@ -13,9 +14,7 @@
 	];
 </script>
 
-<svelte:head>
-	<title>רישום למסע | {trip.title}</title>
-</svelte:head>
+<Meta title="רישום למסע | {trip.title}" description="{trip.title}, {trip.dateLabel}" image="/img/hero/sealions.jpg" />
 
 <section class="top" style="background-image:url('{u('/img/hero/sealions.jpg')}')">
 	<div class="shade"></div>

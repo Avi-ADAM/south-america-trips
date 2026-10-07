@@ -1,12 +1,10 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import credits from '$lib/data/credits.json';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>קרדיט לתמונות</title>
-	<meta name="robots" content="noindex" />
-</svelte:head>
+<Meta title="קרדיט לתמונות" noindex />
 
 <section class="wrap">
 	<a href={u('/')}>→ לדף הבית</a>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { slide } from '$lib/actions/slide';
 	import ContactBlock from '$lib/components/ContactBlock.svelte';
@@ -127,10 +128,7 @@
 	}));
 </script>
 
-<svelte:head>
-	<title>{trip.title} | {trip.dateLabel}</title>
-	<meta name="description" content={trip.subtitle} />
-</svelte:head>
+<Meta title="{trip.title} | {trip.dateLabel}" description={trip.subtitle} image="/img/client/quilotoa-flowers.jpg" />
 
 <!-- HERO -->
 <TripProgress />

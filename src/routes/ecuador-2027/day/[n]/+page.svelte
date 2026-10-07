@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { goto } from '$app/navigation';
 	import { reveal } from '$lib/actions/reveal';
 	import Lightbox from '$lib/components/Lightbox.svelte';
@@ -24,10 +25,7 @@
 	}
 </script>
 
-<svelte:head>
-	<title>יום {day.n}: {day.title} | {trip.title}</title>
-	<meta name="description" content={day.summary} />
-</svelte:head>
+<Meta title="יום {day.n}: {day.title} | {trip.title}" description={day.summary} image={day.image} />
 
 <svelte:window onkeydown={onKey} />
 

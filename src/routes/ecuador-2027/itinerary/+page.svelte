@@ -1,13 +1,12 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { days, included, notIncluded, regions, trip, worlds } from '$lib/data/ecuador';
 	import { longDate } from '$lib/format';
 	import { site } from '$lib/config';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>המסלול המלא | {trip.title}</title>
-</svelte:head>
+<Meta title="המסלול המלא | {trip.title}" description={trip.subtitle} image="/img/client/quilotoa-flowers.jpg" />
 
 <div class="paper-bg">
 	<article class="paper">

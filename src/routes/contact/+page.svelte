@@ -1,12 +1,11 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import ContactBlock from '$lib/components/ContactBlock.svelte';
 	import { site } from '$lib/config';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>צור קשר | {site.brand}</title>
-</svelte:head>
+<Meta title="צור קשר | {site.brand}" image="/img/amazon/canoe-binoculars.jpg" />
 
 <main>
 	<section class="top" style="background-image:url('{u('/img/amazon/canoe-binoculars.jpg')}')">

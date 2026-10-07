@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import Brand from '$lib/components/Brand.svelte';
 	import HeroSlideshow from '$lib/components/HeroSlideshow.svelte';
@@ -7,10 +8,7 @@
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>{site.brand} | {site.tagline}</title>
-	<meta name="description" content="{site.tagline} — הטיול הבא: {trip.title}, {trip.dateLabel}" />
-</svelte:head>
+<Meta title="{site.brand} | {site.tagline}" description="{site.tagline} — הטיול הבא: {trip.title}, {trip.dateLabel}" />
 
 <header class="top wrap">
 	<div class="brand"><Brand /></div>

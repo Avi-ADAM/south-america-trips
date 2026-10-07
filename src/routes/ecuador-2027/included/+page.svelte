@@ -1,12 +1,11 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { goodToKnow, included, notIncluded, stays, trip } from '$lib/data/ecuador';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>מה כלול ומה לא | {trip.title}</title>
-</svelte:head>
+<Meta title="מה כלול ומה לא | {trip.title}" description={trip.subtitle} image="/img/hero/booby.jpg" />
 
 <section class="top" style="background-image:url('{u('/img/hero/booby.jpg')}')">
 	<div class="shade"></div>

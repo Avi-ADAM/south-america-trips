@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import Lightbox from '$lib/components/Lightbox.svelte';
 	import Media from '$lib/components/Media.svelte';
@@ -9,9 +10,7 @@
 	let zoomed = $state<number | null>(null);
 </script>
 
-<svelte:head>
-	<title>{d.name} · גלריה</title>
-</svelte:head>
+<Meta title="{d.name} · גלריה" description="תמונות מהמסע — {d.name}" image={d.cover} />
 
 {#key d.slug}
 	<main class="wrap">

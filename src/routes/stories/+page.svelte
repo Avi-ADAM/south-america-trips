@@ -1,13 +1,11 @@
 <script lang="ts">
+	import Meta from '$lib/components/Meta.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { stories } from '$lib/data/stories';
 	import { u } from '$lib/paths';
 </script>
 
-<svelte:head>
-	<title>סיפורי מטיילות</title>
-	<meta name="description" content={stories[0].excerpt} />
-</svelte:head>
+<Meta title="סיפורי מטיילות" description={stories[0].excerpt} image={stories[0].image} />
 
 <main>
 	{#each stories as s}
