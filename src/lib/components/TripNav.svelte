@@ -283,6 +283,35 @@
 			bottom: calc(6px + env(safe-area-inset-bottom));
 			border-radius: 14px;
 		}
+		/* The button never shrinks; if space still runs out, the brand name is the one that gives way. */
+		.cta {
+			flex: none;
+		}
+		.brand {
+			min-width: 0;
+		}
+		.brand :global(a) {
+			max-width: 100%;
+		}
+		.brand :global(span) {
+			min-width: 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+	/* Small phones: brand and button scale down together so both fit in one row. */
+	@media (max-width: 400px) {
+		.bar {
+			gap: 8px;
+		}
+		.brand {
+			font-size: clamp(0.82rem, 4.2vw, 1.02rem);
+			--logo-size: 32px;
+		}
+		.cta {
+			padding: 7px 12px;
+			font-size: clamp(0.72rem, 3.6vw, 0.85rem);
+		}
 	}
 	@media print {
 		header {
