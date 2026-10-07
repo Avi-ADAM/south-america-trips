@@ -12,3 +12,4 @@ vite.config.*.timestamp-*
 
 # Original client photos/videos (large); web-sized copies live in static/img and static/video
 /media-source
+.vercel
