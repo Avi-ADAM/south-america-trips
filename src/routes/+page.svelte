@@ -5,10 +5,11 @@
 	import HeroSlideshow from '$lib/components/HeroSlideshow.svelte';
 	import { site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
+	import { ltr } from '$lib/format';
 	import { u } from '$lib/paths';
 </script>
 
-<Meta title="{site.brand} | {site.tagline}" description="{site.tagline} — הטיול הבא: {trip.title}, {trip.dateLabel}" />
+<Meta title="{site.brand} | {site.tagline}" description="{site.tagline} — הטיול הבא: {trip.title}, {ltr(trip.dateLabel)}" />
 
 <header class="top wrap">
 	<div class="brand"><Brand /></div>
@@ -31,7 +32,7 @@
 	<a class="card reveal" use:reveal href={u('/ecuador-2027/')}>
 		<img src={u('/img/client/boobies.jpg')} alt="" />
 		<div class="body">
-			<span class="chip">הטיול הבא · {trip.dateLabel}</span>
+			<span class="chip">הטיול הבא · <span class="ltr">{trip.dateLabel}</span></span>
 			<h2>{trip.title}</h2>
 			<p>{trip.subtitle}</p>
 			<span class="go">למצגת הטיול ←</span>

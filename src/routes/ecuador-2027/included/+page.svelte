@@ -12,7 +12,7 @@
 	<div class="wrap inner">
 		<span class="kicker">לפני שנארוז</span>
 		<h1>מה כלול ומה לא</h1>
-		<p>{trip.title} · {trip.dateLabel}</p>
+		<p>{trip.title} · <span class="ltr">{trip.dateLabel}</span></p>
 	</div>
 </section>
 

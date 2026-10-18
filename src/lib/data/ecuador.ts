@@ -3,6 +3,8 @@
  * בכוונה אין כאן מחירים: המחיר מוגדר רק ב-src/lib/config.ts.
  */
 
+import { shortDate } from '$lib/format';
+
 export type RegionId = 'andes' | 'amazon' | 'galapagos' | 'coast';
 
 export interface Region {
@@ -59,6 +61,10 @@ export interface Day {
 export const isVideo = (src: string) => src.endsWith('.mp4');
 export const posterOf = (src: string) => src.replace(/\.mp4$/, '.jpg');
 
+/** תאריכי המסע — מקור אחד לכל האתר */
+const start = '2027-06-22';
+const end = '2027-07-11';
+
 const img = (name: string) => `/img/trip/${name}.jpg`;
 const hero = (name: string) => `/img/hero/${name}.jpg`;
 const amazon = (name: string) => `/img/amazon/${name}.jpg`;
@@ -74,9 +80,10 @@ export const trip = {
 	headline: 'אקוודור · אמזונס · איי גלאפגוס',
 	tagline: 'חוויה של פעם בחיים',
 	subtitle: '20 ימים בין הרי געש, ג׳ונגל אמזוני ואיים שבהם הטבע עדיין מנהל את העניינים',
-	start: '2027-06-22',
-	end: '2027-07-11',
-	dateLabel: '22.6.2027 – 11.7.2027',
+	start,
+	end,
+	/** "22.6.27 – 11.7.27" — טווח תאריכים שמוצג משמאל לימין (ראו .ltr ב-app.css) */
+	dateLabel: `${shortDate(start)} – ${shortDate(end)}`,
 	days: 20,
 	nights: 19,
 	/** בטלפון: תמונת הפתיחה הראשונה זזה (סרטון אנכי שנוצר ממנה) */

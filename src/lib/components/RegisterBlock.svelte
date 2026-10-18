@@ -2,10 +2,10 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { ecuadorPricing as p, site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
-	import { money } from '$lib/format';
+	import { ltr, money } from '$lib/format';
 	import { u } from '$lib/paths';
 
-	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${trip.dateLabel})`);
+	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${ltr(trip.dateLabel)})`);
 </script>
 
 <div class="reg panel reveal" use:reveal>
