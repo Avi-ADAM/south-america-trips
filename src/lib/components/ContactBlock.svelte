@@ -2,9 +2,10 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { site } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
+	import { ltr } from '$lib/format';
 	import { u } from '$lib/paths';
 
-	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${trip.dateLabel})`);
+	const waText = encodeURIComponent(`היי, אשמח לפרטים על הטיול לאקוודור (${ltr(trip.dateLabel)})`);
 
 	// Empty fields in config show "coming soon" instead of a link.
 	const items = [

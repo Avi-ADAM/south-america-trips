@@ -18,7 +18,7 @@
 			<img class="logo" src={u('/img/brand/logo.jpg')} alt="AH Boutique Tours" width="600" height="586" />
 			<p class="brand">{site.brand}</p>
 			<h1>{trip.title}</h1>
-			<p class="meta">{trip.dateLabel} · {trip.days} ימים / {trip.nights} לילות</p>
+			<p class="meta"><span class="ltr">{trip.dateLabel}</span> · {trip.days} ימים / {trip.nights} לילות</p>
 		</header>
 
 		<section class="intro">

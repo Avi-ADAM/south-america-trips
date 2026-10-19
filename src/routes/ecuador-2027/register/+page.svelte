@@ -4,6 +4,7 @@
 	import RegisterBlock from '$lib/components/RegisterBlock.svelte';
 	import { ecuadorPricing } from '$lib/config';
 	import { trip } from '$lib/data/ecuador';
+	import { ltr } from '$lib/format';
 	import { u } from '$lib/paths';
 
 	const steps = [
@@ -14,12 +15,12 @@
 	];
 </script>
 
-<Meta title="רישום למסע | {trip.title}" description="{trip.title}, {trip.dateLabel}" image="/img/hero/sealions.jpg" />
+<Meta title="רישום למסע | {trip.title}" description="{trip.title}, {ltr(trip.dateLabel)}" image="/img/hero/sealions.jpg" />
 
 <section class="top" style="background-image:url('{u('/img/hero/sealions.jpg')}')">
 	<div class="shade"></div>
 	<div class="wrap inner">
-		<span class="kicker">{trip.dateLabel}</span>
+		<span class="kicker"><span class="ltr">{trip.dateLabel}</span></span>
 		<h1>רישום למסע</h1>
 	</div>
 </section>

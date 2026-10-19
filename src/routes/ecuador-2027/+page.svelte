@@ -13,7 +13,7 @@
 	import { previousTripVideoId } from '$lib/config';
 	import { days, goodToKnow, regions, stats, stays, trip, worlds, type RegionId } from '$lib/data/ecuador';
 	import { stories } from '$lib/data/stories';
-	import { shortDate } from '$lib/format';
+	import { ltr, shortDate } from '$lib/format';
 	import { u } from '$lib/paths';
 
 	const chapterTitles: Record<RegionId, string> = {
@@ -128,7 +128,7 @@
 	}));
 </script>
 
-<Meta title="{trip.title} | {trip.dateLabel}" description={trip.subtitle} image="/img/client/quilotoa-flowers.jpg" />
+<Meta title="{trip.title} | {ltr(trip.dateLabel)}" description={trip.subtitle} image="/img/client/quilotoa-flowers.jpg" />
 
 <!-- HERO -->
 <TripProgress />
@@ -140,7 +140,7 @@
 	<div class="orb orb-1"></div>
 	<div class="orb orb-2"></div>
 	<div class="hero-content wrap">
-		<span class="chip intro" style="--d:0.1s"><span class="dot" style="color:var(--accent)"></span>{trip.dateLabel} · {trip.days} ימים</span>
+		<span class="chip intro" style="--d:0.1s"><span class="dot" style="color:var(--accent)"></span><span class="ltr">{trip.dateLabel}</span> · {trip.days} ימים</span>
 		<p class="tagline intro" style="--d:0.2s">{trip.tagline}</p>
 		<h1>
 			{#each titleWords as w, i}
@@ -158,7 +158,7 @@
 
 <!-- STATS -->
 <section id="stats" class="stats-slide slide" use:slide>
-	<p class="stats-k reveal" use:reveal>{trip.dateLabel}</p>
+	<p class="stats-k reveal ltr" use:reveal>{trip.dateLabel}</p>
 	<div class="stats wrap">
 		{#each stats as s, i}
 			<div class="stat panel reveal" use:reveal style="--delay:{i * 100}ms">
@@ -239,10 +239,10 @@
 			<div class="wrap reveal" use:reveal>
 				<h2>{chapterTitles[ch.region]}</h2>
 				<span class="chapter-dates"
-					>ימים {ch.days[0].n}{ch.days.length > 1 ? `–${ch.days.at(-1)!.n}` : ''} · {shortDate(ch.days[0].date)}{ch.days
+					>ימים {ch.days[0].n}{ch.days.length > 1 ? `–${ch.days.at(-1)!.n}` : ''} · <span class="ltr">{shortDate(ch.days[0].date)}{ch.days
 						.length > 1
 						? ` – ${shortDate(ch.days.at(-1)!.date)}`
-						: ''}</span
+						: ''}</span></span
 				>
 			</div>
 		</header>
